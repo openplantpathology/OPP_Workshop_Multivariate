@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Principal Components Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Multivariate Analysis in R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="1-MV_PCA.html">PCA</a>
+</li>
+<li>
+  <a href="2-MV_PCO.html">PCO</a>
+</li>
+<li>
+  <a href="3-Cluster.html">Cluster</a>
+</li>
+<li>
+  <a href="4-DA_Manova.html">LDA and Manova</a>
+</li>
+<li>
+  <a href="Intro_R.html">Intro to R</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/openplantpathology/OPPWorkshop-multivariate-Neil">
+    <span class="fa fa-github-square"></span>
+     
+    source
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Principal Components Analysis</h1>
+
+</div>
+
+
+<div id="survey-data" class="section level2">
+<h2>Survey data</h2>
+<p>The data are from a survey of pests and diseases in winter wheat crops in Scotland during the 1990’s. In this case there are data for 41 fields spread over 3 regions and for 15 disease variables in each field. The data file for this section of the workshop is <code>PCA1_Survey.csv</code>.</p>
+<p>The following code lets you load the data, generates the PCA and produces some output to examine the results of the PCA.</p>
+<pre class="r"><code>PCA1_data &lt;- read.csv(&quot;data/PCA1_Survey.csv&quot;, head = TRUE)
+head(PCA1_data)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Yr_L"],"name":[7],"type":["int"],"align":["right"]},{"label":["Yr_G"],"name":[8],"type":["int"],"align":["right"]},{"label":["Br_L"],"name":[9],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[14],"type":["int"],"align":["right"]},{"label":["ES"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[17],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0","8":"0","9":"0","10":"0.8","11":"1.4","12":"1.8","13":"0.2","14":"0","15":"0","16":"6.90","17":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0","8":"0","9":"0","10":"0.0","11":"0.2","12":"1.5","13":"0.5","14":"0","15":"0","16":"6.90","17":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0","8":"0","9":"0","10":"0.7","11":"0.6","12":"0.7","13":"0.8","14":"0","15":"0","16":"1.40","17":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"0","8":"0","9":"0","10":"2.0","11":"2.3","12":"1.0","13":"0.1","14":"0","15":"0","16":"8.30","17":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"0","8":"0","9":"0","10":"2.1","11":"1.3","12":"1.0","13":"0.4","14":"0","15":"0","16":"11.40","17":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0","8":"0","9":"0","10":"0.2","11":"0.4","12":"0.6","13":"0.1","14":"0","15":"0","16":"2.35","17":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>survey_pca1 &lt;- princomp(PCA1_data[3:17])
+summary_pca1 &lt;- summary(survey_pca1)
+summary_pca1</code></pre>
+<pre><code>## Importance of components:
+##                          Comp.1    Comp.2     Comp.3     Comp.4
+## Standard deviation     9.140000 7.0822555 3.70328360 2.03527024
+## Proportion of Variance 0.538989 0.3236165 0.08848332 0.02672586
+## Cumulative Proportion  0.538989 0.8626054 0.95108877 0.97781462
+##                             Comp.5      Comp.6      Comp.7      Comp.8
+## Standard deviation     1.076954292 0.964126883 0.809473804 0.617138237
+## Proportion of Variance 0.007483108 0.005997301 0.004227592 0.002457267
+## Cumulative Proportion  0.985297731 0.991295032 0.995522624 0.997979891
+##                              Comp.9      Comp.10      Comp.11     Comp.12
+## Standard deviation     0.3909325619 0.2885552177 0.2245169033 0.163103845
+## Proportion of Variance 0.0009860323 0.0005372115 0.0003252262 0.000171639
+## Cumulative Proportion  0.9989659233 0.9995031348 0.9998283610 1.000000000
+##                             Comp.13      Comp.14 Comp.15
+## Standard deviation     4.049968e-08 9.530711e-09       0
+## Proportion of Variance 1.058256e-17 5.860546e-19       0
+## Cumulative Proportion  1.000000e+00 1.000000e+00       1</code></pre>
+<pre class="r"><code>loadings_pca1 &lt;- survey_pca1$loadings
+loadings_pca1</code></pre>
+<pre><code>## 
+## Loadings:
+##      Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9
+## ST_L                       0.882                0.431              
+## St_G                       0.318  0.389  0.205 -0.616 -0.518  0.231
+## Sn_L                             -0.782  0.372        -0.369  0.183
+## Sn_G                             -0.117         0.175 -0.375 -0.170
+## Yr_L                                                               
+## Yr_G                                                               
+## Br_L                                                               
+## Pm_L                      -0.156  0.170  0.619  0.234  0.100  0.220
+## Pm_G                      -0.136  0.310  0.499  0.209  0.157  0.140
+## Fu_L                              0.111  0.321        -0.196 -0.860
+## Bo_L                       0.113                             -0.199
+## SM_E                       0.242 -0.284  0.279 -0.544  0.604 -0.186
+## ES    0.959  0.255  0.105                                          
+## SES   0.260 -0.962                                                 
+## TA                  0.987                                          
+##      Comp.10 Comp.11 Comp.12 Comp.13 Comp.14 Comp.15
+## ST_L  0.117                                         
+## St_G                                                
+## Sn_L  0.220  -0.105  -0.132                         
+## Sn_G -0.659   0.592                                 
+## Yr_L                         -0.959   0.282         
+## Yr_G                         -0.216  -0.697  -0.683 
+## Br_L                         -0.182  -0.659   0.730 
+## Pm_L -0.293  -0.286   0.531                         
+## Pm_G  0.139   0.303  -0.661                         
+## Fu_L  0.297           0.117                         
+## Bo_L -0.492  -0.666  -0.493                         
+## SM_E -0.256   0.132                                 
+## ES                                                  
+## SES                                                 
+## TA                                                  
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8
+## SS loadings     1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000
+## Proportion Var  0.067  0.067  0.067  0.067  0.067  0.067  0.067  0.067
+## Cumulative Var  0.067  0.133  0.200  0.267  0.333  0.400  0.467  0.533
+##                Comp.9 Comp.10 Comp.11 Comp.12 Comp.13 Comp.14 Comp.15
+## SS loadings     1.000   1.000   1.000   1.000   1.000   1.000   1.000
+## Proportion Var  0.067   0.067   0.067   0.067   0.067   0.067   0.067
+## Cumulative Var  0.600   0.667   0.733   0.800   0.867   0.933   1.000</code></pre>
+<p>The <code>summary()</code> shows how the variance in the original data is distributed among the new components, while the <code>loadings()</code> show how the original variables contribute to the new components. One of the main ways to interpret the components is to plot the scores for the objects and then use any patterns that are apparent as a way to identify what information (in the informal sense) the new components contain. The following block of code generates various graphs based on the scores for the objects.</p>
+<pre class="r"><code>pca1_plot2_1 &lt;- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 2],
+  cex = 1.5,
+  xlab = &quot;first principal component 54% variance&quot;,
+  ylab = &quot;second principal component 32% variance&quot;
+)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>pca1_plot3_2 &lt;- plot(survey_pca1$scores[, 2], survey_pca1$scores[, 3],
+  cex = 1.5,
+  xlab = &quot;second principal component 32% variance&quot;,
+  ylab = &quot;third principal component 9% variance&quot;
+)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1 &lt;- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 3],
+  cex = 1.5,
+  xlab = &quot;first principal component 54% variance&quot;,
+  ylab = &quot;third principal component 9% variance&quot;
+)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 2],
+  cex = 1.5, pch = 19,
+  xlab = &quot;first principal component 54% variance&quot;,
+  ylab = &quot;second principal component 32% variance&quot;,
+  xlim = c(-25, 10), ylim = c(-15, 15)
+)
+points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 2], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 2], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 2], survey_pca1$scores[1:17, 3],
+  cex = 1.5, pch = 19,
+  xlab = &quot;second principal component 32% variance&quot;,
+  ylab = &quot;second principal component 9% variance&quot;,
+  xlim = c(-25, 10), ylim = c(-15, 15)
+)
+points(survey_pca1$scores[18:31, 2], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_pca1$scores[32:41, 2], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-5.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 3],
+  cex = 1.5, pch = 19,
+  xlab = &quot;first principal component 54% variance&quot;,
+  ylab = &quot;third principal component 9% variance&quot;,
+  xlim = c(-25, 10), ylim = c(-15, 15)
+)
+points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-6.png" width="672" /></p>
+<p>Since we can see from the loadings that the first 3 components a really only looking at diferences based on the soil-borne diseases, and since the 4th component is &gt;0 let’s look at what we get by plotting 4 against 3. Note that we reduce the scale of the axes because these components have less variance so need a smaller absolute scale.</p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 3], survey_pca1$scores[1:17, 4],
+  cex = 1.5, pch = 19,
+  xlab = &quot;third principal component 9% variance&quot;,
+  ylab = &quot;fourth principal component 3% variance&quot;,
+  xlim = c(-5, 10), ylim = c(-5, 10)
+)
+points(survey_pca1$scores[18:31, 3], survey_pca1$scores[18:31, 4], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_pca1$scores[32:41, 3], survey_pca1$scores[32:41, 4], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The plot shows that the fourth component is an east-west split (probably related to rainfall and cropping density in the rotation, the west being associated with wet weather diseases such as Septoria and ear blights and soil-borne diseases (eyespot and sharp eyespot being associated with the east where second wheat crops are not unusual and wheat is more frequent generally in the rotation.</p>
+<p>With the results of the initial PCA in hand we can see it might be worth looking at an analysis of the correlation matrix of the data rather than the data matrix directly. This is an approach that can help in seeing the fine structure in a data set that might otherwise be obscured by differences in absolute magnitude among the variables. In this case the root diseases were scored on a pseudo-percentage scale from 0 to 100 while the foliar and head diseases were scored on a 0-9 categorical scale. There is an option in <code>princomp()</code> to switch to the correlation matrix, but we first have to dump the rust variables from the data because they are all 0 and the correlation method does not work with variables that have 0 variance.</p>
+<p>The 3 rust variables are in columns 7,8 and 9 of the data frame. The following lines of code make a new data frame by dropping those columns from the original one and repeat the PCA on the correlation matrix. This time we can see that the variance is much more evenly spread over the components and the loadings show that the original variables contribute more equally to the components.</p>
+<pre class="r"><code>PCA1_cordata &lt;- PCA1_data[c(-7, -8, -9)]
+head(PCA1_cordata)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>survey_corpca1 &lt;- princomp(PCA1_cordata[3:14], cor = TRUE)
+summary_corpca1 &lt;- summary(survey_corpca1)
+summary_corpca1</code></pre>
+<pre><code>## Importance of components:
+##                           Comp.1    Comp.2    Comp.3    Comp.4     Comp.5
+## Standard deviation     1.7743038 1.4399475 1.2780887 1.1454076 1.05087820
+## Proportion of Variance 0.2623462 0.1727874 0.1361259 0.1093299 0.09202875
+## Cumulative Proportion  0.2623462 0.4351336 0.5712595 0.6805893 0.77261809
+##                            Comp.6     Comp.7     Comp.8     Comp.9
+## Standard deviation     0.98340581 0.80200920 0.63328449 0.56742763
+## Proportion of Variance 0.08059058 0.05360156 0.03342077 0.02683118
+## Cumulative Proportion  0.85320867 0.90681023 0.94023100 0.96706218
+##                           Comp.10    Comp.11     Comp.12
+## Standard deviation     0.43531982 0.38976123 0.232027303
+## Proportion of Variance 0.01579195 0.01265948 0.004486389
+## Cumulative Proportion  0.98285413 0.99551361 1.000000000</code></pre>
+<pre class="r"><code>corpca1_scree &lt;- plot(survey_corpca1)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>loadings_corpca1 &lt;- survey_corpca1$loadings
+loadings_corpca1</code></pre>
+<pre><code>## 
+## Loadings:
+##      Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9
+## ST_L  0.373  0.316  0.100  0.238  0.165  0.192  0.243  0.545       
+## St_G  0.159  0.533  0.214         0.167 -0.153  0.166 -0.410 -0.541
+## Sn_L        -0.402         0.525  0.311 -0.312 -0.245  0.138       
+## Sn_G  0.119 -0.260  0.181  0.564 -0.480         0.161 -0.141 -0.317
+## Pm_L -0.378 -0.116  0.513                0.124         0.265 -0.145
+## Pm_G -0.429         0.437 -0.128         0.133  0.137  0.198 -0.120
+## Fu_L -0.292  0.316  0.220  0.400         0.187 -0.199 -0.439  0.524
+## Bo_L  0.429         0.314        -0.272  0.155  0.136  0.112  0.427
+## SM_E  0.343         0.253         0.599        -0.278              
+## ES    0.291 -0.191  0.259 -0.273 -0.238  0.400 -0.532 -0.147 -0.224
+## SES         -0.433                0.330  0.471  0.567 -0.349       
+## TA   -0.139  0.191 -0.413  0.303         0.607 -0.262  0.172 -0.247
+##      Comp.10 Comp.11 Comp.12
+## ST_L  0.288   0.410   0.151 
+## St_G -0.314                 
+## Sn_L -0.403   0.298  -0.180 
+## Sn_G  0.367  -0.238         
+## Pm_L -0.212  -0.198   0.620 
+## Pm_G  0.138          -0.700 
+## Fu_L  0.135   0.193         
+## Bo_L -0.507  -0.316  -0.206 
+## SM_E  0.367  -0.476         
+## ES            0.406         
+## SES           0.143         
+## TA   -0.196  -0.302  -0.123 
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8
+## SS loadings     1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000
+## Proportion Var  0.083  0.083  0.083  0.083  0.083  0.083  0.083  0.083
+## Cumulative Var  0.083  0.167  0.250  0.333  0.417  0.500  0.583  0.667
+##                Comp.9 Comp.10 Comp.11 Comp.12
+## SS loadings     1.000   1.000   1.000   1.000
+## Proportion Var  0.083   0.083   0.083   0.083
+## Cumulative Var  0.750   0.833   0.917   1.000</code></pre>
+<pre class="r"><code>corpca1_plot2_1 &lt;- plot(survey_corpca1$scores[, 1], survey_corpca1$scores[, 2],
+  cex = 1.5,
+  xlab = &quot;first principal component 26% variance&quot;,
+  ylab = &quot;second principal component 17% variance&quot;
+)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>corpca1_plot3_2 &lt;- plot(survey_corpca1$scores[, 2], survey_corpca1$scores[, 3],
+  cex = 1.5,
+  xlab = &quot;second principal component 17% variance&quot;,
+  ylab = &quot;third principal component 14% variance&quot;
+)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 1], survey_corpca1$scores[1:17, 2],
+  cex = 1.5, pch = 19,
+  xlab = &quot;first principal component 26% variance&quot;,
+  ylab = &quot;second principal component 17% variance&quot;,
+  xlim = c(-4, 6), ylim = c(-3, 4)
+)
+points(survey_corpca1$scores[18:31, 1], survey_corpca1$scores[18:31, 2], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_corpca1$scores[32:41, 1], survey_corpca1$scores[32:41, 2], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 3],
+  cex = 1.5, pch = 19,
+  xlab = &quot;second principal component 17% variance&quot;,
+  ylab = &quot;third principal component 14% variance&quot;,
+  xlim = c(-3, 4), ylim = c(-4, 4)
+)
+points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<p>By switching the components in the plot we can make the PCA output match the geographic orientation of the regions</p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 1],
+  cex = 1.5, pch = 19,
+  xlab = &quot;second principal component 17% variance&quot;,
+  ylab = &quot;first principal component 26% variance&quot;,
+  xlim = c(-3, 4), ylim = c(-4, 6)
+)
+points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 1], cex = 1.5, pch = 15, col = &quot;red&quot;)
+points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 1], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="biplots" class="section level2">
+<h2>Biplots</h2>
+<p>As a final piece of analysis for this section we’ll introduce biplots. This will also serve as a link to the next section where we’ll look at biplots as a data inspection tool that can be helpful in interpreting two-factor ANOVA output. Both the scores for the objects and the loadings for the variables are related to the principal components. In 1971 Ruben Gabriel worked out an elegant way to how both the scores and the loadings on the same graph called a biplot. R includes a plot method that accepts a PCA structure as its input and produces a biplot automatically. One simple line of code is all that’s needed to make a biplot once you have a PCA object in R.</p>
+<pre class="r"><code>corpca1_bplot &lt;- biplot(survey_corpca1, col = c(&quot;black&quot;, &quot;blue&quot;))</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Vectors which point in similar directions are positively correlated. Points which lie in a zone of the graph in the direction of a vector tend to have high values of the variable associated with the vector.</p>
+</div>
+<div id="biplots-two-way-table" class="section level2">
+<h2>Biplots two-way table</h2>
+<p>We often associate multivariate analyses with large data sets and think of them as techniques either to reduce the dimensionality of the data, or to show how objects of interest are related to each other overall given a large number of variables, or both. However, techniques such as PCA can be put to use in other contexts. One potentially useful application is to use the fact that a biplot is a representation of the variance-covariance structure in a set of data to use it to summarize the output from two-way ANOVAs.</p>
+<p>There are a number of publications in the plant pathology literature where people have made use of this idea. The example here is from a paper on host and nonhost interactions between Alternaria anamorphs and a range of plant species by McRoberts &amp; Lennard (1996) [Plant Pathology, 45 (4), 742-752]</p>
+<p>We are going to use the biplot as a way of inspecting how the variance in a table of means from a two-factor ANOVA is distributed among the levels of the two factors. This gives us a nice visual tool for looking directly at interactions and seeing the difference between situations where the interaction is signficant and those where it’s not. The particular case we’ll look at comes from work on trying to establish where in the infection process host-specificity is decided for different Alternaria anamorphs during attempted infection on known hosts and non-hosts.</p>
+<p>The first set of data is the percentage of germ-tubes of different Alternaria anamorphs which did NOT attempt penetration on different plant species.</p>
+<p>The data are in file Alternaria_nopen.csv</p>
+<pre class="r"><code>Alt_nopen_data &lt;- read.csv(&quot;data/Alternaria_nopen.csv&quot;, head = FALSE)
+Altspp &lt;- c(&quot;alternata&quot;, &quot;brassicae&quot;, &quot;brassicicola&quot;, &quot;infectoria&quot;, &quot;raphani&quot;, &quot;solani&quot;)
+host &lt;- c(&quot;Bnapus&quot;, &quot;Papaver&quot;, &quot;Lycopersicon&quot;, &quot;Triticum&quot;)
+rownames(Alt_nopen_data) &lt;- Altspp
+colnames(Alt_nopen_data) &lt;- host
+Alt_pen_data &lt;- 100 - Alt_nopen_data
+Alt_pen_PCA &lt;- princomp(Alt_pen_data, cor = FALSE)
+summary(Alt_pen_PCA)</code></pre>
+<pre><code>## Importance of components:
+##                            Comp.1     Comp.2      Comp.3     Comp.4
+## Standard deviation     41.7719685 16.4955105 12.53752475 4.91088660
+## Proportion of Variance  0.7937465  0.1237780  0.07150486 0.01097063
+## Cumulative Proportion   0.7937465  0.9175245  0.98902937 1.00000000</code></pre>
+<pre class="r"><code>Alt_pen_bplt &lt;- biplot(Alt_pen_PCA, pc.biplot = TRUE)</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Now repeat the analysis with the data from Table 6 in M&amp;L 1996. These data show the percentage of attempted penetration events that were successful.</p>
+<p>The data are in Alternaria_pen_csv</p>
+<pre class="r"><code>Alt_infect_data &lt;- read.csv(&quot;data/Alternaria_pen.csv&quot;, head = FALSE)
+rownames(Alt_infect_data) &lt;- Altspp
+colnames(Alt_infect_data) &lt;- host
+Alt_infect_PCA &lt;- princomp(Alt_infect_data, cor = FALSE)
+summary(Alt_infect_PCA)</code></pre>
+<pre><code>## Importance of components:
+##                            Comp.1     Comp.2     Comp.3 Comp.4
+## Standard deviation     35.1072940 22.8488871 7.66055138      0
+## Proportion of Variance  0.6797205  0.2879160 0.03236352      0
+## Cumulative Proportion   0.6797205  0.9676365 1.00000000      1</code></pre>
+<pre class="r"><code>Alt_infect_bplt &lt;- biplot(Alt_infect_PCA, pc.biplot = TRUE)</code></pre>
+<pre><code>## Warning in arrows(0, 0, y[, 1L] * 0.8, y[, 2L] * 0.8, col = col[2L], length
+## = arrow.len): zero-length arrow is of indeterminate angle and so skipped</code></pre>
+<p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>Alt_pen_PCA$loadings</code></pre>
+<pre><code>## 
+## Loadings:
+##              Comp.1 Comp.2 Comp.3 Comp.4
+## Bnapus        0.479  0.640  0.559  0.219
+## Papaver       0.489 -0.266  0.202 -0.806
+## Lycopersicon  0.446 -0.685  0.190  0.544
+## Triticum      0.577  0.224 -0.781       
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4
+## SS loadings      1.00   1.00   1.00   1.00
+## Proportion Var   0.25   0.25   0.25   0.25
+## Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
+<pre class="r"><code>Alt_infect_PCA$loadings</code></pre>
+<pre><code>## 
+## Loadings:
+##              Comp.1 Comp.2 Comp.3 Comp.4
+## Bnapus        0.985         0.154       
+## Papaver      -0.134  0.923  0.362       
+## Lycopersicon  0.112  0.377 -0.920       
+## Triticum                           1.000
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4
+## SS loadings      1.00   1.00   1.00   1.00
+## Proportion Var   0.25   0.25   0.25   0.25
+## Cumulative Var   0.25   0.50   0.75   1.00</code></pre>
+</div>
+
+
+
+Copyright 2018 Neil McRoberts
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

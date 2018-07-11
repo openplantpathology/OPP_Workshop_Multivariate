@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Discriminant Analysis and Multivariate ANOVA</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Multivariate Analysis in R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="1-MV_PCA.html">PCA</a>
+</li>
+<li>
+  <a href="2-MV_PCO.html">PCO</a>
+</li>
+<li>
+  <a href="3-Cluster.html">Cluster</a>
+</li>
+<li>
+  <a href="4-DA_Manova.html">LDA and Manova</a>
+</li>
+<li>
+  <a href="Intro_R.html">Intro to R</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/openplantpathology/OPPWorkshop-multivariate-Neil">
+    <span class="fa fa-github-square"></span>
+     
+    source
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Discriminant Analysis and Multivariate ANOVA</h1>
+
+</div>
+
+
+<div id="differences-among-groups" class="section level2">
+<h2>Differences among groups</h2>
+<p>In this, final, section of the Workshop we turn to multivariate hypothesis testing. Following on from the theme developed in the last section we will use a combination of ordination and another method to achieve the analysis. In this case we will combine Linear Discriminant Analysis (LDA) with Multivariate Analysis of Variance (MANOVA). LDA is also known by a number of other names, the most commonly used being Discriminant Analysis, Canonical Variates Analysis, and Canonical Discriminant Analysis.</p>
+<p>The major conceptual difference between this section of the workshop and the previous ones concerns how we use existing information that we might have about grouping among the objects. In the previous analyses while we had information about groupings we did impose it on the analysis in any way. So, for example, any tendency for fields from the same region to cluster together was an emergent property of the shared features of those fields, but the algorithms running the PCA, PCO or clustering were “<em>blind</em>” to the existence of the groups.</p>
+<p>In LDA we take a different approach and <strong>impose</strong> grouping on the objects with a view to asking one or or more of three key questions:</p>
+<ol style="list-style-type: decimal">
+<li>Is it possible to differentiate among groups on the basis of differences in a set of shared variables</li>
+<li>Which variables are most important in differentiating among groups?</li>
+<li>What are the chances that the observed differences are not due to random variation?</li>
+</ol>
+<p>It is worth noting that while LDA has a theoretical parametric basis (one can think of it as a tool for visualizing the space within which the hypothesis tests in a MANOVA occur) it does not have to be used for hypothesis testing; it can be used for exploratory analyses, just like the other techniques we have already discussed. However, you can get into some philosophically troubled waters if you use LDA in an exploratory, non-test based way and then use MANOVA to test for differences among groups having already seen that the differences exist. Multivariate fishing expeditions suffer from all the same dangers (and probably more) as their univariate cousins. So, to play it safe here are suggested sequences of analysis that avoid the dangers of fishing for significant results:</p>
+<ol style="list-style-type: decimal">
+<li>Use LDA for exploratory analyses and collect new data for hypothesis testing perhaps using the results of your LDA to form the priors for a Bayesian analysis,</li>
+<li>State your null and experimental hypotheses in advance of the analysis and then use LDA and MANOVA to test them</li>
+<li>Use LDA in the situation where you have stated your hypotheses in advance and tested with MANOVA, to visualize the results and add explanatory detail.</li>
+</ol>
+</div>
+<div id="lda-and-manova-for-hypothesis-tests" class="section level2">
+<h2>LDA and MANOVA for hypothesis tests</h2>
+<p>With the MASS package installed, the first thing to do is to make the library of procedures in the package available for use:</p>
+<pre class="r"><code>library(MASS)</code></pre>
+<p>Ignoring our own advice, we will demonstrate the combination of LDA and MANOVA on the field survey data by reanalyzing it to determine if there is a significant difference among the regions with respect to diseases. This is the multivariate equivalent of the simplest type of ANOVA model - a single categorical factor. In this case our null hypothesis is that there is no difference among regions on the intensity of wheat diseases, or equivalently that disease intensities do not differ among regions more than would be expected by chance alone.</p>
+<p>Since we have stated our hypothesis in advance we can do the analyses in any order we want so We will run the LDA first. You will need the disease data set. If you still have the data set that was used for the PCA on the correlation matrix you can use it to make a data frame to hold the data variables. If you don’t have the PCA data set still available you will need to repeat the necessary steps to recreate it.</p>
+<pre class="r"><code>PCA1_data &lt;- read.csv(&quot;data/PCA1_Survey.csv&quot;, head = TRUE)
+PCA1_cordata &lt;- PCA1_data[c(-7, -8, -9)]
+lda_expl &lt;- PCA1_cordata[, 3:14]</code></pre>
+<p>The lda procedure is a little idiosyncratic in the way that it expects the information that it acts on. You can either enter a model formula, or give it a set of explanatory variables in a data frame and a factor to test using the “grouping” option. Below we use the second approach.</p>
+<pre class="r"><code>region_lda &lt;- lda(lda_expl, grouping = PCA1_cordata$region)
+region_lda</code></pre>
+<pre><code>## Call:
+## lda(lda_expl, grouping = PCA1_cordata$region)
+## 
+## Prior probabilities of groups:
+##         E         N         W 
+## 0.3414634 0.4146341 0.2439024 
+## 
+## Group means:
+##       ST_L      St_G      Sn_L      Sn_G      Pm_L      Pm_G      Fu_L
+## E 2.071429 0.0000000 1.1428571 0.2857143 0.3571429 0.1428571 0.7142857
+## N 1.805882 0.8352941 0.2529412 0.0000000 0.6000000 0.7176471 1.2117647
+## W 5.000000 2.2000000 0.1000000 0.1000000 0.0000000 0.0000000 0.9000000
+##        Bo_L      SM_E       ES      SES       TA
+## E 0.6428571 0.9285714 11.84643 8.800714 0.000000
+## N 0.3176471 0.0000000  0.00000 5.049412 1.864706
+## W 0.9000000 1.5000000  7.86600 6.931000 2.640000
+## 
+## Coefficients of linear discriminants:
+##              LD1         LD2
+## ST_L  0.24561018  0.04340412
+## St_G  1.77682294 -0.34217993
+## Sn_L -1.12748453  0.30222420
+## Sn_G  1.41477636  0.59130386
+## Pm_L  1.17698492  0.35323668
+## Pm_G -0.68126225 -0.69007369
+## Fu_L -1.42770688 -0.39274438
+## Bo_L  0.66179996  0.44118265
+## SM_E  1.16312030  0.56955987
+## ES   -0.07924553  0.07603390
+## SES   0.05175887 -0.01021430
+## TA    0.33463741  0.02697694
+## 
+## Proportion of trace:
+##    LD1    LD2 
+## 0.8355 0.1645</code></pre>
+<p>The format of the output from the lda should be somewhat familiar now. The first section is a summary of the proportion of objects in each of the categories of the grouping factor. These are labeled prior probabilities because lda has a predictive capacity and if one has “unknown” objects it can be used to predict their identity. In that case, the final (or posterior) probability of each class will depend on the proportions in the “training” set and in the “test” set of observations. We will not explore that aspect of lda in this workshop.</p>
+<p>The second section of output shows the mean values for each of the variables for each of the levels of the grouping factor. Inspection of this information will start to reveal the nature of any differences there might be among class of the grouping factor. In this case we can see that while the East and West have notably high values for some of the diseases the North appears to have a lower range of values.</p>
+<p>The third section of output shows us the coefficients (or loadings) applied to each of the data variables in the construction of the discriminant axes. Conceptually LDA has a lot in common with PCA, but in the case of LDA the new “components” or discriminant functions are formed with the constraint that they maximize the ratio of between group to within group variance. This contrasts PCA, where the new variables are formed simply to maximize the amount of variance captured overall. Unlike the situation with PCA where the maximum number of non-zero components is one less than the number of original data variables, with LDA the number of possible axes is one less than the number of groups. In the present case this means that we can form at most two discriminant axes because we have three levels (N,E and W) in our grouping factor. The final section of output shows the proportion of the variance ratio accounted for by each of the axes. Just as in PCA, the axes are formed so that they capture the variance structure in decreasing amounts. In the case of the disease data, the first LDA accounts for 83.5% of the variance ratio, while the second axis accounts for the remaining 16.5%.</p>
+<p>The MASS package includes a special version of <code>plot()</code> that accepts an LDA obect and produces a Scatter plot of the data objects in the LDA solution space, labeled with the identifier of the grouping factor. In its basic form it gives a simple diagnostic plot of the extent to which discrimination among the levels of the factor has been achieved.</p>
+<pre class="r"><code>region_ldaplt &lt;- plot(region_lda)</code></pre>
+<p><img src="4-DA_Manova_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Just as for PCA, we can use a biplot to help interpret the solution of a LDA. Unfortunately MASS does not include a biplot procedure for LDA, but the following function written by a contributor to Stackoverflow produces reasonable results.</p>
+<pre class="r"><code>lda.arrows &lt;- function(x, myscale = 1, tex = 0.75, choices = c(1, 2), ...) {
+  ## adds `biplot` arrows to an lda using the discriminant function values
+  heads &lt;- coef(x)
+  arrows(
+    x0 = 0, y0 = 0,
+    x1 = myscale * heads[, choices[1]],
+    y1 = myscale * heads[, choices[2]], ...
+  )
+  text(myscale * heads[, choices],
+    labels = row.names(heads),
+    cex = tex, pos = 1, offset = 0.5
+  )
+}</code></pre>
+<p>Once the function has been loaded you can use it just like any other procedure in R. The following code replots the LDA solution with larger labels, makes sure the physical scale of the plot reflects the mathematical scale, adds color to the labels and adds the vectors representing the variables. We added an extra twist to the plot by using the colors assigned by the clusters formed in the NHCA, so we can see where members of those clusters occur when the data are re-analyzed to maximize regional differences.</p>
+<pre class="r"><code>NHCA_data1 &lt;- data.frame(PCA1_cordata[, 1:2], scale(PCA1_cordata[, 3:14]))
+NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)
+plot(region_lda, asp = 1, col = NHCA_fields2$cluster, cex = 1.25)
+lda.arrows(region_lda, col = 1, lwd = 1, myscale = 2.5)</code></pre>
+<p><img src="4-DA_Manova_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Overall, the LDA suggests that there are differences among all three regions. The major difference is between the West and the other two, with fields in the West being associated with diseases typical of wet late season conditions (glume and ear diseases are more intense). The difference between the North and East regions is smaller in absolute terms but nonetheless appears to be a real difference.</p>
+<p>To obtain overall significance tests on whether there are differences among the regions we use a MANOVA simultaneously to test all of the disease variables. To fit the MANOVA model we have to supply a list of variables using a <code>cbind()</code> statement and then identify the treatment (or grouping) factor. R uses the tilde (~) to indicate a statistical model. It makes the model more compact to write if we use the <code>data= option</code> to identify a data frame the contains the variables. By default the manova() procedure doesn’t print anything. Since we have already examined the way that the variables and grouping are connected in the LDA, all we really need are the overall tests of significance. There are several such tests for MANOVA which differ in their tendency to type 1 and type 2 errors. Wilks test tends to be conservative while the Hotelling-Lawley test tends to be lax. It’s a good idea to look at all of the options and come to a consensus. In this case, there’s no conflict. All of the tests point to a clear case for rejecting the null hypothesis of no difference among the different regions.</p>
+<pre class="r"><code>lda_expl &lt;- data.frame(lda_expl)
+region_MAN &lt;- manova(
+  cbind(ST_L, St_G, Sn_L, Sn_G, Pm_L, Pm_G, Fu_L, Bo_L, SM_E, ES, SES, TA) ~ PCA1_cordata$region,
+  data = lda_expl
+)
+summary(region_MAN, test = &quot;Pillai&quot;)</code></pre>
+<pre><code>##                     Df Pillai approx F num Df den Df    Pr(&gt;F)    
+## PCA1_cordata$region  2 1.4986   6.9741     24     56 1.201e-09 ***
+## Residuals           38                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>summary(region_MAN, test = &quot;Wilks&quot;)</code></pre>
+<pre><code>##                     Df    Wilks approx F num Df den Df    Pr(&gt;F)    
+## PCA1_cordata$region  2 0.043523   8.5351     24     54 4.286e-11 ***
+## Residuals           38                                              
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>summary(region_MAN, test = &quot;Hotelling-Lawley&quot;)</code></pre>
+<pre><code>##                     Df Hotelling-Lawley approx F num Df den Df    Pr(&gt;F)
+## PCA1_cordata$region  2           9.5202   10.313     24     52 1.942e-12
+## Residuals           38                                                  
+##                        
+## PCA1_cordata$region ***
+## Residuals              
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+
+
+
+Copyright 2018 Neil McRoberts
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

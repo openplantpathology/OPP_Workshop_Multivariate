@@ -1,0 +1,44 @@
+name: 'teste'
+output_dir: docs
+output:
+  html_document:
+    css: style.css
+    theme: cosmo
+    df_print: paged
+    lib_dir: site_libs
+    self_contained: no
+    highlight: default
+    include:
+      after_body: footer.md
+    toc: true
+    toc_float:
+     collapsed: false
+     smooth_scroll: false
+bibliography: crossref.bib
+csl: chicago-author-date.csl
+navbar:
+  title: Multivariate Analysis in R
+  left:
+  - text: Introduction
+    #icon: fa fa-home
+    href: index.html
+  - text: PCA
+    #icon: fa fa-file-code-o
+    href: 1-MV_PCA.html
+  - text: PCO
+    #icon: fa fa-file-code-o
+    href: 2-MV_PCO.html
+  - text: Cluster
+    #icon: fa fa-file-code-o
+    href: 3-Cluster.html
+  - text: LDA and Manova
+    #icon: fa fa-file-code-o
+    href: 4-DA_Manova.html
+  - text: Intro to R
+    #icon: fa fa-file-code-o
+    href: Intro_R.html
+
+  right:
+  - text: source
+    icon: fa-github-square
+    href: https://github.com/openplantpathology/OPPWorkshop-multivariate-Neil
