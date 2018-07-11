@@ -1,0 +1,185 @@
+#APS 2015, Pasadena California
+
+##Workshop: Introduction to Multivariate Statistics in R
+
+###Workshop syllabus
+The workshop will cover introductory aspects of several widely-used multivariate statistical methods.  Our aim is to give inexperienced users of these techniques a first look at how they can be implemented in R.  We will focus mostly on analyses and outputs that R generates automatically from existing procedures and avoid too much programming to manipulate data objects.  Over the course of the workshop we hope to cover the following:
+
+ * Ordination methods for dimensionality reduction and data display
+	 * Principal components analysis (PCA)
+	 * Principal coordinates analysis (PCO)
+ * Clustering methods for examining relationships among data items
+	 * Hierarchical clustering
+	 * Non-hierarchical clustering
+ * Linking ordination and clustering
+ * Examining differences among groups
+	 * Discriminant analysis and MANOVA
+	 * Procrustes analysis for comparing ordinations
+
+The materials for the workshop come in 4 different types of file:
+1. There are general information files like this one, that provide background material, comments, code snippets and other miscellaneous material. These are R *Markdown* files. They can be viewed in a Markdown-aware editor (such as the one in R Studio, or cloud-based tools such as StackEdit or a range of others). R Studio can generate  HTML pages, PDF files, or Word documents from Markdown files.  Markdown is a simple text formatting system that was originally developed as a tool to allow people who didn't want to learn the intricacies of HTML to generate basic text-oriented web-pages. It has quickly become a highly functional generic document preparation system.  Some (but not all - **Beware**) versions of Markdown and Markdown editors can implement $LaT_{E}X$ math syntax to allow publication-quality rendering of equations. 
+2. Powerpoint files. These contain the slides we will use during the workshop to introduce the topics and highlight important details of the process of analysis and interpretation of outputs.   The Markdown files and Powerpoints together give a complete version of the workshop content.
+3. R program files. Although a lot of the R code will appear as snippets in the Markdown files, we give a set of basic R program files that run the example analyses from the workshop sessions.  These files contain comments to guide the user as to the purpose of different sections of the code, but they are not intended to be a stand-alone way to learn the methods we are covering.
+4. Data files (usually .csv files).  All of the data files needed to reproduce the examples are provided.  We use the *file.choose()* function in most examples so you will need to pay attention to the comment in the code to tell you which data file to load since the code does not (usually) contain an explicit reference to the path and file name.
+
+We hope you will be able to work through the material in the workshop at your own pace, so although we hope to cover all the topics listed above on the day, don't worry if we move on to a new topic before you feel you have completely got to grips with the one you are already working on.
+
+###Principal Components Analysis
+####1. Disease survey data
+The data are from a survey of pests and diseases in winter wheat crops in Scotland during the 1990's.  In this case there are data for 41 fields spread over 3 regions and for 15 disease variables in each field.  The data file for this section of the workshop is *APS2015_PCA1_Survey.csv*.
+
+The following code lets you load the data using file.choose(), generates the PCA and produces some output to examine the results of the PCA.
+
+```{r}
+PCA1_data <-read.csv(file.choose(), head=TRUE)
+head(PCA1_data)
+survey_pca1 <-princomp(PCA1_data[3:17])
+summary_pca1 <-summary(survey_pca1)
+summary_pca1
+loadings_pca1 <-survey_pca1$loadings
+loadings_pca1
+```
+
+The *summary*() shows how the variance in the original data is distributed among the new components, while the *loadings*() show how the original variables contribute to the new components.  One of the main ways to interpret the components is to plot the scores for the objects and then use any patterns that are apparent as a way to identify what information (in the informal sense) the new components contain.  The following block of code generates various graphs based on the scores for the objects.
+
+```{r}
+pca1_plot2_1 <-plot(survey_pca1$scores[,1],survey_pca1$scores[,2], cex=1.5,
+                    xlab="first principal component 54% variance",
+                    ylab="second principal component 32% variance")
+
+pca1_plot3_2 <-plot(survey_pca1$scores[,2],survey_pca1$scores[,3], cex=1.5,
+                    xlab="second principal component 32% variance",
+                    ylab="third principal component 9% variance")
+
+pca1_plot2_1 <-plot(survey_pca1$scores[,1],survey_pca1$scores[,3], cex=1.5,
+                    xlab="first principal component 54% variance",
+                    ylab="third principal component 9% variance")
+ 
+pca1_plot2_1N <-plot(survey_pca1$scores[1:17,1],survey_pca1$scores[1:17,2], cex=1.5, pch=19,
+                     xlab="first principal component 54% variance",
+                     ylab="second principal component 32% variance",
+                     xlim=c(-25,10), ylim=c(-15,15))
+  points(survey_pca1$scores[18:31,1],survey_pca1$scores[18:31,2], cex=1.5, pch=15, col='red')
+  points(survey_pca1$scores[32:41,1], survey_pca1$scores[32:41,2], cex=1.5, pch=17, col='blue')
+
+pca1_plot2_1N <-plot(survey_pca1$scores[1:17,2],survey_pca1$scores[1:17,3], cex=1.5, pch=19,
+                     xlab="second principal component 32% variance",
+                     ylab="second principal component 9% variance",
+                     xlim=c(-25,10), ylim=c(-15,15))
+points(survey_pca1$scores[18:31,2],survey_pca1$scores[18:31,3], cex=1.5, pch=15, col='red')
+points(survey_pca1$scores[32:41,2], survey_pca1$scores[32:41,3], cex=1.5, pch=17, col='blue')
+
+pca1_plot2_1N <-plot(survey_pca1$scores[1:17,1],survey_pca1$scores[1:17,3], cex=1.5, pch=19,
+                     xlab="first principal component 54% variance",
+                     ylab="third principal component 9% variance",
+                     xlim=c(-25,10), ylim=c(-15,15))
+points(survey_pca1$scores[18:31,1],survey_pca1$scores[18:31,3], cex=1.5, pch=15, col='red')
+points(survey_pca1$scores[32:41,1], survey_pca1$scores[32:41,3], cex=1.5, pch=17, col='blue')
+```
+Since we can see from the loadings that the first 3 components a really only looking at diferences based on the soil-borne diseases, and since the 4th component is >0 let's look at what we get by plotting 4 against 3.  Note that we reduce the scale of the  axes because these components have less variance so need a smaller absolute scale.
+
+```{r}
+pca1_plot2_1N <-plot(survey_pca1$scores[1:17,3],survey_pca1$scores[1:17,4], cex=1.5, pch=19,
+                     xlab="third principal component 9% variance",
+                     ylab="fourth principal component 3% variance",
+                     xlim=c(-5,10), ylim=c(-5,10))
+points(survey_pca1$scores[18:31,3],survey_pca1$scores[18:31,4], cex=1.5, pch=15, col='red')
+points(survey_pca1$scores[32:41,3], survey_pca1$scores[32:41,4], cex=1.5, pch=17, col='blue')
+```
+The plot shows that the fourth component is an east-west split (probably related to rainfall and cropping density in the rotation, the west being associated with wet weather diseases such as Septoria and ear blights and soil-borne diseases (eyespot and sharp eyespot being associated with the east where second wheat crops are not unusual and wheat is more frequent generally in the rotation.
+
+With the results of the initial PCA in hand we can see it might be worth looking at an analysis of the correlation matrix of the data rather than the data matrix directly.  This is an approach that can help in seeing the fine structure in a data set that might otherwise be obscured by differences in absolute magnitude among the variables.  In this case the root diseases were scored on a pseudo-percentage scale from 0 to 100 while the foliar and head diseases were scored on a 0-9 categorical scale.  There is an option in *princomp*() to switch to the correlation matrix, but we first have to dump the rust variables from the data because
+they are all 0 and the correlation method does not work with variables that have 0 variance.
+
+The 3 rust variables are in columns 7,8 and 9 of the data frame. The following lines of code make a new data frame by dropping those columns from the original one and repeat the PCA on the correlation matrix. This time we can see that the variance is much more evenly spread over the components and the loadings show that the original variables contribute more equally to the components.
+
+```{r}
+PCA1_cordata <-PCA1_data[c(-7,-8,-9)]
+head(PCA1_cordata)
+survey_corpca1 <-princomp(PCA1_cordata[3:14], cor=TRUE)
+summary_corpca1 <-summary(survey_corpca1)
+summary_corpca1
+corpca1_scree <-plot(survey_corpca1)
+loadings_corpca1 <-survey_corpca1$loadings
+loadings_corpca1
+corpca1_plot2_1 <-plot(survey_corpca1$scores[,1],survey_corpca1$scores[,2], cex=1.5,
+                    xlab="first principal component 26% variance",
+                    ylab="second principal component 17% variance")
+
+corpca1_plot3_2 <-plot(survey_corpca1$scores[,2],survey_corpca1$scores[,3], cex=1.5,
+                    xlab="second principal component 17% variance",
+                    ylab="third principal component 14% variance")
+
+
+pca1_plot2_1N <-plot(survey_corpca1$scores[1:17,1],survey_corpca1$scores[1:17,2], cex=1.5, pch=19,
+                     xlab="first principal component 26% variance",
+                     ylab="second principal component 17% variance",
+                     xlim=c(-4,6), ylim=c(-3,4))
+    points(survey_corpca1$scores[18:31,1],survey_corpca1$scores[18:31,2], cex=1.5, pch=15, col='red')
+    points(survey_corpca1$scores[32:41,1], survey_corpca1$scores[32:41,2], cex=1.5, pch=17, col='blue')
+
+pca1_plot2_1N <-plot(survey_corpca1$scores[1:17,2],survey_corpca1$scores[1:17,3], cex=1.5, pch=19,
+                     xlab="second principal component 17% variance",
+                     ylab="third principal component 14% variance",
+                     xlim=c(-3,4), ylim=c(-4,4))
+    points(survey_corpca1$scores[18:31,2], survey_corpca1$scores[18:31,3], cex=1.5, pch=15, col='red')
+    points(survey_corpca1$scores[32:41,2], survey_corpca1$scores[32:41,3], cex=1.5, pch=17, col='blue')
+```
+
+By switching the components in the plot we can make the PCA output match the geographic orientation of the regions
+
+```{r}
+pca1_plot2_1N <-plot(survey_corpca1$scores[1:17,2],survey_corpca1$scores[1:17,1], cex=1.5, pch=19,
+                     xlab="second principal component 17% variance",
+                     ylab="first principal component 26% variance",
+                     xlim=c(-3,4), ylim=c(-4,6))
+points(survey_corpca1$scores[18:31,2],survey_corpca1$scores[18:31,1], cex=1.5, pch=15, col='red')
+points(survey_corpca1$scores[32:41,2], survey_corpca1$scores[32:41,1], cex=1.5, pch=17, col='blue')
+```
+
+#### A first look at biplots
+As a final piece of analysis for this section we'll introduce biplots.  This will also serve as a link to the next section where we'll look at biplots as a data inspection tool that can be helpful in interpreting two-factor ANOVA output. 
+Both the scores for the objects and the loadings for the variables are related to the principal components.  In 1971 Ruben Gabriel worked out an elegant way to how both the scores and the loadings on the same graph called a biplot.  R includes a plot method that accepts a PCA structure as its input and produces a biplot automatically.  One simple line of code is all that's needed to make a biplot once you have a PCA object in R.
+
+```{r}
+corpca1_bplot <-biplot(survey_corpca1, col=c('black','blue'))
+```
+Vectors which point in similar directions are positively correlated.  Points which lie in a zone of the graph in the direction of a vector tend to have high values of the variable associated with the vector.
+
+####2. Biplots for two-way table inspection
+We often associate multivariate analyses with large data sets and think of them as techniques either to reduce the dimensionality of the data, or to show how objects of interest are related to each other overall given a large number of variables, or both.  However, techniques such as PCA can be put to use in other contexts.   One potentially useful application is to use the fact that a biplot is a representation of the variance-covariance structure in a set of data to use it to summarize the output from two-way ANOVAs.
+
+There are a number of publications in the plant pathology literature where people have made use of this idea.  The example here is from a paper on host and nonhost interactions between Alternaria anamorphs and a range of plant species by McRoberts & Lennard (1996) [Plant Pathology, 45 (4), 742-752]
+
+We are going to use the biplot as a way of inspecting how the variance in a table of means from a two-factor ANOVA is distributed among the levels of the two factors. This gives us a nice visual tool for looking directly at interactions and seeing the difference between situations where the interaction is signficant and those where it's not. The particular case we'll look at comes from work on trying to establish where in the infection process host-specificity is decided for different Alternaria anamorphs during attempted infection on known hosts and non-hosts.
+
+The first set of data is the percentage of germ-tubes of different Alternaria anamorphs which did NOT attempt penetration on different plant species.
+
+The data are in file Alternaria_nopen.csv
+
+```{r}
+Alt_nopen_data <-read.csv(file.choose(), head=FALSE)
+Altspp <-c("alternata","brassicae","brassicicola","infectoria","raphani","solani")
+host <- c("Bnapus","Papaver","Lycopersicon","Triticum")
+rownames(Alt_nopen_data) <-Altspp
+colnames(Alt_nopen_data) <-host
+Alt_pen_data <-100-Alt_nopen_data
+Alt_pen_PCA <-princomp(Alt_pen_data, cor=FALSE)
+summary(Alt_pen_PCA)
+Alt_pen_bplt <-biplot(Alt_pen_PCA, pc.biplot=TRUE)
+```
+
+Now repeat the analysis with the data from Table 6 in M&L 1996. These data show the percentage of attempted penetration events that were successful.
+
+The data are in Alternaria_pen_csv
+
+```{r}
+Alt_infect_data <-read.csv(file.choose(), head=FALSE)
+rownames(Alt_infect_data) <-Altspp
+colnames(Alt_infect_data) <-host
+Alt_infect_PCA <-princomp(Alt_infect_data, cor=FALSE)
+summary(Alt_infect_PCA)
+Alt_infect_bplt <-biplot(Alt_infect_PCA, pc.biplot=TRUE)
+Alt_pen_PCA$loadings
+Alt_infect_PCA$loadings
+```

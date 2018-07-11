@@ -1,0 +1,114 @@
+# USing Linear Discriminant Analysis and MANOVA for multivariate hypothesis tests
+# With the MASS package installed, the first thing to do is to make the library of 
+# procedures in the package available for use:
+
+library(MASS)
+
+# Ignoring our own advice, we will demonstrate the combination of LDA and MANOVA on the
+# field survey data by reanalyzing it to determine if there is a significant difference 
+# among the regions with respect to diseases.  This is the multivariate equivalent of the
+# simplest type of ANOVA model - a single categorical factor.  In this case our null
+# hypothesis is that there is no difference among regions on the intensity of wheat diseases,
+# or equivalently that disease intensities do not differ among regions more than would be 
+# expected by chance alone.
+
+# Since we have stated our hypothesis in advance we can do the analyses in any order we want
+# so We will run the LDA first.  You will need the disease data set.  If you still have the
+# data set that was used for the PCA on the correlation matrix you can use it to make a 
+# data frame to hold the data variables.  If you don't have the PCA data set still available
+# you will need to repeat the necessary steps to recreate it.
+
+lda_expl <-PCA1_cordata[,3:14]
+
+# The lda procedure is a little idiosyncratic in the way that it expects the information that
+# it acts on.  You can either enter a model formula, or give it a set of explanatory variables
+# in a data frame and a factor to test using the "grouping" option.  Below we use the second
+# approach.
+
+region_lda <-lda(lda_expl,grouping=PCA1_cordata$region)
+region_lda
+
+# The format of the output from the lda should be somewhat familiar now.  The first section
+# is a summary of the proportion of objects in each of the categories of the grouping 
+# factor. These are labeled prior probabilities because lda has a predictive capacity and 
+# if one has "unknown" objects it can be used to predict their identity. In that case, 
+# the final (or posterior) probability of each class will depend on the proportions in the
+# "training" set and in the "test" set of observations.  We will not explore that aspect
+# of lda in this workshop.
+
+# The second section of output shows the mean values for each of the variables for each of 
+# the levels of the grouping factor.  Inspection of this information will start to reveal
+# the nature of any differences there might be among class of the grouping factor.  In this
+# case we can see that while the East and West have noticably high values for some of the 
+# diseases the North appears to have a lower range of values.
+
+# The third section of output shows us the coefficients (or loadings) applied to each of the 
+# data variables in the construction of the discriminant axes.  Conceptually LDA has a lot in
+# common with PCA, but in the case of LDA the new "components" or discriminant functions are
+# formed with the constraint that they maximize the ratio of between group to within group variance.
+# This contrasts PCA, where the new variables are formed simply to maximize the amount of variance
+# captured overall.  Unlike the situation with PCA where the maximum number of non-zero components is
+# one less than the number of original data variables, with LDA the number of possible axes is one
+# less than the number of groups.  In the present case this means that we can form at most two
+# discriminant axes because we have three levels (N,E and W) in our grouping factor. The final
+# section of output shows the proportion of the variance ratio accounted for by each of the axes.
+# Just as in PCA, the axes are formed so that they capture the variance structure in decreasing 
+# amounts.  In the case of the disease data, the first LDA accounts for 83.5% of the variance ratio,
+# while the second axis accounts for the remaining 16.5%.
+
+# The MASS package includes a special version of plot() that accepts an LDA obect and produces a 
+# Scatter plot of the data objects in the LDA solution space, labeled with the identifier of the 
+# grouping factor.  In its basic form it gives a simple diagnostic plot of the extent to which
+# discrimination among the levels of the factor has been achieved.
+region_ldaplt <-plot(region_lda)
+
+# Just as for PCA, we can use a biplot to help interpret the solution of a LDA. Unfortunately
+# MASS does not include a biplot procedure for LDA, but the following function written by a 
+# contributer to Stackoverflow produces reasonable results.
+
+lda.arrows <- function(x, myscale = 1, tex = 0.75, choices = c(1,2), ...){
+  ## adds `biplot` arrows to an lda using the discriminant function values
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], ...)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, pos=1, offset=0.5)
+}
+
+# Once the function has been loaded you can use it just like any other procedure in R. The 
+# following code replots the LDA solution with larger labels, makes sure the physical scale
+# of the plot reflects the mathematical scale, adds color to the labels and adds the vectors
+# representing the variables.  We added an extra twist to the plot by using the colors 
+# assigned by the clusters formed in the NHCA, so we can see where members of those clusters
+# occur when the data are re-analyzed to maximize regional differences.
+
+plot(region_lda, asp = 1, col=NHCA_fields2$cluster, cex=1.25)
+lda.arrows(region_lda, col = 1, lwd=1, myscale = 2.5)
+
+# Overall, the LDA suggests that there are differences among all three regions.  The major
+# difference is between the West and the other two, with fields in the West being associated
+# with diseases typical of wet late season conditions (glume and ear diseases are more intense).
+# The difference between the North and East regions is smaller in absolute terms but nonetheless
+# appears to be a real difference.
+
+# To obtain overall significance tests on whether there are differences among the regions we
+# use a MANOVA simultaneously to test all of the disease variables. To fit the MANOVA model
+# we have to supply a list of variables using a cbind() statement and then identify the 
+# treatment (or grouping) factor.  R uses the tilde (~) to indicate a statistical model.  It makes
+# the model more compact to write if we use the data= option to identify a data frame that
+# contains the variables.  By default the manova() procedure doesn't print anything.  Since we have
+# already examined the way that the variables and grouping are connected in the LDA, all we
+# really need are the overall tests of significance.  There are several such tests for MANOVA
+# which differ in their tendency to type 1 and type 2 errors.  Wilks test tends to be conservative
+# while the Hotelling-Lawley test tends to be lax.  It's a good idea to look at all of the 
+# options and come to a consensus. In this case, there's no conflict. All of the tests point to a
+# clear case for rejecting the null hypothesis of no difference among the different regions.
+
+lda_expl <-data.frame(lda_expl)
+region_MAN <-manova(
+  cbind(ST_L,St_G,Sn_L,Sn_G,Pm_L,Pm_G,Fu_L,Bo_L,SM_E,ES,SES,TA)~PCA1_cordata$region, data=lda_expl)
+summary(region_MAN, test="Pillai")
+summary(region_MAN, test="Wilks")
+summary(region_MAN, test="Hotelling-Lawley")
+
