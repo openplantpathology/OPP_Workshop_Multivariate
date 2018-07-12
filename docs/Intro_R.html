@@ -293,20 +293,41 @@ div.tocify {
         <li>
   <a href="index.html">Introduction</a>
 </li>
-<li>
-  <a href="1-MV_PCA.html">PCA</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Topics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2-MV_PCO.html">Principal Components Analysis</a>
+    </li>
+    <li>
+      <a href="2-MV_PCO.html">Principal Coordinates Analysis</a>
+    </li>
+    <li>
+      <a href="3-Cluster.html">Cluster analysis</a>
+    </li>
+    <li>
+      <a href="4-PCA_PCO_cluster.html">Linking ordination and clustering</a>
+    </li>
+    <li>
+      <a href="5-DA_Manova.html">Discriminant Analysis and Manova</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="2-MV_PCO.html">PCO</a>
-</li>
-<li>
-  <a href="3-Cluster.html">Cluster</a>
-</li>
-<li>
-  <a href="4-DA_Manova.html">LDA and Manova</a>
-</li>
-<li>
-  <a href="Intro_R.html">Intro to R</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonus material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_R.html">Introduction to R</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -489,14 +510,14 @@ disease</code></pre>
 length(X)</code></pre>
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>mean(X)</code></pre>
-<pre><code>## [1] 5.189586</code></pre>
+<pre><code>## [1] 4.41099</code></pre>
 <pre class="r"><code>median(X)</code></pre>
-<pre><code>## [1] 5.36296</code></pre>
+<pre><code>## [1] 3.813813</code></pre>
 <pre class="r"><code>var(X)</code></pre>
-<pre><code>## [1] 2.643237</code></pre>
+<pre><code>## [1] 4.594165</code></pre>
 <pre class="r"><code>summary(X)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   2.545   3.785   5.363   5.190   6.213   8.762</code></pre>
+##   1.431   2.489   3.814   4.411   6.197   8.353</code></pre>
 </div>
 <div id="matrix-calculations" class="section level4">
 <h4><strong>Matrix calculations</strong></h4>
@@ -795,13 +816,13 @@ group3&lt;-rnorm(10,15,7)
 example.apply&lt;-cbind(group1,group2,group3)
 apply(example.apply, MARGIN=2, mean)</code></pre>
 <pre><code>##    group1    group2    group3 
-##  5.095064  8.421562 10.757940</code></pre>
+##  4.602649  8.720922 13.709929</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, sd)</code></pre>
 <pre><code>##   group1   group2   group3 
-## 2.068563 3.145206 5.640096</code></pre>
+## 2.128654 6.278082 8.389056</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, function (x) sd(x)/mean(x))</code></pre>
 <pre><code>##    group1    group2    group3 
-## 0.4059936 0.3734706 0.5242729</code></pre>
+## 0.4624844 0.7198875 0.6118964</code></pre>
 <pre class="r"><code>#lapply() - works on a list
 L28 &lt;- list(c(1,2,3),1000,seq(1,2,.1))
 L28</code></pre>
@@ -826,13 +847,13 @@ L28</code></pre>
 factor&lt;-rep(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;), each=2)
 tapply(example.apply[,1], factor, mean) #Summarizing the first column, by factor</code></pre>
 <pre><code>##        A        B        C        D        E 
-## 6.779329 3.009755 4.798248 4.504047 6.383943</code></pre>
+## 4.332625 4.789344 6.469803 5.938159 1.483315</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, sd) #Summarizing the first column, by factor</code></pre>
-<pre><code>##         A         B         C         D         E 
-## 1.4378091 3.9451790 0.2596212 0.4454355 1.4301381</code></pre>
+<pre><code>##          A          B          C          D          E 
+## 0.16168313 1.26993225 0.47018556 2.94872373 0.09922893</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, function (x) sd(x)/mean(x)) #CV by factor</code></pre>
 <pre><code>##          A          B          C          D          E 
-## 0.21208724 1.31079755 0.05410751 0.09889674 0.22402114</code></pre>
+## 0.03731759 0.26515787 0.07267386 0.49657201 0.06689674</code></pre>
 </div>
 
 

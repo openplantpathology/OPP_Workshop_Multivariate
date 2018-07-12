@@ -293,20 +293,41 @@ div.tocify {
         <li>
   <a href="index.html">Introduction</a>
 </li>
-<li>
-  <a href="1-MV_PCA.html">PCA</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Topics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2-MV_PCO.html">Principal Components Analysis</a>
+    </li>
+    <li>
+      <a href="2-MV_PCO.html">Principal Coordinates Analysis</a>
+    </li>
+    <li>
+      <a href="3-Cluster.html">Cluster analysis</a>
+    </li>
+    <li>
+      <a href="4-PCA_PCO_cluster.html">Linking ordination and clustering</a>
+    </li>
+    <li>
+      <a href="5-DA_Manova.html">Discriminant Analysis and Manova</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="2-MV_PCO.html">PCO</a>
-</li>
-<li>
-  <a href="3-Cluster.html">Cluster</a>
-</li>
-<li>
-  <a href="4-DA_Manova.html">LDA and Manova</a>
-</li>
-<li>
-  <a href="Intro_R.html">Intro to R</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonus material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_R.html">Introduction to R</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -364,25 +385,25 @@ head(NHCA_data1)</code></pre>
 <pre class="r"><code># Cluster the fields into 3 groups
 NHCA_fields1 &lt;- kmeans(NHCA_data1[, 3:14], 3)
 NHCA_fields1</code></pre>
-<pre><code>## K-means clustering with 3 clusters of sizes 11, 21, 9
+<pre><code>## K-means clustering with 3 clusters of sizes 19, 17, 5
 ## 
 ## Cluster means:
-##         ST_L       St_G       Sn_L        Sn_G       Pm_L       Pm_G
-## 1  1.2241451  1.0231808 -0.2457903 -0.07766454 -0.4836272 -0.4821244
-## 2 -0.5138070 -0.1893597 -0.3134817 -0.30511069  0.2121172  0.3928780
-## 3 -0.2972944 -0.8087150  1.0318677  0.80684827  0.0961598 -0.3274523
-##         Fu_L       Bo_L       SM_E         ES        SES         TA
-## 1 -0.2571397  1.0214250  0.6904617  0.3447132 -0.5391760 -0.2658168
-## 2  0.2750472 -0.7461708 -0.6444095 -0.5282419 -0.1788765  0.2979625
-## 3 -0.3274949  0.4926570  0.6597245  0.8112484  1.0763713 -0.3703586
+##         ST_L       St_G        Sn_L       Sn_G       Pm_L       Pm_G
+## 1 -0.4722292 -0.2639670  0.08016341 -0.3051107 -0.2227231 -0.1377754
+## 2  0.7594520  0.3766294 -0.04872678  0.4307445 -0.4068907 -0.4821244
+## 3 -0.7876661 -0.2774652 -0.13894991 -0.3051107  2.2297760  2.1627693
+##          Fu_L       Bo_L       SM_E          ES         SES         TA
+## 1 -0.02302349 -0.7819521 -0.3723971 -0.50304676 -0.08865062  0.3352989
+## 2 -0.24782799  1.0214250  0.5602808  0.59152557  0.03101715 -0.3027139
+## 3  0.93010445 -0.5014268 -0.4898455 -0.09960923  0.23141405 -0.2449084
 ## 
 ## Clustering vector:
-##  [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 2 3 2 1 3 3 2 3 1 1 3 3 1 1 1 1
-## [36] 1 3 2 1 1 1
+##  [1] 3 1 1 3 3 1 1 1 1 1 1 1 1 1 1 3 1 1 3 1 1 1 2 2 2 1 2 2 2 2 2 2 2 2 2
+## [36] 2 2 1 2 2 2
 ## 
 ## Within cluster sum of squares by cluster:
-## [1]  61.60036 157.82690 111.25969
-##  (between_SS / total_SS =  31.1 %)
+## [1] 146.50138 155.71549  34.15967
+##  (between_SS / total_SS =  29.9 %)
 ## 
 ## Available components:
 ## 
@@ -421,33 +442,33 @@ clus_plot_pct &lt;- barplot(wSS_fields1_pct,
 <pre class="r"><code># Cluster the fields into 7 groups
 NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)
 NHCA_fields2</code></pre>
-<pre><code>## K-means clustering with 7 clusters of sizes 5, 3, 17, 2, 1, 10, 3
+<pre><code>## K-means clustering with 7 clusters of sizes 2, 1, 10, 7, 3, 1, 17
 ## 
 ## Cluster means:
-##         ST_L       St_G       Sn_L        Sn_G        Pm_L        Pm_G
-## 1  0.1708408 -0.8087150 -0.3182244 -0.30511069  0.03818110 -0.20371453
-## 2 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.48212440
-## 3 -0.5138070 -0.1567756 -0.2772139 -0.30511069 -0.20737575  0.01737565
-## 4 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.48212440
-## 5  0.6974930 -0.8087150 -0.5174184 -0.30511069 -0.48362721 -0.48212440
-## 6  1.2241451  1.2063704 -0.2186275 -0.05491992 -0.48362721 -0.48212440
-## 7 -0.9175736 -0.1675514 -0.4510204 -0.30511069  2.82115871  2.81239232
+##          ST_L       St_G        Sn_L        Sn_G       Pm_L        Pm_G
+## 1 -0.61913740 -0.8087150  3.46646011 -0.30511069  0.1686332 -0.48212440
+## 2  0.69749297 -0.8087150 -0.51741836 -0.30511069 -0.4836272 -0.48212440
+## 3  1.22414512  1.2063704 -0.21862748 -0.05491992 -0.4836272 -0.48212440
+## 4 -0.05486724 -0.8087150 -0.09057424  0.40972007 -0.1109070 -0.28326021
+## 5 -0.91757362 -0.1675514 -0.45102039 -0.30511069  2.8211587  2.81239232
+## 6  0.17084082 -0.8087150  2.47049050  4.69870465  0.8208936 -0.48212440
+## 7 -0.51380697 -0.1567756 -0.27721393 -0.30511069 -0.2073758  0.01737565
 ##          Fu_L       Bo_L       SM_E          ES        SES          TA
-## 1 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.37035862
-## 2  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.37035862
-## 3  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
-## 4 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
-## 5  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
-## 6 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
-## 7  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
+## 1 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
+## 2  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
+## 3 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
+## 4 -0.43805311  1.0214250  0.4665195  1.60878025  0.6725334 -0.37035862
+## 5  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
+## 6  0.05945873  1.0214250 -0.6927108  0.51877454  1.1648820 -0.37035862
+## 7  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
 ## 
 ## Clustering vector:
-##  [1] 3 3 3 7 7 3 3 3 3 3 3 3 3 3 3 7 3 4 1 3 4 3 1 1 2 3 1 6 6 2 2 6 6 6 6
-## [36] 6 1 5 6 6 6
+##  [1] 7 7 7 5 5 7 7 7 7 7 7 7 7 7 7 5 7 1 4 7 1 7 4 4 4 7 4 3 3 4 6 3 3 3 3
+## [36] 3 4 2 3 3 3
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 36.40606 10.53387 61.40302 11.04295  0.00000 45.04325 14.43222
-##  (between_SS / total_SS =  62.7 %)
+## [1] 11.04295  0.00000 45.04325 51.84865 14.43222  0.00000 61.40302
+##  (between_SS / total_SS =  61.7 %)
 ## 
 ## Available components:
 ## 
@@ -463,31 +484,31 @@ NHCA_fields2</code></pre>
 <pre class="r"><code># Cluster the fields into 6 groups
 NHCA_fields3 &lt;- kmeans(NHCA_data1[, 3:14], 6)
 NHCA_fields3</code></pre>
-<pre><code>## K-means clustering with 6 clusters of sizes 10, 5, 2, 18, 3, 3
+<pre><code>## K-means clustering with 6 clusters of sizes 10, 3, 2, 1, 8, 17
 ## 
 ## Cluster means:
-##         ST_L       St_G        Sn_L        Sn_G        Pm_L       Pm_G
-## 1  1.2241451  1.2063704 -0.21862748 -0.05491992 -0.48362721 -0.4821244
-## 2  0.1708408 -0.8087150 -0.31822444 -0.30511069  0.03818110 -0.2037145
-## 3 -0.6191374 -0.8087150  3.46646011 -0.30511069  0.16863317 -0.4821244
-## 4 -0.6513217 -0.2387918 -0.35695659 -0.30511069  0.32082726  0.5232446
-## 5  0.3112814  0.1072329 -0.05263254 -0.30511069 -0.44014318 -0.3893211
-## 6 -0.3558113 -0.8087150  1.14253100  3.03076620 -0.04878696 -0.4821244
-##          Fu_L       Bo_L       SM_E          ES        SES         TA
-## 1 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.2553626
-## 2 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.3703586
-## 3 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.3703586
-## 4  0.11750178 -0.7102902 -0.6363593 -0.51486574 -0.1878709 -0.1380434
-## 5  1.22031969 -0.9614549 -0.6927108 -0.60849902 -0.1249097  2.9139978
-## 6  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.3703586
+##          ST_L       St_G       Sn_L        Sn_G         Pm_L        Pm_G
+## 1  1.22414512  1.2063704 -0.2186275 -0.05491992 -0.483627208 -0.48212440
+## 2 -0.91757362 -0.1675514 -0.4510204 -0.30511069  2.821158715  2.81239232
+## 3 -0.61913740 -0.8087150  3.4664601 -0.30511069  0.168633171 -0.48212440
+## 4  0.69749297 -0.8087150 -0.5174184 -0.30511069 -0.483627208 -0.48212440
+## 5 -0.02665374 -0.8087150  0.2295589  0.94584314  0.005568076 -0.30811823
+## 6 -0.51380697 -0.1567756 -0.2772139 -0.30511069 -0.207375753  0.01737565
+##          Fu_L       Bo_L       SM_E          ES        SES          TA
+## 1 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
+## 2  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
+## 3 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
+## 4  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
+## 5 -0.37586413  1.0214250  0.3216157  1.47252953  0.7340769 -0.37035862
+## 6  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
 ## 
 ## Clustering vector:
-##  [1] 4 4 4 4 4 4 5 4 4 4 4 4 4 4 5 4 4 3 2 4 3 4 2 2 6 4 2 1 1 6 6 1 1 1 1
-## [36] 1 2 5 1 1 1
+##  [1] 6 6 6 2 2 6 6 6 6 6 6 6 6 6 6 2 6 3 5 6 3 6 5 5 5 6 5 1 1 5 5 1 1 1 1
+## [36] 1 5 4 1 1 1
 ## 
 ## Within cluster sum of squares by cluster:
-## [1]  45.04325  36.40606  11.04295 106.18928  17.79516  10.53387
-##  (between_SS / total_SS =  52.7 %)
+## [1] 45.04325 14.43222 11.04295  0.00000 77.16680 61.40302
+##  (between_SS / total_SS =  56.4 %)
 ## 
 ## Available components:
 ## 
@@ -539,78 +560,6 @@ field_hgroups4 &lt;- cutree(HCA_field4, k = 7)
 rect.hclust(HCA_field4, k = 7, border = &quot;red&quot;)</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-7-4.png" width="672" /></p>
 <p>We have only touched on the basic approaches for HCA even among the options offered in the base stats package. In addition to the options available in the base package remember there is a wide range of other packages available that allow distances to be calculated using other metrics and clustering to be carried out with many different algorithms. Some of these packages are written with specific purposes in mind, others are more general. Rather than explore a subset of these options, in the limited time of the workshop we are going to stay with analyses that can be performed with the base package and move on to look at how we can combine ordination and cluster analyses to get good visualizations of clusters of objects.</p>
-</div>
-<div id="ordination-and-cluster" class="section level2">
-<h2>Ordination and Cluster</h2>
-<p>We have already seen that we can apply both ordination analyses (such as PCA and PCO) <strong>and</strong> cluster analyses to the same data sets on objects of interest. We also had some hints that there are connections between certain types of ordination and cluster analysis. In this section of the workshop we will explore those connections more fully and look at how to combine the two sets of techniques. To do this we will look at two <em>natural</em> pairings of approaches, PCA with K-means NHCA, and PCO with HCA of a common distance matrix.</p>
-<div id="pca-and-k-means-nhca" class="section level3">
-<h3>PCA and K-means NHCA</h3>
-<p>In the section on PCA we noted that the PCA algorithm derives a set of new variables (the principal components) from a set of data such that the maximum variance possible among the data objects with respect to the original variables is captured in as small a set as possible of the new principal components. We also saw that in K-means NHCA the clusters are formed in such a way that the within-cluster variance (the sums of squares) over the data variables is minimized given the number of clusters we impose on the objects. Given this shared goal of minimizing variance, we might expect that a successful NHCA will result in groups of objects that occupy compact regions of the principal component space and which can be clearly differentiated from other clusters in that space. Another way of saying this is that PCA gives us a geometric interpretation of NHCA, in which the distances between points in the PCA solution is an indication of their tendency to cluster together in K-means NHCA.</p>
-<p>With the background concepts spelled out, let’s take a look at the disease survey data again and bring the PCA and NHCA together. We’ll need the PCA solution from the disease survey analysis. If you still have the PCA object from the analysis on the correlation matrix in your environment you will be able to use it directly. If you have removed it, or restarted your R session since we ran the PCA, you will need to recreate it. The following chunk of code will let you load the data file and run the PCA. Note we don’t need to see the results at this stage so we don’t ask R to display anything.</p>
-<pre class="r"><code>PCA1_data &lt;- read.csv(&quot;data/PCA1_Survey.csv&quot;, head = TRUE)
-PCA1_cordata &lt;- PCA1_data[c(-7, -8, -9)]
-head(PCA1_cordata)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<pre class="r"><code>survey_corpca1 &lt;- princomp(PCA1_cordata[3:14], cor = TRUE)
-NHCA_data1 &lt;- data.frame(PCA1_cordata[, 1:2], scale(PCA1_cordata[, 3:14]))
-NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)</code></pre>
-<p>If the NHCA object is not in your environment you will need to create one from the survey data using <code>hclust()</code>. If you need a reminder on how to do that, open the file APS2015_nhca.R.</p>
-<p>To bring the ordination and cluster analysis together we plot the fields in the the principal component space of the PCA solution and use the cluster membership vector from the NHCA solution to identify the points. In the examples we use a simple call to the “text” command to achieve the colors and cluster identifiers, but we could use the same trick with the ‘col’ option of the <code>plot()</code> command itself to color the points on the plot and also use it to allocate symbol types to the clusters. We leave you to explore those (and other) possibilities.</p>
-<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  xlab = &quot;first principal component&quot;, ylab = &quot;second principal component&quot;
-)
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  cex = 1.5, NHCA_fields2$cluster,
-  col = NHCA_fields2$cluster
-)</code></pre>
-<p><img src="3-Cluster_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  xlab = &quot;first principal component&quot;, ylab = &quot;second principal component&quot;
-)
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  cex = 1.5, NHCA_fields2$cluster,
-  col = NHCA_fields2$cluster
-)</code></pre>
-<p><img src="3-Cluster_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
-<pre class="r"><code>PCA_7clusplot2 &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
-  xlab = &quot;first principal component&quot;, ylab = &quot;third principal component&quot;
-)
-
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
-  cex = 1.5, NHCA_fields2$cluster,
-  col = NHCA_fields2$cluster
-)</code></pre>
-<p><img src="3-Cluster_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
-<p>Looking at the ordination labelled with the 7 cluster identifiers, we can see that the clusters formed by <code>hclust()</code> using K-means has resulted in clusters that are (for the most part) fairly compact in PCA space. Given that the PCA is a representation of the variance in the data and the K-means attempts to identify clusters that minimize the overall within-group variance, it’s no suprise that that the PCA turns out to be a good way to visualize the results of K-means clustering (or looking at things the other way round, that K-means is a way to identify compact clusters of objects in a PCA space.).</p>
-<p>It won’t come of much of a surprise that a similar relationship exists in the case of PCO and HCA. The space constructed by the PCO analysis of a distance matrix generates a low dimensional representation of the true distances between objects. HCA represents the same set of distances as branch lengths on a tree. We would expect that there will be an approximate relationship between the branch structure of the tree and the clustering of objects in the PCO space.</p>
-</div>
-<div id="pco-and-hca" class="section level3">
-<h3>PCO and HCA</h3>
-<p>We have seen that both PCO and HCA operate on a distance (or similarity) matrix. The PCO attempts to represent the distances in the matrix as a set of points in Euclidean space, the HCA represents the distances as branch lengths on a tree. As with the PCA/NHCA combination, what we might expect is that objects that form compact branches on a dendrogram formed from a similarity matrix, will occupy a compact region of the PCO space formed from the same similarity matrix. It is worth remembering however that because the PCO solution is only an approximation of the true distances among the objects and because (as we have seen) different tree-forming algorithms produce rather different results when applied to the same distance matrix, we should be ready for the PCO and HCA results to show some differences.</p>
-<p>For this example we’ll work with the presence/absence version of the disease survey data. In case you don’t still have the binary distance matrix for that analysis in your R environment, here is the code that creates it from the data vectors used for the PCA analysis.</p>
-<pre class="r"><code>HCA_data2 &lt;- data.frame(PCA1_cordata[, 1:2], (PCA1_cordata[, 3:14] &gt; 0) * 1)
-field_bindis &lt;- dist(HCA_data2[, 3:14], method = &quot;binary&quot;)
-PCO1_fields &lt;- cmdscale(field_bindis, k = 10, eig = TRUE)
-HCA_field3 &lt;- hclust(field_bindis, method = &quot;complete&quot;)
-plot(HCA_field3)
-field_hgroups3 &lt;- cutree(HCA_field3, k = 7)
-rect.hclust(HCA_field3, k = 7, border = &quot;blue&quot;)</code></pre>
-<p><img src="3-Cluster_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<pre class="r"><code>PCO_7clusplot &lt;- plot(PCO1_fields$points[, 1], PCO1_fields$points[, 2],
-  xlab = &quot;first principal coordinate&quot;, ylab = &quot;second principal cordinate&quot;
-)
-text(PCO1_fields$points[, 1], PCO1_fields$points[, 2],
-  cex = 1.5, field_hgroups3,
-  col = field_hgroups3
-)</code></pre>
-<p><img src="3-Cluster_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
-<p>The result is pretty much what we’d expect - the tree branches identified by <code>cutree()</code> do seem to form compact clusters in the PCO space, but the plot clearly has some points that lie directly on top of one another because there are far fewer than 41 visible.</p>
-<p>The analyses suggest that there are clusters of fields in the data and we saw earlier when we looked at PCA biplots that there are diagnostic tools available to relate the clusters to the original data variables. At the start of an experimental program these sorts of analyses can be used to generate hypotheses for further testing, or important structure that needs to be considered in model-building. Of course, a logical question to ask is whether the apparent differences among the clusters are “real” or simply an artifact of the sampling procedures used to collect the data (which fields, which locations within fields for assessing the diseases etc). Sometimes we have no particular information about structure in the data before running analyses and the techniques we have looked at so far can be used to find out if there is obvious structure (i.e. clustering) and which variables are associated with it. On the other hand, sometimes we know a priori that there are groups in our dataset and the question we want to answer is whether they are different from one another, and if they are, in what respects they differ. In this situation we move from exploratory data analysis to multivariate hypothesis testing and that will be the subject of the final section of the workshop.</p>
-</div>
 </div>
 
 

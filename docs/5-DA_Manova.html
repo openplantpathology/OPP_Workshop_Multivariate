@@ -293,20 +293,41 @@ div.tocify {
         <li>
   <a href="index.html">Introduction</a>
 </li>
-<li>
-  <a href="1-MV_PCA.html">PCA</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Topics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2-MV_PCO.html">Principal Components Analysis</a>
+    </li>
+    <li>
+      <a href="2-MV_PCO.html">Principal Coordinates Analysis</a>
+    </li>
+    <li>
+      <a href="3-Cluster.html">Cluster analysis</a>
+    </li>
+    <li>
+      <a href="4-PCA_PCO_cluster.html">Linking ordination and clustering</a>
+    </li>
+    <li>
+      <a href="5-DA_Manova.html">Discriminant Analysis and Manova</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="2-MV_PCO.html">PCO</a>
-</li>
-<li>
-  <a href="3-Cluster.html">Cluster</a>
-</li>
-<li>
-  <a href="4-DA_Manova.html">LDA and Manova</a>
-</li>
-<li>
-  <a href="Intro_R.html">Intro to R</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonus material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_R.html">Introduction to R</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -331,8 +352,8 @@ div.tocify {
 </div>
 
 
-<div id="differences-among-groups" class="section level2">
-<h2>Differences among groups</h2>
+<div id="group-dfferences" class="section level2">
+<h2>Group dfferences</h2>
 <p>In this, final, section of the Workshop we turn to multivariate hypothesis testing. Following on from the theme developed in the last section we will use a combination of ordination and another method to achieve the analysis. In this case we will combine Linear Discriminant Analysis (LDA) with Multivariate Analysis of Variance (MANOVA). LDA is also known by a number of other names, the most commonly used being Discriminant Analysis, Canonical Variates Analysis, and Canonical Discriminant Analysis.</p>
 <p>The major conceptual difference between this section of the workshop and the previous ones concerns how we use existing information that we might have about grouping among the objects. In the previous analyses while we had information about groupings we did impose it on the analysis in any way. So, for example, any tendency for fields from the same region to cluster together was an emergent property of the shared features of those fields, but the algorithms running the PCA, PCO or clustering were “<em>blind</em>” to the existence of the groups.</p>
 <p>In LDA we take a different approach and <strong>impose</strong> grouping on the objects with a view to asking one or or more of three key questions:</p>
@@ -348,8 +369,8 @@ div.tocify {
 <li>Use LDA in the situation where you have stated your hypotheses in advance and tested with MANOVA, to visualize the results and add explanatory detail.</li>
 </ol>
 </div>
-<div id="lda-and-manova-for-hypothesis-tests" class="section level2">
-<h2>LDA and MANOVA for hypothesis tests</h2>
+<div id="hypothesis-tests" class="section level2">
+<h2>Hypothesis tests</h2>
 <p>With the MASS package installed, the first thing to do is to make the library of procedures in the package available for use:</p>
 <pre class="r"><code>library(MASS)</code></pre>
 <p>Ignoring our own advice, we will demonstrate the combination of LDA and MANOVA on the field survey data by reanalyzing it to determine if there is a significant difference among the regions with respect to diseases. This is the multivariate equivalent of the simplest type of ANOVA model - a single categorical factor. In this case our null hypothesis is that there is no difference among regions on the intensity of wheat diseases, or equivalently that disease intensities do not differ among regions more than would be expected by chance alone.</p>
@@ -400,7 +421,7 @@ region_lda</code></pre>
 <p>The third section of output shows us the coefficients (or loadings) applied to each of the data variables in the construction of the discriminant axes. Conceptually LDA has a lot in common with PCA, but in the case of LDA the new “components” or discriminant functions are formed with the constraint that they maximize the ratio of between group to within group variance. This contrasts PCA, where the new variables are formed simply to maximize the amount of variance captured overall. Unlike the situation with PCA where the maximum number of non-zero components is one less than the number of original data variables, with LDA the number of possible axes is one less than the number of groups. In the present case this means that we can form at most two discriminant axes because we have three levels (N,E and W) in our grouping factor. The final section of output shows the proportion of the variance ratio accounted for by each of the axes. Just as in PCA, the axes are formed so that they capture the variance structure in decreasing amounts. In the case of the disease data, the first LDA accounts for 83.5% of the variance ratio, while the second axis accounts for the remaining 16.5%.</p>
 <p>The MASS package includes a special version of <code>plot()</code> that accepts an LDA obect and produces a Scatter plot of the data objects in the LDA solution space, labeled with the identifier of the grouping factor. In its basic form it gives a simple diagnostic plot of the extent to which discrimination among the levels of the factor has been achieved.</p>
 <pre class="r"><code>region_ldaplt &lt;- plot(region_lda)</code></pre>
-<p><img src="4-DA_Manova_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="5-DA_Manova_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Just as for PCA, we can use a biplot to help interpret the solution of a LDA. Unfortunately MASS does not include a biplot procedure for LDA, but the following function written by a contributor to Stackoverflow produces reasonable results.</p>
 <pre class="r"><code>lda.arrows &lt;- function(x, myscale = 1, tex = 0.75, choices = c(1, 2), ...) {
   ## adds `biplot` arrows to an lda using the discriminant function values
@@ -420,7 +441,7 @@ region_lda</code></pre>
 NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)
 plot(region_lda, asp = 1, col = NHCA_fields2$cluster, cex = 1.25)
 lda.arrows(region_lda, col = 1, lwd = 1, myscale = 2.5)</code></pre>
-<p><img src="4-DA_Manova_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="5-DA_Manova_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Overall, the LDA suggests that there are differences among all three regions. The major difference is between the West and the other two, with fields in the West being associated with diseases typical of wet late season conditions (glume and ear diseases are more intense). The difference between the North and East regions is smaller in absolute terms but nonetheless appears to be a real difference.</p>
 <p>To obtain overall significance tests on whether there are differences among the regions we use a MANOVA simultaneously to test all of the disease variables. To fit the MANOVA model we have to supply a list of variables using a <code>cbind()</code> statement and then identify the treatment (or grouping) factor. R uses the tilde (~) to indicate a statistical model. It makes the model more compact to write if we use the <code>data= option</code> to identify a data frame the contains the variables. By default the manova() procedure doesn’t print anything. Since we have already examined the way that the variables and grouping are connected in the LDA, all we really need are the overall tests of significance. There are several such tests for MANOVA which differ in their tendency to type 1 and type 2 errors. Wilks test tends to be conservative while the Hotelling-Lawley test tends to be lax. It’s a good idea to look at all of the options and come to a consensus. In this case, there’s no conflict. All of the tests point to a clear case for rejecting the null hypothesis of no difference among the different regions.</p>
 <pre class="r"><code>lda_expl &lt;- data.frame(lda_expl)

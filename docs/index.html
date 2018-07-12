@@ -293,20 +293,41 @@ div.tocify {
         <li>
   <a href="index.html">Introduction</a>
 </li>
-<li>
-  <a href="1-MV_PCA.html">PCA</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Topics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2-MV_PCO.html">Principal Components Analysis</a>
+    </li>
+    <li>
+      <a href="2-MV_PCO.html">Principal Coordinates Analysis</a>
+    </li>
+    <li>
+      <a href="3-Cluster.html">Cluster analysis</a>
+    </li>
+    <li>
+      <a href="4-PCA_PCO_cluster.html">Linking ordination and clustering</a>
+    </li>
+    <li>
+      <a href="5-DA_Manova.html">Discriminant Analysis and Manova</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="2-MV_PCO.html">PCO</a>
-</li>
-<li>
-  <a href="3-Cluster.html">Cluster</a>
-</li>
-<li>
-  <a href="4-DA_Manova.html">LDA and Manova</a>
-</li>
-<li>
-  <a href="Intro_R.html">Intro to R</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonus material
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_R.html">Introduction to R</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -332,22 +353,25 @@ div.tocify {
 
 
 <p>The workshop <strong>Introduction to Multivariate Statistics in R</strong> will cover introductory aspects of several widely-used multivariate statistical methods. Our aim is to give inexperienced users of these techniques a first look at how they can be implemented in R. We will focus mostly on analyses and outputs that R generates automatically from existing procedures and avoid too much programming to manipulate data objects.</p>
+<blockquote>
+<p>Next Workshop:<br> International Congress of Plant Pathology 2018<br> Saturday July 28 1:00 - 5:00 PM</p>
+</blockquote>
 <div id="instructors" class="section level2">
 <h2>Instructors</h2>
-<table width = 100%>
-<tr>
-<td width="50%">
-<img src = "figs/mcroberts.jpg"><br />
+<div class="section group">
+<div class="col span_1_of_2">
+<img src = "figs/mcroberts.jpg" style = "border-radius: 50%; border-color: white 1px; margin: 20px"><br />
 Dr. <a href="https://qbelab.plantpathology.ucdavis.edu/neil-mcroberts/">Neil McRoberts</a><br />
 University of California Davis
-</td>
-<td width="50%">
-<img src = "figs/esker.jpg"><br />
+</div>
+<div class="col span_1_of_2">
+<img src = "figs/esker.jpg" style = "border-radius: 50%; border-color: white 1px; margin: 20px"><br />
 Dr. <a href="https://plantpath.psu.edu/directory/pde6">Paul Esker</a><br />
 Pennsylvania State University
-</td>
-<tr>
-</table>
+</div>
+</div>
+<p>
+</p>
 </div>
 <div id="syllabus" class="section level2">
 <h2>Syllabus</h2>
@@ -363,13 +387,15 @@ Pennsylvania State University
 <li>Hierarchical clustering</li>
 <li>Non-hierarchical clustering</li>
 </ul></li>
-<li>Linking ordination and clustering</li>
-<li><a href="4-DA_Manova.html">Examining differences among groups</a>
+<li><a href="4-PCA_PCO_cluster.html">Linking ordination and clustering</a></li>
+<li><a href="5-DA_Manova.html">Examining differences among groups</a>
 <ul>
 <li>Discriminant analysis and MANOVA</li>
 <li>Procrustes analysis for comparing ordinations</li>
 </ul></li>
 </ul>
+<p>
+</p>
 </div>
 <div id="types-of-materials" class="section level2">
 <h2>Types of materials</h2>
@@ -381,14 +407,6 @@ Pennsylvania State University
 <li><p><strong>Data files</strong> (usually .csv files). All of the data files needed to reproduce the examples are provided in the <code>data</code> folder. We use the <code>read.csv</code> function to read the files.</p></li>
 </ol>
 <p>We hope you will be able to work through the material in the workshop at your own pace, so although we hope to cover all the topics listed above on the day, don’t worry if we move on to a new topic before you feel you have completely got to grips with the one you are already working on. <br></p>
-</div>
-<div id="offering" class="section level2">
-<h2>Offering</h2>
-<p>These materials were produced for workshops taught at the following meetings.</p>
-<ul>
-<li>2015 APS meeting in Pasadena, CA</li>
-<li>2018 ICPP meeting in Boston, MA</li>
-</ul>
 </div>
 <div id="licences" class="section level2">
 <h2>Licences</h2>

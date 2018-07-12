@@ -1,7 +1,7 @@
 % Discriminant Analysis and Multivariate ANOVA
 
 
-## Differences among groups 
+## Group dfferences 
 
 In this, final, section of the Workshop we turn to multivariate hypothesis testing.  Following on from the theme developed in the last section we will use a combination of ordination and another method to achieve the analysis.  In this case we will combine Linear Discriminant Analysis (LDA) with Multivariate Analysis of Variance (MANOVA).  LDA is also known by a number of other names, the most commonly used being Discriminant Analysis, Canonical Variates Analysis, and Canonical Discriminant Analysis.
 
@@ -19,7 +19,7 @@ It is worth noting that while LDA has a theoretical parametric basis (one can th
 2. State your null and experimental hypotheses in advance of the analysis and then use LDA and MANOVA to test them
 3. Use LDA in the situation where you have stated your hypotheses in advance and tested with MANOVA, to visualize the results and add explanatory detail.
 
-## LDA and MANOVA for hypothesis tests
+## Hypothesis tests
 
 With the MASS package installed, the first thing to do is to make the library of procedures in the package available for use:
 

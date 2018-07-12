@@ -1,23 +1,23 @@
 % Introduction
 
+
 The workshop **Introduction to Multivariate Statistics in R** will cover introductory aspects of several widely-used multivariate statistical methods. Our aim is to give inexperienced users of these techniques a first look at how they can be implemented in R.  We will focus mostly on analyses and outputs that R generates automatically from existing procedures and avoid too much programming to manipulate data objects.
+
+> Next Workshop:<br>
+International Congress of Plant Pathology 2018<br>
+Saturday July 28 1:00 - 5:00 PM
 
 ## Instructors
 
-<table width = 100%>
-<tr>
-<td width = 50%>
-<img src = "figs/mcroberts.jpg">  
-Dr. [Neil McRoberts](https://qbelab.plantpathology.ucdavis.edu/neil-mcroberts/)  
-University of California Davis  
-</td>
-<td width=50%>
-<img src = "figs/esker.jpg">    
-Dr. [Paul Esker](https://plantpath.psu.edu/directory/pde6)  
-Pennsylvania State University
-</td><tr></table>
 
- 
+<div class="section group"><div class="col span_1_of_2"><img src = "figs/mcroberts.jpg" style = "border-radius: 50%; border-color: white 1px; margin: 20px">  
+Dr. [Neil McRoberts](https://qbelab.plantpathology.ucdavis.edu/neil-mcroberts/)  
+University of California Davis 
+	</div><div class="col span_1_of_2"><img src = "figs/esker.jpg" style = "border-radius: 50%; border-color: white 1px; margin: 20px">    
+Dr. [Paul Esker](https://plantpath.psu.edu/directory/pde6)  
+Pennsylvania State University</div></div>
+
+<p></p> 
 
 ## Syllabus
 
@@ -29,11 +29,13 @@ Over the course of the workshop we hope to cover the following:
  * [Clustering methods](3-Cluster.html) for examining relationships among data items
 	 * Hierarchical clustering
 	 * Non-hierarchical clustering
-   * Linking ordination and clustering
- * [Examining differences among groups](4-DA_Manova.html)
+ * [Linking ordination and clustering](4-PCA_PCO_cluster.html)
+ * [Examining differences among groups](5-DA_Manova.html)
 	 * Discriminant analysis and MANOVA
 	 * Procrustes analysis for comparing ordinations
 
+<p> </p> 
+ 
 ## Types of materials
 
 The materials for the workshop come in four different types of file:
@@ -49,13 +51,6 @@ The materials for the workshop come in four different types of file:
 We hope you will be able to work through the material in the workshop at your own pace, so although we hope to cover all the topics listed above on the day, don't worry if we move on to a new topic before you feel you have completely got to grips with the one you are already working on.
 <br>
 
-
-## Offering
-
-These materials were produced for workshops taught at the following meetings.
-
-- 2015 APS meeting in Pasadena, CA
-- 2018 ICPP meeting in Boston, MA
 
 
 ## Licences

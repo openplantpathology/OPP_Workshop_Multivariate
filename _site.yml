@@ -20,23 +20,23 @@ navbar:
   title: Multivariate Analysis in R
   left:
   - text: Introduction
-    #icon: fa fa-home
     href: index.html
-  - text: PCA
-    #icon: fa fa-file-code-o
-    href: 1-MV_PCA.html
-  - text: PCO
-    #icon: fa fa-file-code-o
-    href: 2-MV_PCO.html
-  - text: Cluster
-    #icon: fa fa-file-code-o
-    href: 3-Cluster.html
-  - text: LDA and Manova
-    #icon: fa fa-file-code-o
-    href: 4-DA_Manova.html
-  - text: Intro to R
-    #icon: fa fa-file-code-o
-    href: Intro_R.html
+  - text: Topics
+    menu:
+    - text: Principal Components Analysis
+      href: 2-MV_PCO.html
+    - text: Principal Coordinates Analysis
+      href: 2-MV_PCO.html
+    - text: Cluster analysis
+      href: 3-Cluster.html
+    - text: Linking ordination and clustering 
+      href: 4-PCA_PCO_cluster.html
+    - text: Discriminant Analysis and Manova
+      href: 5-DA_Manova.html
+  - text: Bonus material
+    menu: 
+    - text: Introduction to R
+      href: Intro_R.html
 
   right:
   - text: source
