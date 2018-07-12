@@ -23,7 +23,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
@@ -489,14 +489,14 @@ disease</code></pre>
 length(X)</code></pre>
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>mean(X)</code></pre>
-<pre><code>## [1] 5.440113</code></pre>
+<pre><code>## [1] 4.434721</code></pre>
 <pre class="r"><code>median(X)</code></pre>
-<pre><code>## [1] 5.588261</code></pre>
+<pre><code>## [1] 4.260351</code></pre>
 <pre class="r"><code>var(X)</code></pre>
-<pre><code>## [1] 3.297051</code></pre>
+<pre><code>## [1] 3.59961</code></pre>
 <pre class="r"><code>summary(X)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   2.613   3.870   5.588   5.440   6.907   8.340</code></pre>
+##  0.8142  2.8705  4.2604  4.4347  5.9734  7.9794</code></pre>
 </div>
 <div id="matrix-calculations" class="section level4">
 <h4><strong>Matrix calculations</strong></h4>
@@ -795,13 +795,13 @@ group3&lt;-rnorm(10,15,7)
 example.apply&lt;-cbind(group1,group2,group3)
 apply(example.apply, MARGIN=2, mean)</code></pre>
 <pre><code>##    group1    group2    group3 
-##  5.301913  8.991030 16.379608</code></pre>
+##  4.944409 12.626011 17.388057</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, sd)</code></pre>
 <pre><code>##   group1   group2   group3 
-## 2.224831 3.923423 8.051666</code></pre>
+## 2.164104 4.782387 9.576684</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, function (x) sd(x)/mean(x))</code></pre>
 <pre><code>##    group1    group2    group3 
-## 0.4196279 0.4363708 0.4915665</code></pre>
+## 0.4376870 0.3787726 0.5507621</code></pre>
 <pre class="r"><code>#lapply() - works on a list
 L28 &lt;- list(c(1,2,3),1000,seq(1,2,.1))
 L28</code></pre>
@@ -826,13 +826,13 @@ L28</code></pre>
 factor&lt;-rep(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;), each=2)
 tapply(example.apply[,1], factor, mean) #Summarizing the first column, by factor</code></pre>
 <pre><code>##        A        B        C        D        E 
-## 6.767588 5.649900 3.276275 4.670494 6.145310</code></pre>
+## 5.509804 6.567213 6.001345 2.554288 4.089395</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, sd) #Summarizing the first column, by factor</code></pre>
 <pre><code>##        A        B        C        D        E 
-## 2.163953 1.334443 2.711113 3.342510 2.144268</code></pre>
+## 0.981709 3.738253 1.921239 1.131348 1.101226</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, function (x) sd(x)/mean(x)) #CV by factor</code></pre>
 <pre><code>##         A         B         C         D         E 
-## 0.3197525 0.2361888 0.8274985 0.7156650 0.3489276</code></pre>
+## 0.1781749 0.5692298 0.3201348 0.4429210 0.2692883</code></pre>
 </div>
 
 

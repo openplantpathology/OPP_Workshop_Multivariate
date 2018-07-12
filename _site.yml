@@ -7,7 +7,7 @@ output:
     df_print: paged
     lib_dir: site_libs
     self_contained: no
-    highlight: default
+    highlight: textmate
     include:
       after_body: footer.md
     toc: true
