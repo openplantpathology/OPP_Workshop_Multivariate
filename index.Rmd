@@ -3,9 +3,10 @@
 
 The workshop **Introduction to Multivariate Statistics in R** will cover introductory aspects of several widely-used multivariate statistical methods. Our aim is to give inexperienced users of these techniques a first look at how they can be implemented in R.  We will focus mostly on analyses and outputs that R generates automatically from existing procedures and avoid too much programming to manipulate data objects.
 
-> Next Workshop:<br>
+> Next Workshop:<img src = "figs/icpp2018.png" width=350 align=right><br>
 International Congress of Plant Pathology 2018<br>
-Saturday July 28 1:00 - 5:00 PM
+Saturday July 28 1:00 - 5:00 PM 
+  
 
 ## Instructors
 
