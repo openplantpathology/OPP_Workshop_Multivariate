@@ -24,7 +24,7 @@ navbar:
   - text: Topics
     menu:
     - text: Principal Components Analysis
-      href: 2-MV_PCO.html
+      href: 1-MV_PCA.html
     - text: Principal Coordinates Analysis
       href: 2-MV_PCO.html
     - text: Cluster analysis

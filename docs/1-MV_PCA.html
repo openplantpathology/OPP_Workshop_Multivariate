@@ -27,9 +27,7 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -98,9 +96,6 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -301,7 +296,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="2-MV_PCO.html">Principal Components Analysis</a>
+      <a href="1-MV_PCA.html">Principal Components Analysis</a>
     </li>
     <li>
       <a href="2-MV_PCO.html">Principal Coordinates Analysis</a>
@@ -388,34 +383,34 @@ loadings_pca1</code></pre>
 <pre><code>## 
 ## Loadings:
 ##      Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9
-## ST_L                       0.882                0.431              
-## St_G                       0.318  0.389  0.205 -0.616 -0.518  0.231
-## Sn_L                             -0.782  0.372        -0.369  0.183
-## Sn_G                             -0.117         0.175 -0.375 -0.170
+## ST_L                       0.882               -0.431              
+## St_G                       0.318 -0.389  0.205  0.616  0.518  0.231
+## Sn_L                              0.782  0.372         0.369  0.183
+## Sn_G                              0.117        -0.175  0.375 -0.170
 ## Yr_L                                                               
 ## Yr_G                                                               
 ## Br_L                                                               
-## Pm_L                      -0.156  0.170  0.619  0.234  0.100  0.220
-## Pm_G                      -0.136  0.310  0.499  0.209  0.157  0.140
-## Fu_L                              0.111  0.321        -0.196 -0.860
+## Pm_L                      -0.156 -0.170  0.619 -0.234 -0.100  0.220
+## Pm_G                      -0.136 -0.310  0.499 -0.209 -0.157  0.140
+## Fu_L                             -0.111  0.321         0.196 -0.860
 ## Bo_L                       0.113                             -0.199
-## SM_E                       0.242 -0.284  0.279 -0.544  0.604 -0.186
-## ES    0.959  0.255  0.105                                          
-## SES   0.260 -0.962                                                 
+## SM_E                       0.242  0.284  0.279  0.544 -0.604 -0.186
+## ES   -0.959  0.255  0.105                                          
+## SES  -0.260 -0.962                                                 
 ## TA                  0.987                                          
 ##      Comp.10 Comp.11 Comp.12 Comp.13 Comp.14 Comp.15
 ## ST_L  0.117                                         
 ## St_G                                                
-## Sn_L  0.220  -0.105  -0.132                         
-## Sn_G -0.659   0.592                                 
+## Sn_L  0.220   0.105  -0.132                         
+## Sn_G -0.659  -0.592                                 
 ## Yr_L                         -0.959   0.282         
 ## Yr_G                         -0.216  -0.697  -0.683 
 ## Br_L                         -0.182  -0.659   0.730 
-## Pm_L -0.293  -0.286   0.531                         
-## Pm_G  0.139   0.303  -0.661                         
+## Pm_L -0.293   0.286   0.531                         
+## Pm_G  0.139  -0.303  -0.661                         
 ## Fu_L  0.297           0.117                         
-## Bo_L -0.492  -0.666  -0.493                         
-## SM_E -0.256   0.132                                 
+## Bo_L -0.492   0.666  -0.493                         
+## SM_E -0.256  -0.132                                 
 ## ES                                                  
 ## SES                                                 
 ## TA                                                  
@@ -517,31 +512,31 @@ loadings_corpca1</code></pre>
 <pre><code>## 
 ## Loadings:
 ##      Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8 Comp.9
-## ST_L  0.373  0.316  0.100  0.238  0.165  0.192  0.243  0.545       
-## St_G  0.159  0.533  0.214         0.167 -0.153  0.166 -0.410 -0.541
-## Sn_L        -0.402         0.525  0.311 -0.312 -0.245  0.138       
-## Sn_G  0.119 -0.260  0.181  0.564 -0.480         0.161 -0.141 -0.317
-## Pm_L -0.378 -0.116  0.513                0.124         0.265 -0.145
-## Pm_G -0.429         0.437 -0.128         0.133  0.137  0.198 -0.120
-## Fu_L -0.292  0.316  0.220  0.400         0.187 -0.199 -0.439  0.524
-## Bo_L  0.429         0.314        -0.272  0.155  0.136  0.112  0.427
-## SM_E  0.343         0.253         0.599        -0.278              
-## ES    0.291 -0.191  0.259 -0.273 -0.238  0.400 -0.532 -0.147 -0.224
-## SES         -0.433                0.330  0.471  0.567 -0.349       
-## TA   -0.139  0.191 -0.413  0.303         0.607 -0.262  0.172 -0.247
+## ST_L -0.373 -0.316  0.100 -0.238 -0.165  0.192  0.243  0.545       
+## St_G -0.159 -0.533  0.214        -0.167 -0.153  0.166 -0.410  0.541
+## Sn_L         0.402        -0.525 -0.311 -0.312 -0.245  0.138       
+## Sn_G -0.119  0.260  0.181 -0.564  0.480         0.161 -0.141  0.317
+## Pm_L  0.378  0.116  0.513                0.124         0.265  0.145
+## Pm_G  0.429         0.437  0.128         0.133  0.137  0.198  0.120
+## Fu_L  0.292 -0.316  0.220 -0.400         0.187 -0.199 -0.439 -0.524
+## Bo_L -0.429         0.314         0.272  0.155  0.136  0.112 -0.427
+## SM_E -0.343         0.253        -0.599        -0.278              
+## ES   -0.291  0.191  0.259  0.273  0.238  0.400 -0.532 -0.147  0.224
+## SES          0.433               -0.330  0.471  0.567 -0.349       
+## TA    0.139 -0.191 -0.413 -0.303         0.607 -0.262  0.172  0.247
 ##      Comp.10 Comp.11 Comp.12
-## ST_L  0.288   0.410   0.151 
-## St_G -0.314                 
-## Sn_L -0.403   0.298  -0.180 
-## Sn_G  0.367  -0.238         
-## Pm_L -0.212  -0.198   0.620 
-## Pm_G  0.138          -0.700 
-## Fu_L  0.135   0.193         
-## Bo_L -0.507  -0.316  -0.206 
-## SM_E  0.367  -0.476         
+## ST_L -0.288   0.410   0.151 
+## St_G  0.314                 
+## Sn_L  0.403   0.298  -0.180 
+## Sn_G -0.367  -0.238         
+## Pm_L  0.212  -0.198   0.620 
+## Pm_G -0.138          -0.700 
+## Fu_L -0.135   0.193         
+## Bo_L  0.507  -0.316  -0.206 
+## SM_E -0.367  -0.476         
 ## ES            0.406         
 ## SES           0.143         
-## TA   -0.196  -0.302  -0.123 
+## TA    0.196  -0.302  -0.123 
 ## 
 ##                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8
 ## SS loadings     1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000
@@ -640,10 +635,10 @@ summary(Alt_infect_PCA)</code></pre>
 <pre><code>## 
 ## Loadings:
 ##              Comp.1 Comp.2 Comp.3 Comp.4
-## Bnapus        0.479  0.640  0.559  0.219
-## Papaver       0.489 -0.266  0.202 -0.806
-## Lycopersicon  0.446 -0.685  0.190  0.544
-## Triticum      0.577  0.224 -0.781       
+## Bnapus       -0.479  0.640 -0.559  0.219
+## Papaver      -0.489 -0.266 -0.202 -0.806
+## Lycopersicon -0.446 -0.685 -0.190  0.544
+## Triticum     -0.577  0.224  0.781       
 ## 
 ##                Comp.1 Comp.2 Comp.3 Comp.4
 ## SS loadings      1.00   1.00   1.00   1.00
@@ -653,9 +648,9 @@ summary(Alt_infect_PCA)</code></pre>
 <pre><code>## 
 ## Loadings:
 ##              Comp.1 Comp.2 Comp.3 Comp.4
-## Bnapus        0.985         0.154       
-## Papaver      -0.134  0.923  0.362       
-## Lycopersicon  0.112  0.377 -0.920       
+## Bnapus        0.985        -0.154       
+## Papaver      -0.134  0.923 -0.362       
+## Lycopersicon  0.112  0.377  0.920       
 ## Triticum                           1.000
 ## 
 ##                Comp.1 Comp.2 Comp.3 Comp.4
