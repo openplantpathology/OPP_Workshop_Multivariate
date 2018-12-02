@@ -43,11 +43,11 @@ The materials for the workshop come in four different types of file:
 
 1. There are general information files like this one, that provide background material, comments, code snippets and other miscellaneous material. These are `R Markdown` files. They can be viewed in a Markdown-aware editor (such as the one in R Studio, or cloud-based tools such as StackEdit or a range of others). Markdown is a simple text formatting system that was originally developed as a tool to allow people who didn't want to learn the intricacies of HTML to generate basic text-oriented web-pages. It has quickly become a highly functional generic document preparation system.  Some (but not all - **Beware**) versions of Markdown and Markdown editors can implement $LaT_{E}X$ math syntax to allow publication-quality rendering of equations. Here, we used R Markdown website structure to generate the HTML files.
 
-2. **Powerpoint files**. These contain the slides we will use during the workshop to introduce the topics and highlight important details of the process of analysis and interpretation of outputs.   The Markdown files and Powerpoints together give a complete version of the workshop content.
+2. [**Powerpoint file**](supp/Introductio-MV.pptx). These contain the slides we will use during the workshop to introduce the topics and highlight important details of the process of analysis and interpretation of outputs. The Markdown files and Powerpoints together give a complete version of the workshop content.
 
 3. [**R program files**](https://github.com/openplantpathology/OPP_Workshop_Multivariate/tree/master/R). Although a lot of the R code will appear as snippets in the Markdown files, we give a set of basic R program files that run the example analyses from the workshop sessions.  These files contain comments to guide the user as to the purpose of different sections of the code, but they are not intended to be a stand-alone way to learn the methods we are covering.
 
-4. **Data files** (usually .csv files).  All of the data files needed to reproduce the examples are provided in the `data` folder.  We use the `read.csv` function to read the files.
+4. [**Data files**](https://github.com/openplantpathology/OPP_Workshop_Multivariate/tree/master/data) (usually .csv files).  All of the data files needed to reproduce the examples are provided in the `data` folder.  We use the `read.csv` function to read the files.
 
 We hope you will be able to work through the material in the workshop at your own pace, so although we hope to cover all the topics listed above on the day, don't worry if we move on to a new topic before you feel you have completely got to grips with the one you are already working on.
 <br>

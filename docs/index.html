@@ -27,7 +27,9 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -96,6 +98,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -397,9 +402,9 @@ Pennsylvania State University
 <p>The materials for the workshop come in four different types of file:</p>
 <ol style="list-style-type: decimal">
 <li><p>There are general information files like this one, that provide background material, comments, code snippets and other miscellaneous material. These are <code>R Markdown</code> files. They can be viewed in a Markdown-aware editor (such as the one in R Studio, or cloud-based tools such as StackEdit or a range of others). Markdown is a simple text formatting system that was originally developed as a tool to allow people who didn’t want to learn the intricacies of HTML to generate basic text-oriented web-pages. It has quickly become a highly functional generic document preparation system. Some (but not all - <strong>Beware</strong>) versions of Markdown and Markdown editors can implement <span class="math inline">\(LaT_{E}X\)</span> math syntax to allow publication-quality rendering of equations. Here, we used R Markdown website structure to generate the HTML files.</p></li>
-<li><p><strong>Powerpoint files</strong>. These contain the slides we will use during the workshop to introduce the topics and highlight important details of the process of analysis and interpretation of outputs. The Markdown files and Powerpoints together give a complete version of the workshop content.</p></li>
+<li><p><a href="supp/Introductio-MV.pptx"><strong>Powerpoint file</strong></a>. These contain the slides we will use during the workshop to introduce the topics and highlight important details of the process of analysis and interpretation of outputs. The Markdown files and Powerpoints together give a complete version of the workshop content.</p></li>
 <li><p><a href="https://github.com/openplantpathology/OPP_Workshop_Multivariate/tree/master/R"><strong>R program files</strong></a>. Although a lot of the R code will appear as snippets in the Markdown files, we give a set of basic R program files that run the example analyses from the workshop sessions. These files contain comments to guide the user as to the purpose of different sections of the code, but they are not intended to be a stand-alone way to learn the methods we are covering.</p></li>
-<li><p><strong>Data files</strong> (usually .csv files). All of the data files needed to reproduce the examples are provided in the <code>data</code> folder. We use the <code>read.csv</code> function to read the files.</p></li>
+<li><p><a href="https://github.com/openplantpathology/OPP_Workshop_Multivariate/tree/master/data"><strong>Data files</strong></a> (usually .csv files). All of the data files needed to reproduce the examples are provided in the <code>data</code> folder. We use the <code>read.csv</code> function to read the files.</p></li>
 </ol>
 <p>We hope you will be able to work through the material in the workshop at your own pace, so although we hope to cover all the topics listed above on the day, don’t worry if we move on to a new topic before you feel you have completely got to grips with the one you are already working on. <br></p>
 </div>

@@ -27,7 +27,9 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -96,6 +98,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -505,14 +510,14 @@ disease</code></pre>
 length(X)</code></pre>
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>mean(X)</code></pre>
-<pre><code>## [1] 5.202567</code></pre>
+<pre><code>## [1] 5.192452</code></pre>
 <pre class="r"><code>median(X)</code></pre>
-<pre><code>## [1] 4.482769</code></pre>
+<pre><code>## [1] 5.157343</code></pre>
 <pre class="r"><code>var(X)</code></pre>
-<pre><code>## [1] 3.729783</code></pre>
+<pre><code>## [1] 4.472019</code></pre>
 <pre class="r"><code>summary(X)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   2.758   3.535   4.483   5.203   7.043   8.509</code></pre>
+##   1.437   3.388   5.157   5.192   6.365   9.652</code></pre>
 </div>
 <div id="matrix-calculations" class="section level4">
 <h4><strong>Matrix calculations</strong></h4>
@@ -811,13 +816,13 @@ group3&lt;-rnorm(10,15,7)
 example.apply&lt;-cbind(group1,group2,group3)
 apply(example.apply, MARGIN=2, mean)</code></pre>
 <pre><code>##    group1    group2    group3 
-##  3.659921  6.835301 14.887604</code></pre>
+##  4.257368  9.579475 18.010220</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, sd)</code></pre>
 <pre><code>##   group1   group2   group3 
-## 1.851437 5.201351 4.835613</code></pre>
+## 1.562569 5.009414 6.527451</code></pre>
 <pre class="r"><code>apply(example.apply, MARGIN=2, function (x) sd(x)/mean(x))</code></pre>
 <pre><code>##    group1    group2    group3 
-## 0.5058680 0.7609542 0.3248080</code></pre>
+## 0.3670270 0.5229320 0.3624304</code></pre>
 <pre class="r"><code>#lapply() - works on a list
 L28 &lt;- list(c(1,2,3),1000,seq(1,2,.1))
 L28</code></pre>
@@ -842,13 +847,13 @@ L28</code></pre>
 factor&lt;-rep(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;), each=2)
 tapply(example.apply[,1], factor, mean) #Summarizing the first column, by factor</code></pre>
 <pre><code>##        A        B        C        D        E 
-## 3.238562 5.527333 1.415206 4.415506 3.703000</code></pre>
+## 3.582097 5.755838 4.298193 3.267251 4.383462</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, sd) #Summarizing the first column, by factor</code></pre>
 <pre><code>##         A         B         C         D         E 
-## 0.8068943 1.9039597 2.2376036 0.6128386 1.6245693</code></pre>
+## 0.7960505 1.6523872 1.3828329 2.9023153 0.9360883</code></pre>
 <pre class="r"><code>tapply(example.apply[,1], factor, function (x) sd(x)/mean(x)) #CV by factor</code></pre>
 <pre><code>##         A         B         C         D         E 
-## 0.2491520 0.3444627 1.5811153 0.1387924 0.4387171</code></pre>
+## 0.2222303 0.2870802 0.3217242 0.8883050 0.2135500</code></pre>
 </div>
 
 
