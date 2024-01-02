@@ -1,6 +1,6 @@
 % Basic introduction to R
 
-Some online resouces:
+Some online resources:
 
 http://www.introductoryr.co.uk/R_Resources_for_Beginners.html
 
@@ -12,7 +12,7 @@ http://www.r-tutor.com/r-introduction
 
 ####**R as a calculator**
 
-R has basics operations to add, subtract, mulitply and divide. Also, R defines certain caluclations, such as pi, based on alpha-numeric nomenclature.
+R has basics operations to add, subtract, multiply and divide. Also, R defines certain calculations, such as pi, based on alpha-numeric nomenclature.
 
 ```{r, R as a basic calculator}
 7+2
@@ -244,7 +244,7 @@ A1 <- c('Severity', 'Yield')
 A1[1]
 A2 <- paste('Disease', 'Severity')
 A2
-A3 <- paste('B', 1:10, sep='') # specifies no space between betwen the characters
+A3 <- paste('B', 1:10, sep='') # specifies no space between between the characters
 A3
 A4 <- paste('B', 1:10, sep='-') # a dash goes between the characters
 A4

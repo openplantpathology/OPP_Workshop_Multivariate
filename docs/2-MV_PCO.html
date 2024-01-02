@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Principal Coordinates Analysis</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -27,16 +37,19 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -49,38 +62,12 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -88,13 +75,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -105,44 +87,59 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
+.dropdown-submenu {
+  position: relative;
 }
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
 }
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
 }
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
 }
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
 }
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left {
+  float: none;
 }
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -152,55 +149,83 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
-
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = false;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -214,6 +239,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -249,8 +280,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -266,8 +295,18 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -281,7 +320,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -294,7 +333,7 @@ div.tocify {
   <a href="index.html">Introduction</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Topics
      
     <span class="caret"></span>
@@ -318,7 +357,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Bonus material
      
     <span class="caret"></span>
@@ -343,7 +382,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -352,33 +391,141 @@ div.tocify {
 </div>
 
 
-<p>Principal coordinates analysis (also known as multidimensional scaling or classical multidimensional scaling) was developed by John <a href="http://hsta559s12.pbworks.com/w/file/fetch/53338762/gower1966.pdf">Gower (1966)</a>. The underlying mathematics of PCO and PCA share some similarities (both depend on eigenvalue decomposition of matrices) but their motivations are different and the details of the eigenvalue analysis differ between the two methods. Whereas in PCA we typically interested in learning about the major relationships among a set of objects <em>and</em> how that relationship is determined by a set of variables, in PCO the interest is primarily in the <em>similarity</em> among the objects and the individual data variables are of secondary importance. For this reason, the aim of PCO is often described as reduction in dimensionality, while retaining the important information about relationships among a set of objects. In the branch of multivariate statistics associated with PCO, <em>similarity</em> , <span class="math inline">\(S\)</span>and <em>distance</em> <span class="math inline">\(D\)</span> are defined as complements of one another so <span class="math inline">\(S=1-D\)</span>.</p>
-<p>The data structure analyzed in a PCO is a similarity (or distance) matrix for a set of objects. The similarity (distance) matrix is constructed from the data variables. The steps in the analysis are therefor:</p>
+<p>Principal coordinates analysis (also known as multidimensional
+scaling or classical multidimensional scaling) was developed by John <a
+href="http://hsta559s12.pbworks.com/w/file/fetch/53338762/gower1966.pdf">Gower
+(1966)</a>. The underlying mathematics of PCO and PCA share some
+similarities (both depend on eigenvalue decomposition of matrices) but
+their motivations are different and the details of the eigenvalue
+analysis differ between the two methods. Whereas in PCA we typically
+interested in learning about the major relationships among a set of
+objects <em>and</em> how that relationship is determined by a set of
+variables, in PCO the interest is primarily in the <em>similarity</em>
+among the objects and the individual data variables are of secondary
+importance. For this reason, the aim of PCO is often described as
+reduction in dimensionality, while retaining the important information
+about relationships among a set of objects. In the branch of
+multivariate statistics associated with PCO, <em>similarity</em> , <span
+class="math inline">\(S\)</span>and <em>distance</em> <span
+class="math inline">\(D\)</span> are defined as complements of one
+another so <span class="math inline">\(S=1-D\)</span>.</p>
+<p>The data structure analyzed in a PCO is a similarity (or distance)
+matrix for a set of objects. The similarity (distance) matrix is
+constructed from the data variables. The steps in the analysis are
+therefore:</p>
 <ol style="list-style-type: decimal">
-<li>Start with two-way array of objects (rows) by variables (columns</li>
-<li>Construct a distance or similarity matrix for the objects on the basis of the data using a suitable similarity index</li>
+<li>Start with two-way array of objects (rows) by variables
+(columns</li>
+<li>Construct a distance or similarity matrix for the objects on the
+basis of the data using a suitable similarity index</li>
 <li>Analyze the similarity (distance) matrix with PCO</li>
-<li>Interpret the PCO, including <em>post hoc</em> comparison with the original data or other variables of interest.</li>
+<li>Interpret the PCO, including <em>post hoc</em> comparison with the
+original data or other variables of interest.</li>
 </ol>
-<p>The base stats package in R gives us a basic set of tools to do a PCO analysis without having to load specialized packages<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The <code>dist()</code> function calculates a distance matrix from a data frame of objects by variables using one of its inbuilt distance metrics (more on this below). The <code>cmdscale()</code> function then takes the distance matrix generated by <code>dist()</code> and performs a classical PCO. Then, as with nearly all multivariate methods, the output from the PCO needs to be examined in graph form to interpret the result of the analysis.</p>
+<p>The base stats package in R gives us a basic set of tools to do a PCO
+analysis without having to load specialized packages<a href="#fn1"
+class="footnote-ref" id="fnref1"><sup>1</sup></a>. The
+<code>dist()</code> function calculates a distance matrix from a data
+frame of objects by variables using one of its inbuilt distance metrics
+(more on this below). The <code>cmdscale()</code> function then takes
+the distance matrix generated by <code>dist()</code> and performs a
+classical PCO. Then, as with nearly all multivariate methods, the output
+from the PCO needs to be examined in graph form to interpret the result
+of the analysis.</p>
 <div id="distance-matrices" class="section level2">
 <h2>Distance matrices</h2>
-<p>The point of PCO is to let us see how similar objects are to one another on the basis of several variables simultaneously. As already noted the idea of similarity here is a kind of statistical opposite of distance, which raises the question of exactly what we mean by the distance between objects in any specific case. Since our interpretation of the PCO results will depend on the distance matrix we give the PCO algorithm to analyze, the choice of how to calculate the distance (similarity) matrix is an important step. Distance matrices are also the central data object in cluster analysis (which we will deal with next) so the issue of how to construct them deserves some attention.</p>
-<p>We’re all familiar with the Euclidean concept of distance. If we have measurements on two objects for a single continuous variable (say, lesion area for rust pustules) we can express the distance between any two objects simply as the absolute value of the difference between the values. If we have measurements on two continuous variables, we have a familiar two-dimensional space (one variable on the <em>x</em>-axis, the other on the <em>y</em>-axis) and the distance between any two objects <span class="math inline">\((i,j)\)</span> in that space is given by the well-known formula from Euclidean geometry:<span class="math display">\[
+<p>The point of PCO is to let us see how similar objects are to one
+another on the basis of several variables simultaneously. As already
+noted the idea of similarity here is a kind of statistical opposite of
+distance, which raises the question of exactly what we mean by the
+distance between objects in any specific case. Since our interpretation
+of the PCO results will depend on the distance matrix we give the PCO
+algorithm to analyze, the choice of how to calculate the distance
+(similarity) matrix is an important step. Distance matrices are also the
+central data object in cluster analysis (which we will deal with next)
+so the issue of how to construct them deserves some attention.</p>
+<p>We’re all familiar with the Euclidean concept of distance. If we have
+measurements on two objects for a single continuous variable (say,
+lesion area for rust pustules) we can express the distance between any
+two objects simply as the absolute value of the difference between the
+values. If we have measurements on two continuous variables, we have a
+familiar two-dimensional space (one variable on the <em>x</em>-axis, the
+other on the <em>y</em>-axis) and the distance between any two objects
+<span class="math inline">\((i,j)\)</span> in that space is given by the
+well-known formula from Euclidean geometry:<span class="math display">\[
 D_{i,j}=\sqrt{\left(x_{i}-x_{j}\right)^{2}+\left(y_{i}-y_{j}\right)^{2}}\]</span></p>
-<p>This concept of distance can be extended to as many dimensions (or variables) as we want by taking the <span class="math inline">\(n^{th}\)</span> root if we have <span class="math inline">\(n\)</span> variables. The Euclidean distance metric is sensitive to extreme values and a variety of other metrics which are conceptually similar, but differ in the detail of the arithmetic. For example, the City Block metric (sometimes referred to as the <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan distance metric</a>) produces similar results to the Euclidean metric but is less sensitive to outliers. For variables that are discrete, but ordinal (so they take on an increasing series of fixed, discrete values) the City Block metric may be a better choice than the Euclidean. Both the Euclidean and City Block metrics are special cases of the <a href="https://en.wikipedia.org/wiki/Minkowski_distance">Minkowski metric</a>, all three are available as options in the base stats <em>dist</em>() function.</p>
-<p>In the case of binary variables the concept of distance (or similarity) is slightly different. Most of the commonly used metrics for binary data are variations or elaborations on the idea of the <a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a> between to objects. Suppose we have two objects for which we have measured a single binary variable. The possible pairs of values are (0,0), (1,0), (0,1), and (1,1). The corresponding Hamming distances are 0 ,1, 1, and 0; the Hamming distance measures the number of pairwise differences between a pair of strings of equal length. So. if we have <span class="math inline">\(n\)</span> binary variables measured on a pair of objects at the variables differ at <span class="math inline">\(x\)</span> positions the Hamming distance can be expressed either a <span class="math inline">\(x\)</span> or as <span class="math inline">\(D=\frac{x}{n}\)</span>. In the second format, similarity can be calculated simply as <span class="math inline">\(S= 1-D\)</span>. The <em>binary</em> option in the <code>dist()</code> function calculates a Hamming-like distance measure that ignores (0,0) cases and calculates the count of differences only for variables where at least one of the objects being compared has a “<em>present</em>” score. In that respect it is conservative in that mutual absences of a character are not interpreted as implying a similarity between two objects, a feature that it shares with, for example, Jaccard’s coefficient.</p>
-<p>A distance measure calculated in this way won’t conform to Euclidean geometry. This isn’t an issue in and of itself because the primary concern is that any distance matrix is self-consistent, but since the output from a PCO <strong><em>will</em></strong> ultimately be interpreted through inspection of distances between points on graphs, it is important to recognize that the initial distance matrix may not be Euclidean and accordingly the low-dimensional projection generated by the PCO may be a rather poor approximation of the actual distances among the objects. We will see how to detect this departure of Euclidean distance in the scree plot of the eigenvalues in the PCO solution. Note that it is <strong>very</strong> common for this to happen.</p>
+<p>This concept of distance can be extended to as many dimensions (or
+variables) as we want by taking the <span
+class="math inline">\(n^{th}\)</span> root if we have <span
+class="math inline">\(n\)</span> variables. The Euclidean distance
+metric is sensitive to extreme values and a variety of other metrics
+which are conceptually similar, but differ in the detail of the
+arithmetic. For example, the City Block metric (sometimes referred to as
+the <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan
+distance metric</a>) produces similar results to the Euclidean metric
+but is less sensitive to outliers. For variables that are discrete, but
+ordinal (so they take on an increasing series of fixed, discrete values)
+the City Block metric may be a better choice than the Euclidean. Both
+the Euclidean and City Block metrics are special cases of the <a
+href="https://en.wikipedia.org/wiki/Minkowski_distance">Minkowski
+metric</a>, all three are available as options in the base stats
+<em>dist</em>() function.</p>
+<p>In the case of binary variables the concept of distance (or
+similarity) is slightly different. Most of the commonly used metrics for
+binary data are variations or elaborations on the idea of the <a
+href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming
+distance</a> between to objects. Suppose we have two objects for which
+we have measured a single binary variable. The possible pairs of values
+are (0,0), (1,0), (0,1), and (1,1). The corresponding Hamming distances
+are 0 ,1, 1, and 0; the Hamming distance measures the number of pairwise
+differences between a pair of strings of equal length. So. if we have
+<span class="math inline">\(n\)</span> binary variables measured on a
+pair of objects at the variables differ at <span
+class="math inline">\(x\)</span> positions the Hamming distance can be
+expressed either a <span class="math inline">\(x\)</span> or as <span
+class="math inline">\(D=\frac{x}{n}\)</span>. In the second format,
+similarity can be calculated simply as <span class="math inline">\(S=
+1-D\)</span>. The <em>binary</em> option in the <code>dist()</code>
+function calculates a Hamming-like distance measure that ignores (0,0)
+cases and calculates the count of differences only for variables where
+at least one of the objects being compared has a “<em>present</em>”
+score. In that respect it is conservative in that mutual absences of a
+character are not interpreted as implying a similarity between two
+objects, a feature that it shares with, for example, Jaccard’s
+coefficient.</p>
+<p>A distance measure calculated in this way won’t conform to Euclidean
+geometry. This isn’t an issue in and of itself because the primary
+concern is that any distance matrix is self-consistent, but since the
+output from a PCO <strong><em>will</em></strong> ultimately be
+interpreted through inspection of distances between points on graphs, it
+is important to recognize that the initial distance matrix may not be
+Euclidean and accordingly the low-dimensional projection generated by
+the PCO may be a rather poor approximation of the actual distances among
+the objects. We will see how to detect this departure of Euclidean
+distance in the scree plot of the eigenvalues in the PCO solution. Note
+that it is <strong>very</strong> common for this to happen.</p>
 </div>
 <div id="pco-example" class="section level2">
 <h2>PCO example</h2>
-<p>The data in this example come from the same survey of wheat crops in Scotland as the disease data we looked at with PCA. In addition to looking at which problems turned up in each wheat crop the survey team also collected a standard set of information about the immediate surroundings of the field and its local setting. For example, whether it was bordered by post and wire fences, stone walls, grass banks, hedgerows etc, and whether the surrounding land use included neighboring wheat crops or other types of cropping and so on. The data set we use here comprises 31 binary (presence/absence) variables recorded on 54 fields spread over three regions.</p>
-<p>The following code block lets the data file be loaded and then constructs a distance matrix, carries out the PCO and generates a scree plot of the eigenvalues and some plots of the scores for the fields on the PCO dimensions.</p>
+<p>The data in this example come from the same survey of wheat crops in
+Scotland as the disease data we looked at with PCA. In addition to
+looking at which problems turned up in each wheat crop the survey team
+also collected a standard set of information about the immediate
+surroundings of the field and its local setting. For example, whether it
+was bordered by post and wire fences, stone walls, grass banks,
+hedgerows etc, and whether the surrounding land use included neighboring
+wheat crops or other types of cropping and so on. The data set we use
+here comprises 31 binary (presence/absence) variables recorded on 54
+fields spread over three regions.</p>
+<p>The following code block lets the data file be loaded and then
+constructs a distance matrix, carries out the PCO and generates a scree
+plot of the eigenvalues and some plots of the scores for the fields on
+the PCO dimensions.</p>
 <pre class="r"><code>margin_data &lt;- read.csv(&quot;data/PCO1_survey.csv&quot;, head = TRUE)
 head(margin_data)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Site.reference.number"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["amenity"],"name":[3],"type":["int"],"align":["right"]},{"label":["arable"],"name":[4],"type":["int"],"align":["right"]},{"label":["A_road"],"name":[5],"type":["int"],"align":["right"]},{"label":["river"],"name":[6],"type":["int"],"align":["right"]},{"label":["grass"],"name":[7],"type":["int"],"align":["right"]},{"label":["msrsh"],"name":[8],"type":["int"],"align":["right"]},{"label":["moor"],"name":[9],"type":["int"],"align":["right"]},{"label":["railway"],"name":[10],"type":["int"],"align":["right"]},{"label":["steadings"],"name":[11],"type":["int"],"align":["right"]},{"label":["shelterbelt"],"name":[12],"type":["int"],"align":["right"]},{"label":["uncult.ivated"],"name":[13],"type":["int"],"align":["right"]},{"label":["urban"],"name":[14],"type":["int"],"align":["right"]},{"label":["waste_ground"],"name":[15],"type":["int"],"align":["right"]},{"label":["woodland"],"name":[16],"type":["int"],"align":["right"]},{"label":["fence"],"name":[17],"type":["int"],"align":["right"]},{"label":["hedge"],"name":[18],"type":["int"],"align":["right"]},{"label":["farm_track"],"name":[19],"type":["int"],"align":["right"]},{"label":["uncultivated_strip"],"name":[20],"type":["int"],"align":["right"]},{"label":["wall"],"name":[21],"type":["int"],"align":["right"]},{"label":["water"],"name":[22],"type":["int"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"1","17":"1","18":"0","19":"0","20":"0","21":"0","22":"0","_rn_":"1"},{"1":"W102","2":"N","3":"0","4":"1","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"1","22":"0","_rn_":"2"},{"1":"W103","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"1","22":"0","_rn_":"3"},{"1":"W104","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"1","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"0","20":"0","21":"1","22":"0","_rn_":"4"},{"1":"W105","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"1","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"0","20":"0","21":"0","22":"1","_rn_":"5"},{"1":"W106","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"0","22":"0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Site.reference.number"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["amenity"],"name":[3],"type":["int"],"align":["right"]},{"label":["arable"],"name":[4],"type":["int"],"align":["right"]},{"label":["A_road"],"name":[5],"type":["int"],"align":["right"]},{"label":["river"],"name":[6],"type":["int"],"align":["right"]},{"label":["grass"],"name":[7],"type":["int"],"align":["right"]},{"label":["msrsh"],"name":[8],"type":["int"],"align":["right"]},{"label":["moor"],"name":[9],"type":["int"],"align":["right"]},{"label":["railway"],"name":[10],"type":["int"],"align":["right"]},{"label":["steadings"],"name":[11],"type":["int"],"align":["right"]},{"label":["shelterbelt"],"name":[12],"type":["int"],"align":["right"]},{"label":["uncult.ivated"],"name":[13],"type":["int"],"align":["right"]},{"label":["urban"],"name":[14],"type":["int"],"align":["right"]},{"label":["waste_ground"],"name":[15],"type":["int"],"align":["right"]},{"label":["woodland"],"name":[16],"type":["int"],"align":["right"]},{"label":["fence"],"name":[17],"type":["int"],"align":["right"]},{"label":["hedge"],"name":[18],"type":["int"],"align":["right"]},{"label":["farm_track"],"name":[19],"type":["int"],"align":["right"]},{"label":["uncultivated_strip"],"name":[20],"type":["int"],"align":["right"]},{"label":["wall"],"name":[21],"type":["int"],"align":["right"]},{"label":["water"],"name":[22],"type":["int"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"1","17":"1","18":"0","19":"0","20":"0","21":"0","22":"0","_rn_":"1"},{"1":"W102","2":"N","3":"0","4":"1","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"1","22":"0","_rn_":"2"},{"1":"W103","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"1","22":"0","_rn_":"3"},{"1":"W104","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"1","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"0","20":"0","21":"1","22":"0","_rn_":"4"},{"1":"W105","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"1","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"0","20":"0","21":"0","22":"1","_rn_":"5"},{"1":"W106","2":"N","3":"0","4":"1","5":"0","6":"0","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0","19":"1","20":"0","21":"0","22":"0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>field_dist &lt;- dist(margin_data[3:22], method = &quot;binary&quot;)
@@ -410,25 +557,68 @@ text(fieldPCO_dim1, fieldPCO_dim3, cex = 1.5, margin_data$region)</code></pre>
 )
 text(fieldPCO_dim2, fieldPCO_dim3, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
-<p>In common with PCA, the solution generated by PCO results in the variance in the data being distributed over the new dimensions in decreasing order from first to last. However the motivation for PCO (as we discussed) is not to study the variance structure, but to project the “distance” among the objects into a reduced dimensional space in such a way that the solution preserves as much information about the true distance relationships as possible. Note that in the <em>plot</em>() calls we set the <em>asp</em> option = 1. This has the effect of making sure that the physical scaling of the plot on the <em>x</em>- and <em>y</em>-axes accurately represents Euclidean distance. Then, if the PCO solution itself is approximately Euclidean the distances between pairs of points on the plots will give a reasonable approximation of the distance by which they differ in the overall distance matrix.</p>
-<p>In the specific example, when we examine the plot of PCO dimensions 1 against 2 there is a suggestion of separation among the fields from the different regions. If we swap the order of plotting the variables and reverse their signs, we can see that the projection looks something like the geographic map of the regions to which the fields belong.</p>
+<p>In common with PCA, the solution generated by PCO results in the
+variance in the data being distributed over the new dimensions in
+decreasing order from first to last. However the motivation for PCO (as
+we discussed) is not to study the variance structure, but to project the
+“distance” among the objects into a reduced dimensional space in such a
+way that the solution preserves as much information about the true
+distance relationships as possible. Note that in the <em>plot</em>()
+calls we set the <em>asp</em> option = 1. This has the effect of making
+sure that the physical scaling of the plot on the <em>x</em>- and
+<em>y</em>-axes accurately represents Euclidean distance. Then, if the
+PCO solution itself is approximately Euclidean the distances between
+pairs of points on the plots will give a reasonable approximation of the
+distance by which they differ in the overall distance matrix.</p>
+<p>In the specific example, when we examine the plot of PCO dimensions 1
+against 2 there is a suggestion of separation among the fields from the
+different regions. If we swap the order of plotting the variables and
+reverse their signs, we can see that the projection looks something like
+the geographic map of the regions to which the fields belong.</p>
 <pre class="r"><code>fieldpco_plot &lt;- plot(-fieldPCO_dim2, -fieldPCO_dim1,
   asp = 1, cex = 1.5,
   xlab = &quot;PCO dimension 1&quot;, ylab = &quot;PCO dimension 2&quot;
 )
 text(-fieldPCO_dim2, -fieldPCO_dim1, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>At this point, you are probably asking whether the apparent separation of the regions in the PCO space is “significant”. PCO isn’t really intended for hypothesis testing, but those who want to take this further could try doing the following:</p>
+<p>At this point, you are probably asking whether the apparent
+separation of the regions in the PCO space is “significant”. PCO isn’t
+really intended for hypothesis testing, but those who want to take this
+further could try doing the following:</p>
 <ol style="list-style-type: decimal">
-<li>For each the fields in each region, calculate the centroid position in the PCO space for dimensions 1 and 2 (NOTE there are several choices for how you could calculate the centroid).</li>
-<li>For each region calculate a measure to variability in the scores along each PCO dimension (your choice of measure of spread might be linked to how you choose to calculate your estimate of central tendency (i.e. centroid position)).</li>
-<li>For each region add the centroid positions and some indication of measure of spread to each region to assess the extent to which the probable regions of the PCO space occupied by each region overlap.</li>
+<li>For each the fields in each region, calculate the centroid position
+in the PCO space for dimensions 1 and 2 (NOTE there are several choices
+for how you could calculate the centroid).</li>
+<li>For each region calculate a measure to variability in the scores
+along each PCO dimension (your choice of measure of spread might be
+linked to how you choose to calculate your estimate of central tendency
+(i.e. centroid position)).</li>
+<li>For each region add the centroid positions and some indication of
+measure of spread to each region to assess the extent to which the
+probable regions of the PCO space occupied by each region overlap.</li>
 </ol>
 </div>
 <div id="variables-and-pco" class="section level2">
 <h2>Variables and PCO</h2>
-<p>A different question, but still one of interest in many studies is how the original data are related to the PCO solution. Because the original variables to do directly enter the analysis it takes a bit more work than with a PCA to see if they are connected with the PCO solution. The following procedure was suggested by the late Pete Digby (A UK statistician who worked a great deal on multivariate techniques) and others. If there is evidence of grouping along one the PCO dimensions, we can do an approximate variance ratio test using each of the binary variables in turn as a grouping factor and testing the variance ratio of the scores on the PCO dimension for objects with and without the variable. Those variables which have large F statistics (variance ratios) are indicated as being associated with the grouping. It is not axiomatically true that the PCO scores have a Normal distribution so the test should be taken as approximate only.</p>
-<p>Inspection of the PCO plots suggests that there are two clusters of fields on the third PCO dimension. These do not appear to have a regional basis so we will use the approximate F test to see which variables might be associated with the clustering. To do this we’re going to use a small <code>for{...}</code> loop.</p>
+<p>A different question, but still one of interest in many studies is
+how the original data are related to the PCO solution. Because the
+original variables to do directly enter the analysis it takes a bit more
+work than with a PCA to see if they are connected with the PCO solution.
+The following procedure was suggested by the late Pete Digby (A UK
+statistician who worked a great deal on multivariate techniques) and
+others. If there is evidence of grouping along one the PCO dimensions,
+we can do an approximate variance ratio test using each of the binary
+variables in turn as a grouping factor and testing the variance ratio of
+the scores on the PCO dimension for objects with and without the
+variable. Those variables which have large F statistics (variance
+ratios) are indicated as being associated with the grouping. It is not
+axiomatically true that the PCO scores have a Normal distribution so the
+test should be taken as approximate only.</p>
+<p>Inspection of the PCO plots suggests that there are two clusters of
+fields on the third PCO dimension. These do not appear to have a
+regional basis so we will use the approximate F test to see which
+variables might be associated with the clustering. To do this we’re
+going to use a small <code>for{...}</code> loop.</p>
 <pre class="r"><code>select_data &lt;- margin_data[3:22]
 Fvals &lt;- vector(length = ncol(select_data))
 maxitem &lt;- length(Fvals)
@@ -443,12 +633,28 @@ Fvalplot &lt;- barplot(log(Fvals, 10),
   main = &quot;Approximate v.r. values on PCO dim 3&quot;
 )</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Plotting the barplot of F values on a log scale immediately lets you differentiate those with v.r.&gt;1 (above the line) from those with v.r. &lt;1 (below the line). We are interested only in those above the line and in this case it is clear that one variable (grass as aa neighboring crop) dominates the others. The cluster of fields with positive values on PCO dimension 3 either have grass crops as neighbors or are close to farm buildings with uncultivated ground, rough tracks or shelterbelts nearby. These features may or may not be of any significance in the ecology of the plant pathogens associated with the crops.</p>
+<p>Plotting the barplot of F values on a log scale immediately lets you
+differentiate those with v.r.&gt;1 (above the line) from those with v.r.
+&lt;1 (below the line). We are interested only in those above the line
+and in this case it is clear that one variable (grass as aa neighboring
+crop) dominates the others. The cluster of fields with positive values
+on PCO dimension 3 either have grass crops as neighbors or are close to
+farm buildings with uncultivated ground, rough tracks or shelterbelts
+nearby. These features may or may not be of any significance in the
+ecology of the plant pathogens associated with the crops.</p>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>The following packages contain procedures for PCO: <strong>ade4, ape, ecodist, labdsv, smacof</strong>, and <strong>vegan</strong>. <a href="http://gastonsanchez.com/blog/how-to/2013/01/23/MDS-in-R.html">This blog post</a> by Gaston Sanchez gives a concise summary. Many of these packages have been developed by vegetation ecologists and they have somewhat overlapping sets of analyses. Delving into the contents of these packages is beyond the scope of this introductory workshop.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>The following packages contain procedures for PCO:
+<strong>ade4, ape, ecodist, labdsv, smacof</strong>, and
+<strong>vegan</strong>. <a
+href="http://gastonsanchez.com/blog/how-to/2013/01/23/MDS-in-R.html">This
+blog post</a> by Gaston Sanchez gives a concise summary. Many of these
+packages have been developed by vegetation ecologists and they have
+somewhat overlapping sets of analyses. Delving into the contents of
+these packages is beyond the scope of this introductory workshop.<a
+href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
@@ -466,13 +672,59 @@ Copyright 2018 Neil McRoberts
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

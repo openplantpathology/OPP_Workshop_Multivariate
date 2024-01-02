@@ -66,7 +66,7 @@ points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 3], cex = 1.5, pc
 points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = "blue")
 ```
 
-Since we can see from the loadings that the first 3 components a really only looking at diferences based on the soil-borne diseases, and since the 4th component is >0 let's look at what we get by plotting 4 against 3.  Note that we reduce the scale of the  axes because these components have less variance so need a smaller absolute scale.
+Since we can see from the loadings that the first 3 components a really only looking at differences based on the soil-borne diseases, and since the 4th component is >0 let's look at what we get by plotting 4 against 3.  Note that we reduce the scale of the  axes because these components have less variance so need a smaller absolute scale.
 
 ```{r}
 pca1_plot2_1N <- plot(survey_pca1$scores[1:17, 3], survey_pca1$scores[1:17, 4],
@@ -156,7 +156,7 @@ We often associate multivariate analyses with large data sets and think of them 
 
 There are a number of publications in the plant pathology literature where people have made use of this idea.  The example here is from a paper on host and nonhost interactions between Alternaria anamorphs and a range of plant species by McRoberts & Lennard (1996) [Plant Pathology, 45 (4), 742-752]
 
-We are going to use the biplot as a way of inspecting how the variance in a table of means from a two-factor ANOVA is distributed among the levels of the two factors. This gives us a nice visual tool for looking directly at interactions and seeing the difference between situations where the interaction is signficant and those where it's not. The particular case we'll look at comes from work on trying to establish where in the infection process host-specificity is decided for different Alternaria anamorphs during attempted infection on known hosts and non-hosts.
+We are going to use the biplot as a way of inspecting how the variance in a table of means from a two-factor ANOVA is distributed among the levels of the two factors. This gives us a nice visual tool for looking directly at interactions and seeing the difference between situations where the interaction is significant and those where it's not. The particular case we'll look at comes from work on trying to establish where in the infection process host-specificity is decided for different Alternaria anamorphs during attempted infection on known hosts and non-hosts.
 
 The first set of data is the percentage of germ-tubes of different Alternaria anamorphs which did NOT attempt penetration on different plant species.
 

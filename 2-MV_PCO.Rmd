@@ -2,7 +2,7 @@
 
 Principal coordinates analysis (also known as multidimensional scaling or classical multidimensional scaling) was developed by John [Gower (1966)](http://hsta559s12.pbworks.com/w/file/fetch/53338762/gower1966.pdf).  The underlying mathematics of PCO and PCA share some similarities (both depend on eigenvalue decomposition of matrices) but their motivations are different and the details of the eigenvalue analysis differ between the two methods.  Whereas in PCA we typically interested in learning about the major relationships among a set of objects *and* how that relationship is determined by a set of variables, in PCO the interest is primarily in the *similarity* among the objects and the individual data variables are of secondary importance.  For this reason, the aim of PCO is often described as reduction in dimensionality, while retaining the important information about relationships among a set of objects.  In the branch of multivariate statistics associated with PCO, *similarity* , $S$and *distance* $D$ are defined as complements of one another so $S=1-D$.
 
-The data structure analyzed in a PCO is a similarity (or distance) matrix for a set of objects.  The similarity (distance) matrix is constructed from the data variables.  The steps in the analysis are therefor:
+The data structure analyzed in a PCO is a similarity (or distance) matrix for a set of objects.  The similarity (distance) matrix is constructed from the data variables.  The steps in the analysis are therefore:
 
 1. Start with two-way array of objects (rows) by variables (columns
 2. Construct a distance or similarity matrix for the objects on the basis of the data using a suitable similarity index

@@ -52,7 +52,7 @@ text(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
 )
 ```
 
-Looking at the ordination labelled with the 7 cluster identifiers, we can see that the clusters formed by `hclust()` using K-means has resulted in clusters that are (for the most part) fairly compact in PCA space.  Given that the PCA is a representation of the variance in the data and the K-means attempts to identify clusters that minimize the  overall within-group variance, it's no suprise that that the PCA turns out to be a  good way to visualize the results of K-means clustering (or looking at things the 
+Looking at the ordination labelled with the 7 cluster identifiers, we can see that the clusters formed by `hclust()` using K-means has resulted in clusters that are (for the most part) fairly compact in PCA space.  Given that the PCA is a representation of the variance in the data and the K-means attempts to identify clusters that minimize the  overall within-group variance, it's no surprise that that the PCA turns out to be a  good way to visualize the results of K-means clustering (or looking at things the 
  other way round, that K-means is a way to identify compact clusters of objects in a  PCA space.).
 
 It won't come of much of a surprise that a similar relationship exists in the case of  PCO and HCA.  The space constructed by the PCO analysis of a distance matrix generates a low dimensional representation of the true distances between objects.  HCA represents the same set of distances as branch lengths on a tree.  We would expect that there will be an approximate relationship between the branch structure of the tree and the clustering of objects in the PCO space.

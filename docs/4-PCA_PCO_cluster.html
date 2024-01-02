@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Linking ordination and clustering</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -27,16 +37,19 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -49,38 +62,12 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -88,13 +75,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -105,44 +87,59 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
+.dropdown-submenu {
+  position: relative;
 }
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
 }
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
 }
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
 }
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
 }
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left {
+  float: none;
 }
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -152,55 +149,83 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
-
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = false;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -214,6 +239,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -249,8 +280,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -266,8 +295,18 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -281,7 +320,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -294,7 +333,7 @@ div.tocify {
   <a href="index.html">Introduction</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Topics
      
     <span class="caret"></span>
@@ -318,7 +357,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Bonus material
      
     <span class="caret"></span>
@@ -343,7 +382,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -352,24 +391,63 @@ div.tocify {
 </div>
 
 
-<p>We have already seen that we can apply both ordination analyses (such as PCA and PCO) <strong>and</strong> cluster analyses to the same data sets on objects of interest. We also had some hints that there are connections between certain types of ordination and cluster analysis. In this section of the workshop we will explore those connections more fully and look at how to combine the two sets of techniques. To do this we will look at two <em>natural</em> pairings of approaches, PCA with K-means NHCA, and PCO with HCA of a common distance matrix.</p>
+<p>We have already seen that we can apply both ordination analyses (such
+as PCA and PCO) <strong>and</strong> cluster analyses to the same data
+sets on objects of interest. We also had some hints that there are
+connections between certain types of ordination and cluster analysis. In
+this section of the workshop we will explore those connections more
+fully and look at how to combine the two sets of techniques. To do this
+we will look at two <em>natural</em> pairings of approaches, PCA with
+K-means NHCA, and PCO with HCA of a common distance matrix.</p>
 <div id="pca-and-k-means-nhca" class="section level3">
 <h3>PCA and K-means NHCA</h3>
-<p>In the section on PCA we noted that the PCA algorithm derives a set of new variables (the principal components) from a set of data such that the maximum variance possible among the data objects with respect to the original variables is captured in as small a set as possible of the new principal components. We also saw that in K-means NHCA the clusters are formed in such a way that the within-cluster variance (the sums of squares) over the data variables is minimized given the number of clusters we impose on the objects. Given this shared goal of minimizing variance, we might expect that a successful NHCA will result in groups of objects that occupy compact regions of the principal component space and which can be clearly differentiated from other clusters in that space. Another way of saying this is that PCA gives us a geometric interpretation of NHCA, in which the distances between points in the PCA solution is an indication of their tendency to cluster together in K-means NHCA.</p>
-<p>With the background concepts spelled out, let’s take a look at the disease survey data again and bring the PCA and NHCA together. We’ll need the PCA solution from the disease survey analysis. If you still have the PCA object from the analysis on the correlation matrix in your environment you will be able to use it directly. If you have removed it, or restarted your R session since we ran the PCA, you will need to recreate it. The following chunk of code will let you load the data file and run the PCA. Note we don’t need to see the results at this stage so we don’t ask R to display anything.</p>
+<p>In the section on PCA we noted that the PCA algorithm derives a set
+of new variables (the principal components) from a set of data such that
+the maximum variance possible among the data objects with respect to the
+original variables is captured in as small a set as possible of the new
+principal components. We also saw that in K-means NHCA the clusters are
+formed in such a way that the within-cluster variance (the sums of
+squares) over the data variables is minimized given the number of
+clusters we impose on the objects. Given this shared goal of minimizing
+variance, we might expect that a successful NHCA will result in groups
+of objects that occupy compact regions of the principal component space
+and which can be clearly differentiated from other clusters in that
+space. Another way of saying this is that PCA gives us a geometric
+interpretation of NHCA, in which the distances between points in the PCA
+solution is an indication of their tendency to cluster together in
+K-means NHCA.</p>
+<p>With the background concepts spelled out, let’s take a look at the
+disease survey data again and bring the PCA and NHCA together. We’ll
+need the PCA solution from the disease survey analysis. If you still
+have the PCA object from the analysis on the correlation matrix in your
+environment you will be able to use it directly. If you have removed it,
+or restarted your R session since we ran the PCA, you will need to
+recreate it. The following chunk of code will let you load the data file
+and run the PCA. Note we don’t need to see the results at this stage so
+we don’t ask R to display anything.</p>
 <pre class="r"><code>PCA1_data &lt;- read.csv(&quot;data/PCA1_Survey.csv&quot;, head = TRUE)
 PCA1_cordata &lt;- PCA1_data[c(-7, -8, -9)]
 head(PCA1_cordata)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>survey_corpca1 &lt;- princomp(PCA1_cordata[3:14], cor = TRUE)
 NHCA_data1 &lt;- data.frame(PCA1_cordata[, 1:2], scale(PCA1_cordata[, 3:14]))
 NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)</code></pre>
-<p>If the NHCA object is not in your environment you will need to create one from the survey data using <code>hclust()</code>. If you need a reminder on how to do that, open the file APS2015_nhca.R.</p>
-<p>To bring the ordination and cluster analysis together we plot the fields in the the principal component space of the PCA solution and use the cluster membership vector from the NHCA solution to identify the points. In the examples we use a simple call to the “text” command to achieve the colors and cluster identifiers, but we could use the same trick with the ‘col’ option of the <code>plot()</code> command itself to color the points on the plot and also use it to allocate symbol types to the clusters. We leave you to explore those (and other) possibilities.</p>
+<p>If the NHCA object is not in your environment you will need to create
+one from the survey data using <code>hclust()</code>. If you need a
+reminder on how to do that, open the file APS2015_nhca.R.</p>
+<p>To bring the ordination and cluster analysis together we plot the
+fields in the the principal component space of the PCA solution and use
+the cluster membership vector from the NHCA solution to identify the
+points. In the examples we use a simple call to the “text” command to
+achieve the colors and cluster identifiers, but we could use the same
+trick with the ‘col’ option of the <code>plot()</code> command itself to
+color the points on the plot and also use it to allocate symbol types to
+the clusters. We leave you to explore those (and other)
+possibilities.</p>
 <pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
   xlab = &quot;first principal component&quot;, ylab = &quot;second principal component&quot;
 )
@@ -395,13 +473,41 @@ text(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
   col = NHCA_fields2$cluster
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
-<p>Looking at the ordination labelled with the 7 cluster identifiers, we can see that the clusters formed by <code>hclust()</code> using K-means has resulted in clusters that are (for the most part) fairly compact in PCA space. Given that the PCA is a representation of the variance in the data and the K-means attempts to identify clusters that minimize the overall within-group variance, it’s no suprise that that the PCA turns out to be a good way to visualize the results of K-means clustering (or looking at things the other way round, that K-means is a way to identify compact clusters of objects in a PCA space.).</p>
-<p>It won’t come of much of a surprise that a similar relationship exists in the case of PCO and HCA. The space constructed by the PCO analysis of a distance matrix generates a low dimensional representation of the true distances between objects. HCA represents the same set of distances as branch lengths on a tree. We would expect that there will be an approximate relationship between the branch structure of the tree and the clustering of objects in the PCO space.</p>
+<p>Looking at the ordination labelled with the 7 cluster identifiers, we
+can see that the clusters formed by <code>hclust()</code> using K-means
+has resulted in clusters that are (for the most part) fairly compact in
+PCA space. Given that the PCA is a representation of the variance in the
+data and the K-means attempts to identify clusters that minimize the
+overall within-group variance, it’s no surprise that that the PCA turns
+out to be a good way to visualize the results of K-means clustering (or
+looking at things the other way round, that K-means is a way to identify
+compact clusters of objects in a PCA space.).</p>
+<p>It won’t come of much of a surprise that a similar relationship
+exists in the case of PCO and HCA. The space constructed by the PCO
+analysis of a distance matrix generates a low dimensional representation
+of the true distances between objects. HCA represents the same set of
+distances as branch lengths on a tree. We would expect that there will
+be an approximate relationship between the branch structure of the tree
+and the clustering of objects in the PCO space.</p>
 </div>
 <div id="pco-and-hca" class="section level3">
 <h3>PCO and HCA</h3>
-<p>We have seen that both PCO and HCA operate on a distance (or similarity) matrix. The PCO attempts to represent the distances in the matrix as a set of points in Euclidean space, the HCA represents the distances as branch lengths on a tree. As with the PCA/NHCA combination, what we might expect is that objects that form compact branches on a dendrogram formed from a similarity matrix, will occupy a compact region of the PCO space formed from the same similarity matrix. It is worth remembering however that because the PCO solution is only an approximation of the true distances among the objects and because (as we have seen) different tree-forming algorithms produce rather different results when applied to the same distance matrix, we should be ready for the PCO and HCA results to show some differences.</p>
-<p>For this example we’ll work with the presence/absence version of the disease survey data. In case you don’t still have the binary distance matrix for that analysis in your R environment, here is the code that creates it from the data vectors used for the PCA analysis.</p>
+<p>We have seen that both PCO and HCA operate on a distance (or
+similarity) matrix. The PCO attempts to represent the distances in the
+matrix as a set of points in Euclidean space, the HCA represents the
+distances as branch lengths on a tree. As with the PCA/NHCA combination,
+what we might expect is that objects that form compact branches on a
+dendrogram formed from a similarity matrix, will occupy a compact region
+of the PCO space formed from the same similarity matrix. It is worth
+remembering however that because the PCO solution is only an
+approximation of the true distances among the objects and because (as we
+have seen) different tree-forming algorithms produce rather different
+results when applied to the same distance matrix, we should be ready for
+the PCO and HCA results to show some differences.</p>
+<p>For this example we’ll work with the presence/absence version of the
+disease survey data. In case you don’t still have the binary distance
+matrix for that analysis in your R environment, here is the code that
+creates it from the data vectors used for the PCA analysis.</p>
 <pre class="r"><code>HCA_data2 &lt;- data.frame(PCA1_cordata[, 1:2], (PCA1_cordata[, 3:14] &gt; 0) * 1)
 field_bindis &lt;- dist(HCA_data2[, 3:14], method = &quot;binary&quot;)
 PCO1_fields &lt;- cmdscale(field_bindis, k = 10, eig = TRUE)
@@ -418,8 +524,29 @@ text(PCO1_fields$points[, 1], PCO1_fields$points[, 2],
   col = field_hgroups3
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<p>The result is pretty much what we’d expect - the tree branches identified by <code>cutree()</code> do seem to form compact clusters in the PCO space, but the plot clearly has some points that lie directly on top of one another because there are far fewer than 41 visible.</p>
-<p>The analyses suggest that there are clusters of fields in the data and we saw earlier when we looked at PCA biplots that there are diagnostic tools available to relate the clusters to the original data variables. At the start of an experimental program these sorts of analyses can be used to generate hypotheses for further testing, or important structure that needs to be considered in model-building. Of course, a logical question to ask is whether the apparent differences among the clusters are “real” or simply an artifact of the sampling procedures used to collect the data (which fields, which locations within fields for assessing the diseases etc). Sometimes we have no particular information about structure in the data before running analyses and the techniques we have looked at so far can be used to find out if there is obvious structure (i.e. clustering) and which variables are associated with it. On the other hand, sometimes we know a priori that there are groups in our dataset and the question we want to answer is whether they are different from one another, and if they are, in what respects they differ. In this situation we move from exploratory data analysis to multivariate hypothesis testing and that will be the subject of the final section of the workshop.</p>
+<p>The result is pretty much what we’d expect - the tree branches
+identified by <code>cutree()</code> do seem to form compact clusters in
+the PCO space, but the plot clearly has some points that lie directly on
+top of one another because there are far fewer than 41 visible.</p>
+<p>The analyses suggest that there are clusters of fields in the data
+and we saw earlier when we looked at PCA biplots that there are
+diagnostic tools available to relate the clusters to the original data
+variables. At the start of an experimental program these sorts of
+analyses can be used to generate hypotheses for further testing, or
+important structure that needs to be considered in model-building. Of
+course, a logical question to ask is whether the apparent differences
+among the clusters are “real” or simply an artifact of the sampling
+procedures used to collect the data (which fields, which locations
+within fields for assessing the diseases etc). Sometimes we have no
+particular information about structure in the data before running
+analyses and the techniques we have looked at so far can be used to find
+out if there is obvious structure (i.e. clustering) and which variables
+are associated with it. On the other hand, sometimes we know a priori
+that there are groups in our dataset and the question we want to answer
+is whether they are different from one another, and if they are, in what
+respects they differ. In this situation we move from exploratory data
+analysis to multivariate hypothesis testing and that will be the subject
+of the final section of the workshop.</p>
 </div>
 
 
@@ -436,13 +563,59 @@ Copyright 2018 Neil McRoberts
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

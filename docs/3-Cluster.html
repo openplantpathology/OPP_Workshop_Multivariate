@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Cluster Analyses</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -27,16 +37,19 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -49,38 +62,12 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -88,13 +75,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -105,44 +87,59 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
+.dropdown-submenu {
+  position: relative;
 }
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
 }
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
 }
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
 }
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
 }
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left {
+  float: none;
 }
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -152,55 +149,83 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
-
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = false;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -214,6 +239,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -249,8 +280,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -266,8 +295,18 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -281,7 +320,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -294,7 +333,7 @@ div.tocify {
   <a href="index.html">Introduction</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Topics
      
     <span class="caret"></span>
@@ -318,7 +357,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Bonus material
      
     <span class="caret"></span>
@@ -343,7 +382,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -352,77 +391,185 @@ div.tocify {
 </div>
 
 
-<p>This section of the workshop can be seen as a logical extension of the first two, but also as a completely independent approach to multivariate analysis. As the name implies cluster analysis is concerned with groupings. We are familiar with cluster analyses of many different forms in lots of different branches of biology from taxonomy to evolutionary biology. Particularly in the fields of evolutionary biology and phylogenetics hierarchical clustering (tree-building) techniques have reached extremely sophisticated levels, in which the clustering algorithms embody detailed hypotheses about the processes of evolution at the molecular level.</p>
-<p>In this introductory course we will take a very broad look at clustering methods from a classical perspective. At this level, and from approach, one might say clustering is a phenomenological exercise: one starts with a set of data, makes some choices about how the clustering process will act on the data, and then attempts to interpret the outcome in terms of what is known about the objects being subjected to the analysis. The clustering algorithms themselves are typically “<em>blind</em>” to the underlying biological or physio-chemical properties of the objects.</p>
-<p>Before getting down to details a couple of warnings for newcomers to cluster analysis. It is one of the areas of quantitative biology that has a large amount of inherent subjectivity. The well-known characterization of taxonomists as either <em>lumpers</em> or <em>splitters</em> is a good indication of this general phenomenon. Even clustering techniques that have built-in objective statistical tests for deciding on numbers of clusters, cluster membership, and the statistical significance of these results, are often based on theoretical assumptions that themselves are open to debate (and hence susceptible to the <em>dangers</em> of subjectivity). As with most of these sorts of debates in biology, there is a core of tried and trusted approaches that nearly everyone agrees are robust, (or at least where the dangers are well-understood) and a periphery of more contentious approaches where you might have to work harder to justify your assumptions and conclusions to readers and critics. Subjectivity cuts both ways, remember. It allows you the freedom to introduce well-argued hypotheses into your analysis at the same time as exposing you to the risk that someone else will disagree with your choices. For those who want to deal with subjectivity by stating it in terms of prior probabilities there is a full range of Bayesian clustering approaches. We will not look at any of these in the workshop, but encourage interested readers to read the package information files that can be found on the CRAN web page at the link at the end of this section. For those who do not want to follow a Bayesian approach we would advocate the following general guidelines. Your assumptions should combine biological plausibility with the most parsimonious explanation available.</p>
-<p>Perhaps as a consequence of the role that subjectivity can (and will) play in cluster analyses, it is an area of analysis that offers a bewildering selection of techniques. Our second warning is simply that for those who are completely new to the subject, when you go beyond the very brief introduction we give here, the list of possible approaches might be overwhelming. If cluster analysis is going to be important in your future we strongly recommend some advanced training and a lot of computer time getting experience. At anything more than a superficial level, cluster analysis is not the sort of subject one can dip in and out of very easily. CRAN maintains a list of well-established approaches available in R can at <a href="http://cran.cnr.berkeley.edu/web/views/Cluster.html">this URL</a>.</p>
+<p>This section of the workshop can be seen as a logical extension of
+the first two, but also as a completely independent approach to
+multivariate analysis. As the name implies cluster analysis is concerned
+with groupings. We are familiar with cluster analyses of many different
+forms in lots of different branches of biology from taxonomy to
+evolutionary biology. Particularly in the fields of evolutionary biology
+and phylogenetics hierarchical clustering (tree-building) techniques
+have reached extremely sophisticated levels, in which the clustering
+algorithms embody detailed hypotheses about the processes of evolution
+at the molecular level.</p>
+<p>In this introductory course we will take a very broad look at
+clustering methods from a classical perspective. At this level, and from
+approach, one might say clustering is a phenomenological exercise: one
+starts with a set of data, makes some choices about how the clustering
+process will act on the data, and then attempts to interpret the outcome
+in terms of what is known about the objects being subjected to the
+analysis. The clustering algorithms themselves are typically
+“<em>blind</em>” to the underlying biological or physio-chemical
+properties of the objects.</p>
+<p>Before getting down to details a couple of warnings for newcomers to
+cluster analysis. It is one of the areas of quantitative biology that
+has a large amount of inherent subjectivity. The well-known
+characterization of taxonomists as either <em>lumpers</em> or
+<em>splitters</em> is a good indication of this general phenomenon. Even
+clustering techniques that have built-in objective statistical tests for
+deciding on numbers of clusters, cluster membership, and the statistical
+significance of these results, are often based on theoretical
+assumptions that themselves are open to debate (and hence susceptible to
+the <em>dangers</em> of subjectivity). As with most of these sorts of
+debates in biology, there is a core of tried and trusted approaches that
+nearly everyone agrees are robust, (or at least where the dangers are
+well-understood) and a periphery of more contentious approaches where
+you might have to work harder to justify your assumptions and
+conclusions to readers and critics. Subjectivity cuts both ways,
+remember. It allows you the freedom to introduce well-argued hypotheses
+into your analysis at the same time as exposing you to the risk that
+someone else will disagree with your choices. For those who want to deal
+with subjectivity by stating it in terms of prior probabilities there is
+a full range of Bayesian clustering approaches. We will not look at any
+of these in the workshop, but encourage interested readers to read the
+package information files that can be found on the CRAN web page at the
+link at the end of this section. For those who do not want to follow a
+Bayesian approach we would advocate the following general guidelines.
+Your assumptions should combine biological plausibility with the most
+parsimonious explanation available.</p>
+<p>Perhaps as a consequence of the role that subjectivity can (and will)
+play in cluster analyses, it is an area of analysis that offers a
+bewildering selection of techniques. Our second warning is simply that
+for those who are completely new to the subject, when you go beyond the
+very brief introduction we give here, the list of possible approaches
+might be overwhelming. If cluster analysis is going to be important in
+your future we strongly recommend some advanced training and a lot of
+computer time getting experience. At anything more than a superficial
+level, cluster analysis is not the sort of subject one can dip in and
+out of very easily. CRAN maintains a list of well-established approaches
+available in R can at <a
+href="http://cran.cnr.berkeley.edu/web/views/Cluster.html">this
+URL</a>.</p>
 <p>So, with warnings duly given here is</p>
 <div id="a-simple-approach" class="section level2">
 <h2>A simple approach</h2>
-<p>One starting point is to decide if you want to work out how many clusters there are in a set of objects, or if you want to build a tree that shows how the objects are related to one another. This decision can be stated as whether you want to perform a non-hierarchical cluster analysis (NHCA) or an hierarchical cluster analysis (HCA). The first of these is often achieved by picking a numerical criterion that can be minimized (or maximized) by allocating objects to clusters (for example the ratio of within-cluster to between-cluster variance) and selecting the number of clusters that achieves the optimized numerical result. The second approach is typically achieved by first calculating a similarity matrix for the objects and then applying a tree building algorithm which repeatedly applies a pre-selected joining rule to the objects on the basis of their similarity until they are all linked into a single group. What has just been said should give a clue as to how the two broad classes of cluster analysis (NHCA or HCA) are related to the ordination methods we looked at in earlier sections.</p>
+<p>One starting point is to decide if you want to work out how many
+clusters there are in a set of objects, or if you want to build a tree
+that shows how the objects are related to one another. This decision can
+be stated as whether you want to perform a non-hierarchical cluster
+analysis (NHCA) or an hierarchical cluster analysis (HCA). The first of
+these is often achieved by picking a numerical criterion that can be
+minimized (or maximized) by allocating objects to clusters (for example
+the ratio of within-cluster to between-cluster variance) and selecting
+the number of clusters that achieves the optimized numerical result. The
+second approach is typically achieved by first calculating a similarity
+matrix for the objects and then applying a tree building algorithm which
+repeatedly applies a pre-selected joining rule to the objects on the
+basis of their similarity until they are all linked into a single group.
+What has just been said should give a clue as to how the two broad
+classes of cluster analysis (NHCA or HCA) are related to the ordination
+methods we looked at in earlier sections.</p>
 </div>
 <div id="non-hierarchical-analysis" class="section level2">
 <h2>Non-Hierarchical Analysis</h2>
-<p>For this example we return to the first data set on diseases in wheat crops in Scotland. Recall that the PCA results hinted that there might be a regional structure to the data. A logical question to ask is whether there are, in fact, three clusters (or groups) of fields. The base statistics package in R provides the funtion <code>kmeans()</code> in the base stats package to do non-hierarchical cluster analysis. In a K-means analysis the clustering algorithm moves objects between clusters until it finds the minimum value of the within-group sums of squares, given the number of clusters specified.</p>
-<p>As a first exercise, let’s assume that there are 3 clusters of fields and look at the output that K-means produces. For this analysis we’ll need the data set from the PCA that we carried out at the start of the workshop. Since we know the rust data were all 0’s we can work with the reduced data set that we generated with the rust variables dropped. If you ran the R code without editing any of the object names and if you haven’t re-started R since you ran the PCA you should have a data frame called PCA1_cordata in your environment. To check if it is there just type the name at the console. If the data frame is in your environment R will print it to the screen. If it’s not there R will tell you it does not exist.If you don’t have the data frame in your environment, the following code will let you re-load the data and re-create the data frame we want.</p>
+<p>For this example we return to the first data set on diseases in wheat
+crops in Scotland. Recall that the PCA results hinted that there might
+be a regional structure to the data. A logical question to ask is
+whether there are, in fact, three clusters (or groups) of fields. The
+base statistics package in R provides the function <code>kmeans()</code>
+in the base stats package to do non-hierarchical cluster analysis. In a
+K-means analysis the clustering algorithm moves objects between clusters
+until it finds the minimum value of the within-group sums of squares,
+given the number of clusters specified.</p>
+<p>As a first exercise, let’s assume that there are 3 clusters of fields
+and look at the output that K-means produces. For this analysis we’ll
+need the data set from the PCA that we carried out at the start of the
+workshop. Since we know the rust data were all 0’s we can work with the
+reduced data set that we generated with the rust variables dropped. If
+you ran the R code without editing any of the object names and if you
+haven’t re-started R since you ran the PCA you should have a data frame
+called PCA1_cordata in your environment. To check if it is there just
+type the name at the console. If the data frame is in your environment R
+will print it to the screen. If it’s not there R will tell you it does
+not exist.If you don’t have the data frame in your environment, the
+following code will let you re-load the data and re-create the data
+frame we want.</p>
 <p>The data are in file PCA1_Survey.csv.</p>
 <pre class="r"><code>PCA1data &lt;- read.csv(&quot;data/PCA1_Survey.csv&quot;, head = TRUE)
 PCA1_cordata &lt;- PCA1data[c(-7, -8, -9)]
 head(PCA1_cordata)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["int"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["int"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"2.1","4":"0.8","5":"0.7","6":"0","7":"0.8","8":"1.4","9":"1.8","10":"0.2","11":"0","12":"0","13":"6.90","14":"0.0","_rn_":"1"},{"1":"W102","2":"N","3":"2.0","4":"1.4","5":"0.2","6":"0","7":"0.0","8":"0.2","9":"1.5","10":"0.5","11":"0","12":"0","13":"6.90","14":"1.2","_rn_":"2"},{"1":"W103","2":"N","3":"2.4","4":"0.5","5":"0.0","6":"0","7":"0.7","8":"0.6","9":"0.7","10":"0.8","11":"0","12":"0","13":"1.40","14":"0.0","_rn_":"3"},{"1":"W105","2":"N","3":"0.2","4":"0.5","5":"0.0","6":"0","7":"2.0","8":"2.3","9":"1.0","10":"0.1","11":"0","12":"0","13":"8.30","14":"1.2","_rn_":"4"},{"1":"W106","2":"N","3":"1.8","4":"0.3","5":"0.2","6":"0","7":"2.1","8":"1.3","9":"1.0","10":"0.4","11":"0","12":"0","13":"11.40","14":"0.0","_rn_":"5"},{"1":"W107","2":"N","3":"1.2","4":"0.2","5":"0.3","6":"0","7":"0.2","8":"0.4","9":"0.6","10":"0.1","11":"0","12":"0","13":"2.35","14":"1.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Because we already know that the data are on different measurement scales and the clustering algorithm is working on sums of squares we might suspect that the solution will be dominated by the data variables with the largest absolute values. To guard against that effect we can use the <code>scale()</code> function to mean-center the data and divide each variable by its standard deviation before the analysis. Note that <code>scale()</code> only works on numeric data so we split the data into two sections and apply <code>scale()</code> only to columns 3 to 14.</p>
+<p>Because we already know that the data are on different measurement
+scales and the clustering algorithm is working on sums of squares we
+might suspect that the solution will be dominated by the data variables
+with the largest absolute values. To guard against that effect we can
+use the <code>scale()</code> function to mean-center the data and divide
+each variable by its standard deviation before the analysis. Note that
+<code>scale()</code> only works on numeric data so we split the data
+into two sections and apply <code>scale()</code> only to columns 3 to
+14.</p>
 <pre class="r"><code>NHCA_data1 &lt;- data.frame(PCA1_cordata[, 1:2], scale(PCA1_cordata[, 3:14]))
 head(NHCA_data1)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"-0.3031461","4":"-0.07595665","5":"0.1797604","6":"-0.3051107","7":"0.5599894","8":"1.46674465","9":"1.45249188","10":"-0.8821397","11":"-0.6927108","12":"-0.6573671","13":"0.01515608","14":"-0.37035862","_rn_":"1"},{"1":"W102","2":"N","3":"-0.3558113","4":"0.47361207","5":"-0.3182244","6":"-0.3051107","7":"-0.4836272","8":"-0.20371453","9":"0.93010445","10":"-0.1683030","11":"-0.6927108","12":"-0.6573671","13":"0.01515608","14":"-0.05673308","_rn_":"2"},{"1":"W103","2":"N","3":"-0.1451505","4":"-0.35074102","5":"-0.5174184","6":"-0.3051107","7":"0.4295373","8":"0.35310519","9":"-0.46292870","10":"0.5455338","11":"-0.6927108","12":"-0.6573671","13":"-0.73764062","14":"-0.37035862","_rn_":"3"},{"1":"W105","2":"N","3":"-1.3037852","4":"-0.35074102","5":"-0.5174184","6":"-0.3051107","7":"2.1254143","8":"2.71958903","9":"0.05945873","10":"-1.1200853","11":"-0.6927108","12":"-0.6573671","13":"0.20677706","14":"-0.05673308","_rn_":"4"},{"1":"W106","2":"N","3":"-0.4611418","4":"-0.53393059","5":"-0.3182244","6":"-0.3051107","7":"2.2558664","8":"1.32753972","9":"0.05945873","10":"-0.4062486","11":"-0.6927108","12":"-0.6573671","13":"0.63108066","14":"-0.37035862","_rn_":"5"},{"1":"W107","2":"N","3":"-0.7771330","4":"-0.62552538","5":"-0.2186275","6":"-0.3051107","7":"-0.2227231","8":"0.07469533","9":"-0.63705784","10":"-1.1200853","11":"-0.6927108","12":"-0.6573671","13":"-0.60761210","14":"0.04780877","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Ref"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["ST_L"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["St_G"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Sn_L"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Sn_G"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Pm_L"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pm_G"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Fu_L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Bo_L"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SM_E"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ES"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["SES"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["TA"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"W101","2":"N","3":"-0.3031461","4":"-0.07595665","5":"0.1797604","6":"-0.3051107","7":"0.5599894","8":"1.46674465","9":"1.45249188","10":"-0.8821397","11":"-0.6927108","12":"-0.6573671","13":"0.01515608","14":"-0.37035862","_rn_":"1"},{"1":"W102","2":"N","3":"-0.3558113","4":"0.47361207","5":"-0.3182244","6":"-0.3051107","7":"-0.4836272","8":"-0.20371453","9":"0.93010445","10":"-0.1683030","11":"-0.6927108","12":"-0.6573671","13":"0.01515608","14":"-0.05673308","_rn_":"2"},{"1":"W103","2":"N","3":"-0.1451505","4":"-0.35074102","5":"-0.5174184","6":"-0.3051107","7":"0.4295373","8":"0.35310519","9":"-0.46292870","10":"0.5455338","11":"-0.6927108","12":"-0.6573671","13":"-0.73764062","14":"-0.37035862","_rn_":"3"},{"1":"W105","2":"N","3":"-1.3037852","4":"-0.35074102","5":"-0.5174184","6":"-0.3051107","7":"2.1254143","8":"2.71958903","9":"0.05945873","10":"-1.1200853","11":"-0.6927108","12":"-0.6573671","13":"0.20677706","14":"-0.05673308","_rn_":"4"},{"1":"W106","2":"N","3":"-0.4611418","4":"-0.53393059","5":"-0.3182244","6":"-0.3051107","7":"2.2558664","8":"1.32753972","9":"0.05945873","10":"-0.4062486","11":"-0.6927108","12":"-0.6573671","13":"0.63108066","14":"-0.37035862","_rn_":"5"},{"1":"W107","2":"N","3":"-0.7771330","4":"-0.62552538","5":"-0.2186275","6":"-0.3051107","7":"-0.2227231","8":"0.07469533","9":"-0.63705784","10":"-1.1200853","11":"-0.6927108","12":"-0.6573671","13":"-0.60761210","14":"0.04780877","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code># Cluster the fields into 3 groups
 NHCA_fields1 &lt;- kmeans(NHCA_data1[, 3:14], 3)
 NHCA_fields1</code></pre>
-<pre><code>## K-means clustering with 3 clusters of sizes 16, 8, 17
+<pre><code>## K-means clustering with 3 clusters of sizes 21, 3, 17
 ## 
 ## Cluster means:
-##         ST_L        St_G        Sn_L       Sn_G       Pm_L       Pm_G
-## 1 -0.7639667 -0.43661113  0.15486113 -0.3051107  0.6578285  0.6489157
-## 2 -0.0859021  0.07288488 -0.20617786 -0.3051107 -0.4510142 -0.2733170
-## 3  0.7594520  0.37662936 -0.04872678  0.4307445 -0.4068907 -0.4821244
-##         Fu_L       Bo_L       SM_E         ES         SES         TA
-## 1 -0.1364366 -0.7185522 -0.2489429 -0.3089751  0.18205454 -0.2560160
-## 2  0.7995076 -0.7334238 -0.6927108 -0.6390416 -0.43002051  1.1552990
-## 3 -0.2478280  1.0214250  0.5602808  0.5915256  0.03101715 -0.3027139
+##         ST_L       St_G       Sn_L       Sn_G       Pm_L       Pm_G       Fu_L
+## 1 -0.5138070 -0.1893597 -0.3134817 -0.3051107  0.2121172  0.3928780  0.2750472
+## 2 -0.3558113 -0.8087150  3.1344702  1.3628278  0.3860533 -0.4821244 -0.5209717
+## 3  0.6974930  0.3766294 -0.1658997  0.1364024 -0.3301542 -0.4002391 -0.2478280
+##         Bo_L       SM_E         ES         SES         TA
+## 1 -0.7461708 -0.6444095 -0.5282419 -0.17887645  0.2979625
+## 2 -0.5648790  0.9978334 -0.1918340  1.35011557 -0.3703586
+## 3  1.0214250  0.6199470  0.6863872 -0.01729066 -0.3027139
 ## 
 ## Clustering vector:
-##  [1] 1 2 1 1 1 1 2 2 1 1 2 2 1 1 2 1 2 1 1 1 1 1 3 3 3 1 3 3 3 3 3 3 3 3 3
-## [36] 3 3 2 3 3 3
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 3 1 2 1 3 3 3 1 3 3 3 3 2 3 3 3 3 3 3 1
+## [39] 3 3 3
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 156.03295  41.76412 155.71549
-##  (between_SS / total_SS =  26.4 %)
+## [1] 157.82690  38.47175 138.59169
+##  (between_SS / total_SS =  30.2 %)
 ## 
 ## Available components:
 ## 
-## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
-## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
-## [9] &quot;ifault&quot;</code></pre>
-<p>Asking R to print the kmeans object produces a summary of the analysis in the following order:</p>
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<p>Asking R to print the kmeans object produces a summary of the
+analysis in the following order:</p>
 <ol style="list-style-type: decimal">
 <li>The number of objects in each cluster</li>
 <li>The value of the data variables at the cluster centroids.</li>
-<li>The vector of cluster membership for the objects in the order they appear in the data set.</li>
-<li>The within-cluster sums of squares and the relative size of within- and between-cluster SS. Since the number of data objects is relatively small we can use a simple barplot to look at how the fields from each region have been allocated to the new clusters.</li>
+<li>The vector of cluster membership for the objects in the order they
+appear in the data set.</li>
+<li>The within-cluster sums of squares and the relative size of within-
+and between-cluster SS. Since the number of data objects is relatively
+small we can use a simple barplot to look at how the fields from each
+region have been allocated to the new clusters.</li>
 </ol>
 <pre class="r"><code>NHCA_3clus_plt &lt;- barplot(NHCA_fields1$cluster,
   names.arg = PCA1_cordata$region, cex.names = 0.5, xlab = &quot;region&quot;,
   ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Group 1 is dominated by fields in the North region, with one from the West and five from the East. Group 3 is predominantly composed of sites from the West and to a lesser extent the East and contains no northern fields. Group 2, which has only five members comprises three fields from the North and two from the East. The within cluster sums of squares is 70% of the total. Given that the clustering is an attempt to minimize within cluster S.S. we might well ask whether 3 clusters is the optimum number.</p>
+<p>Group 1 is dominated by fields in the North region, with one from the
+West and five from the East. Group 3 is predominantly composed of sites
+from the West and to a lesser extent the East and contains no northern
+fields. Group 2, which has only five members comprises three fields from
+the North and two from the East. The within cluster sums of squares is
+70% of the total. Given that the clustering is an attempt to minimize
+within cluster S.S. we might well ask whether 3 clusters is the optimum
+number.</p>
 </div>
 <div id="number-of-clusters" class="section level2">
 <h2>Number of clusters</h2>
@@ -436,100 +583,195 @@ clus_plot_pct &lt;- barplot(wSS_fields1_pct,
   ylab = &quot;within cluster %S.S.&quot;, names.arg = seq(1, 20, 1)
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<p>The <code>for()</code> loop cycles through the clustering procedure, extracts the within-cluster sum of squares and stores it in rows 2 to 20 of the data structure wSS_fields1 which was declared explicitly outside the loop. We get the total sum of squares among the objects in the calculation that declares wSS_fields1 using the <em>sum</em>() and <code>apply()</code> functions. The result is stored by implication in the first line of the new data structure. Note that this little piece of coding shows a feature of <code>for()</code> loop writing that is often needed: <strong>we do the first calculation outside the loop</strong> and then write the loop so that it cycles from 2 to our maximum number of iterations. In this case that trick let’s us use the loop iteration index , <span class="math inline">\(i\)</span>, to be the variable that sets the number of clusters we want to extract from the data each pass round the loop.</p>
-<p>The barplot shows how the within-cluster sum of squares drops as the number of clusters grows. we can use this (if we are lucky), in the same way we use a scree plot in ordination to select the number of dimensions, to work out how many clusters are present. In a clear case, we would choose the number just after a dramatic decrease in the wSS value. In this case we are not so lucky. The Within group S.S. shows a fairly steady decline as the number of clusters increases.The first value of wSS_fields1 contains the total S.S. for the data so by calculating the values for the rest of the bars as a percentage of the first one, we can see how the within-cluster S.S.decreases as a proportion of the total as the number of clusers increases.</p>
-<p>The values for 6 and 7 clusters are 48.8% and 40.7% respectively. so with 7 clusters the between cluster S.S. is &gt;50% of the total and the within cluster S.S. has dropped by a relatively large increment in moving from 6 to 7 clusters. These features together suggest that a model with 7 clusters might be of interest.</p>
+<p>The <code>for()</code> loop cycles through the clustering procedure,
+extracts the within-cluster sum of squares and stores it in rows 2 to 20
+of the data structure wSS_fields1 which was declared explicitly outside
+the loop. We get the total sum of squares among the objects in the
+calculation that declares wSS_fields1 using the <em>sum</em>() and
+<code>apply()</code> functions. The result is stored by implication in
+the first line of the new data structure. Note that this little piece of
+coding shows a feature of <code>for()</code> loop writing that is often
+needed: <strong>we do the first calculation outside the loop</strong>
+and then write the loop so that it cycles from 2 to our maximum number
+of iterations. In this case that trick let’s us use the loop iteration
+index , <span class="math inline">\(i\)</span>, to be the variable that
+sets the number of clusters we want to extract from the data each pass
+round the loop.</p>
+<p>The barplot shows how the within-cluster sum of squares drops as the
+number of clusters grows. we can use this (if we are lucky), in the same
+way we use a scree plot in ordination to select the number of
+dimensions, to work out how many clusters are present. In a clear case,
+we would choose the number just after a dramatic decrease in the wSS
+value. In this case we are not so lucky. The Within group S.S. shows a
+fairly steady decline as the number of clusters increases.The first
+value of wSS_fields1 contains the total S.S. for the data so by
+calculating the values for the rest of the bars as a percentage of the
+first one, we can see how the within-cluster S.S.decreases as a
+proportion of the total as the number of clusters increases.</p>
+<p>The values for 6 and 7 clusters are 48.8% and 40.7% respectively. so
+with 7 clusters the between cluster S.S. is &gt;50% of the total and the
+within cluster S.S. has dropped by a relatively large increment in
+moving from 6 to 7 clusters. These features together suggest that a
+model with 7 clusters might be of interest.</p>
 <pre class="r"><code># Cluster the fields into 7 groups
 NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)
 NHCA_fields2</code></pre>
-<pre><code>## K-means clustering with 7 clusters of sizes 8, 2, 9, 3, 8, 1, 10
+<pre><code>## K-means clustering with 7 clusters of sizes 3, 3, 17, 10, 2, 5, 1
 ## 
 ## Cluster means:
-##          ST_L       St_G        Sn_L        Sn_G         Pm_L       Pm_G
-## 1 -0.02665374 -0.8087150  0.22955885  0.94584314  0.005568076 -0.3081182
-## 2 -0.61913740 -0.8087150  3.46646011 -0.30511069  0.168633171 -0.4821244
-## 3 -0.78298474 -0.5949938 -0.46208672 -0.30511069 -0.179239031 -0.1109112
-## 4 -0.91757362 -0.1675514 -0.45102039 -0.30511069  2.821158715  2.8123923
-## 5 -0.21098199  0.3362199 -0.06923203 -0.30511069 -0.239029566  0.1616984
-## 6  0.69749297 -0.8087150 -0.51741836 -0.30511069 -0.483627208 -0.4821244
-## 7  1.22414512  1.2063704 -0.21862748 -0.05491992 -0.483627208 -0.4821244
-##         Fu_L       Bo_L       SM_E          ES        SES         TA
-## 1 -0.3758641  1.0214250  0.3216157  1.47252953  0.7340769 -0.3703586
-## 2 -0.8111870 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.3703586
-## 3 -0.6370578 -0.7235094 -0.5800078 -0.37236436 -0.1452885 -0.1380434
-## 4  1.0461905 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.1612749
-## 5  0.8212737 -0.6441942 -0.6927108 -0.65736713 -0.5177898  0.3254981
-## 6  1.8007502 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.3794431
-## 7 -0.1146704  1.0214250  0.7273463  0.04071208 -0.5001675 -0.2553626
+##         ST_L       St_G       Sn_L        Sn_G        Pm_L        Pm_G
+## 1 -0.9175736 -0.1675514 -0.4510204 -0.30511069  2.82115871  2.81239232
+## 2 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.48212440
+## 3 -0.5138070 -0.1567756 -0.2772139 -0.30511069 -0.20737575  0.01737565
+## 4  1.2241451  1.2063704 -0.2186275 -0.05491992 -0.48362721 -0.48212440
+## 5 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.48212440
+## 6  0.1708408 -0.8087150 -0.3182244 -0.30511069  0.03818110 -0.20371453
+## 7  0.6974930 -0.8087150 -0.5174184 -0.30511069 -0.48362721 -0.48212440
+##          Fu_L       Bo_L       SM_E          ES        SES          TA
+## 1  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
+## 2  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.37035862
+## 3  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
+## 4 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
+## 5 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
+## 6 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.37035862
+## 7  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
 ## 
 ## Clustering vector:
-##  [1] 5 5 3 4 4 3 5 5 5 3 3 5 3 3 5 4 5 2 1 3 2 3 1 1 1 3 1 7 7 1 1 7 7 7 7
-## [36] 7 1 6 7 7 7
+##  [1] 3 3 3 1 1 3 3 3 3 3 3 3 3 3 3 1 3 5 6 3 5 3 6 6 2 3 6 4 4 2 2 4 4 4 4 4 6 7
+## [39] 4 4 4
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 77.16680 11.04295 23.54137 14.43222 20.89019  0.00000 45.04325
-##  (between_SS / total_SS =  60.0 %)
+## [1] 14.43222 10.53387 61.40302 45.04325 11.04295 36.40606  0.00000
+##  (between_SS / total_SS =  62.7 %)
 ## 
 ## Available components:
 ## 
-## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
-## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
-## [9] &quot;ifault&quot;</code></pre>
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
 <pre class="r"><code>NHCA_7clus_plt &lt;- barplot(NHCA_fields2$cluster,
   names.arg = PCA1_cordata$region, cex.names = 0.5,
   xlab = &quot;region&quot;, ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Although the solution with 7 clusters has reduced the within-cluster S.S. to &lt;50%, it has a couple of clusters that have only 1 or 2 members. This may reflect fields that are truly different from the rest of the sample in some important respect, but it might also be an artifact of the clustering process. It certainly suggests that we should look at the solution with only 6 clusters since we now have the hang of running the analysis.</p>
+<p>Although the solution with 7 clusters has reduced the within-cluster
+S.S. to &lt;50%, it has a couple of clusters that have only 1 or 2
+members. This may reflect fields that are truly different from the rest
+of the sample in some important respect, but it might also be an
+artefact of the clustering process. It certainly suggests that we should
+look at the solution with only 6 clusters since we now have the hang of
+running the analysis.</p>
 <pre class="r"><code># Cluster the fields into 6 groups
 NHCA_fields3 &lt;- kmeans(NHCA_data1[, 3:14], 6)
 NHCA_fields3</code></pre>
-<pre><code>## K-means clustering with 6 clusters of sizes 3, 16, 2, 5, 14, 1
+<pre><code>## K-means clustering with 6 clusters of sizes 2, 3, 20, 10, 1, 5
 ## 
 ## Cluster means:
-##         ST_L       St_G       Sn_L       Sn_G        Pm_L        Pm_G
-## 1 -0.3558113 -0.8087150  1.1425310  3.0307662 -0.04878696 -0.48212440
-## 2 -0.5269733 -0.1618268 -0.3057748 -0.3051107 -0.25533608 -0.07320991
-## 3 -0.6191374 -0.8087150  3.4664601 -0.3051107  0.16863317 -0.48212440
-## 4 -0.7876661 -0.2774652 -0.1389499 -0.3051107  2.22977597  2.16276931
-## 5  0.9984371  0.6306317 -0.3039963 -0.1264030 -0.48362721 -0.48212440
-## 6  0.6974930 -0.8087150 -0.5174184 -0.3051107 -0.48362721 -0.48212440
-##          Fu_L       Bo_L       SM_E          ES         SES         TA
-## 1  0.05945873  1.0214250 -0.3546019  0.98283793  0.43626600 -0.3703586
-## 2 -0.03848891 -0.6739374 -0.6293154 -0.49705307 -0.34156690  0.1082470
-## 3 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.44273238 -0.3703586
-## 4  0.93010445 -0.5014268 -0.4898455 -0.09960923  0.23141405 -0.2449084
-## 5 -0.31367515  1.0214250  0.7563271  0.50767292 -0.05582189 -0.2882186
-## 6  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.89524387  5.3794431
+##         ST_L       St_G       Sn_L        Sn_G        Pm_L       Pm_G
+## 1 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.4821244
+## 2 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.4821244
+## 3 -0.3610779 -0.2912044 -0.2485066 -0.30511069 -0.30099430 -0.1549928
+## 4  1.2768103  1.2063704 -0.4178214 -0.05491992 -0.48362721 -0.4821244
+## 5  0.6974930 -0.8087150 -0.5174184 -0.30511069 -0.48362721 -0.4821244
+## 6 -0.7876661 -0.2774652 -0.1389499 -0.30511069  2.22977597  2.1627693
+##          Fu_L       Bo_L       SM_E          ES        SES         TA
+## 1 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.3703586
+## 2  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.3703586
+## 3 -0.01889938 -0.3348649 -0.4391291 -0.34189221 -0.2308031  0.0125259
+## 4 -0.46292870  1.0214250  0.9302116  0.59924159 -0.1630514 -0.2553626
+## 5  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.3794431
+## 6  0.93010445 -0.5014268 -0.4898455 -0.09960923  0.2314140 -0.2449084
 ## 
 ## Clustering vector:
-##  [1] 4 2 2 4 4 2 2 2 2 2 2 2 2 2 2 4 2 3 4 2 3 2 5 5 1 2 5 5 5 1 1 5 5 5 5
-## [36] 5 5 6 5 5 5
+##  [1] 6 3 3 6 6 3 3 3 3 3 3 3 3 3 3 6 3 1 6 3 1 3 4 3 2 3 3 3 3 2 2 4 4 4 4 4 4 5
+## [39] 4 4 4
 ## 
 ## Within cluster sum of squares by cluster:
-## [1]  10.53387  55.77306  11.04295  34.15967 100.70357   0.00000
-##  (between_SS / total_SS =  55.8 %)
+## [1] 11.04295 10.53387 88.10693 71.11939  0.00000 34.15967
+##  (between_SS / total_SS =  55.2 %)
 ## 
 ## Available components:
 ## 
-## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
-## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
-## [9] &quot;ifault&quot;</code></pre>
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
 <pre class="r"><code>NHCA_6clus_plt &lt;- barplot(NHCA_fields3$cluster,
   names.arg = PCA1_cordata$region, cex.names = 0.5,
   xlab = &quot;region&quot;, ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Sacrificing some of the within-cluster S.S. by moving from 7 to 6 clusters didn’t really gain us anything useful; we still have a couple of fields that apparently do not belong to any of the larger clusters. Some general results from the analysis are apparent, however. The majority of fields from the West remain clustered together, while the majority of fields from the North form a second relatively stable cluster. The remaining fields from these regions and most of those in the East tend to change cluster identity as the number of clusters changes, suggesting that they do not have as coherent a pattern of diseases as those from the other regions.</p>
-<p>A graphical representation of how coherent the different clusters are, would be helpful in interpreting the results of the cluster analysis. We will look at how ordination can be combined with cluster analysis to achieve this, but before doing that, we will look at hierarchical clustering.</p>
+<p>Sacrificing some of the within-cluster S.S. by moving from 7 to 6
+clusters didn’t really gain us anything useful; we still have a couple
+of fields that apparently do not belong to any of the larger clusters.
+Some general results from the analysis are apparent, however. The
+majority of fields from the West remain clustered together, while the
+majority of fields from the North form a second relatively stable
+cluster. The remaining fields from these regions and most of those in
+the East tend to change cluster identity as the number of clusters
+changes, suggesting that they do not have as coherent a pattern of
+diseases as those from the other regions.</p>
+<p>A graphical representation of how coherent the different clusters
+are, would be helpful in interpreting the results of the cluster
+analysis. We will look at how ordination can be combined with cluster
+analysis to achieve this, but before doing that, we will look at
+hierarchical clustering.</p>
 </div>
 <div id="hierarchical-cluster-analysis" class="section level2">
 <h2>Hierarchical Cluster Analysis</h2>
-<p>As we indicated in the introduction to this section the aim in hierarchical clustering is to form clusters of objects by starting with each object in a cluster of its own and iteratively linking them together according to a clustering algorithm applied to a distance (or similarity matrix) for the objects. We already saw that a distance matrix is the basis for a PCO. We will use the same type of data structure here to examine how the individual fields cluster.</p>
-<p>The base stats package in R provides the <code>hclust()</code> function for performing NHCA. Just as there are different algorithms for HCA, so there are for NHCA. In the case of NHCA the main differences among the algorithms relate to the choice of which objects to select for “joining” at each successive step of agglomeration. At one extreme we have “complete” (or farthest neighbor) clustering and at the other extreme “single” (or nearest neighbor) clustering. In between these extremes we can use methods such as “Ward” clustering or Unweighted Group Mean Averaging (UPGMA) or “centroid” or any one of several others. The <code>hclust()</code> function provides “single”, “complete”, “ward”, “centroid”, “average”, “mcquitty”, and “median” as methods (note that the option names <strong>do not</strong> start with upper case letters).</p>
-<p>The easiest way to understand what the differences between any two clustering methods is to start with the extreme case (i.e. complete v single clustering) applied to a toy example. Suppose we have a group of objects which are being subjected to NHCA. Further suppose the process has so far combined the objects into 3 clusters and the next iteration will decide which two of the three to combine to form the next larger cluster. The <strong>single</strong> (nearest neighbor) approach considers each pair of clusters in turn and notes the similarity between the closest (or most similar) members of each pair. The pair of existing clusters whose <strong>most similar individual members have the highest similarity (or smallest distance) are joined together</strong>.</p>
-<p>The <strong>complete</strong> (or farthest neighbor) algorithm does the same thing except that it selects the pair of existing clusters whose <strong>least similar members have the highest similarity</strong> among all possible pairwise comparisons. The result is that single clustering tends to produce <em>long</em> diffuse clusters which may contain rather dissimilar members linked by a long series of pairs of somewhat similar neighbors. In contrast complete clustering tends to produce a large number of small, compact clusters with relatively large inter-cluster differences.</p>
-<p>It is important to note that with HCA both the choice of distance metric used to construct the distance matrix <strong>and</strong> the clustering algorithm will affect the results of the clustering exercise. The standard approach to displaying the results of HCA is to draw a tree or dendrogram. The base stats package provides some fairly nice tree drawing tools and some additional tools for exploring the structure of the tree or highlighting groupings. The following block of code, does four HCAs on the disease data, first a pair based on a Euclidean distance matrix calculated from the scaled data and then a pair with the data converted to simple presence/absence of each disease in each field and translated into a binary distance matrix. In each pair we first apply the complete joining algorithm and then the single joining algorithm. We also illustrate the use of the <code>cutree()</code> function to cut each tree into 7 groups and the <code>rect.hclust()</code> function to draw boxes around the branches of the trees identified by <code>cutree()</code>.</p>
+<p>As we indicated in the introduction to this section the aim in
+hierarchical clustering is to form clusters of objects by starting with
+each object in a cluster of its own and iteratively linking them
+together according to a clustering algorithm applied to a distance (or
+similarity matrix) for the objects. We already saw that a distance
+matrix is the basis for a PCO. We will use the same type of data
+structure here to examine how the individual fields cluster.</p>
+<p>The base stats package in R provides the <code>hclust()</code>
+function for performing NHCA. Just as there are different algorithms for
+HCA, so there are for NHCA. In the case of NHCA the main differences
+among the algorithms relate to the choice of which objects to select for
+“joining” at each successive step of agglomeration. At one extreme we
+have “complete” (or farthest neighbor) clustering and at the other
+extreme “single” (or nearest neighbor) clustering. In between these
+extremes we can use methods such as “Ward” clustering or Unweighted
+Group Mean Averaging (UPGMA) or “centroid” or any one of several others.
+The <code>hclust()</code> function provides “single”, “complete”,
+“ward”, “centroid”, “average”, “mcquitty”, and “median” as methods (note
+that the option names <strong>do not</strong> start with upper case
+letters).</p>
+<p>The easiest way to understand what the differences between any two
+clustering methods is to start with the extreme case (i.e. complete v
+single clustering) applied to a toy example. Suppose we have a group of
+objects which are being subjected to NHCA. Further suppose the process
+has so far combined the objects into 3 clusters and the next iteration
+will decide which two of the three to combine to form the next larger
+cluster. The <strong>single</strong> (nearest neighbor) approach
+considers each pair of clusters in turn and notes the similarity between
+the closest (or most similar) members of each pair. The pair of existing
+clusters whose <strong>most similar individual members have the highest
+similarity (or smallest distance) are joined together</strong>.</p>
+<p>The <strong>complete</strong> (or farthest neighbor) algorithm does
+the same thing except that it selects the pair of existing clusters
+whose <strong>least similar members have the highest similarity</strong>
+among all possible pairwise comparisons. The result is that single
+clustering tends to produce <em>long</em> diffuse clusters which may
+contain rather dissimilar members linked by a long series of pairs of
+somewhat similar neighbors. In contrast complete clustering tends to
+produce a large number of small, compact clusters with relatively large
+inter-cluster differences.</p>
+<p>It is important to note that with HCA both the choice of distance
+metric used to construct the distance matrix <strong>and</strong> the
+clustering algorithm will affect the results of the clustering exercise.
+The standard approach to displaying the results of HCA is to draw a tree
+or dendrogram. The base stats package provides some fairly nice tree
+drawing tools and some additional tools for exploring the structure of
+the tree or highlighting groupings. The following block of code, does
+four HCAs on the disease data, first a pair based on a Euclidean
+distance matrix calculated from the scaled data and then a pair with the
+data converted to simple presence/absence of each disease in each field
+and translated into a binary distance matrix. In each pair we first
+apply the complete joining algorithm and then the single joining
+algorithm. We also illustrate the use of the <code>cutree()</code>
+function to cut each tree into 7 groups and the
+<code>rect.hclust()</code> function to draw boxes around the branches of
+the trees identified by <code>cutree()</code>.</p>
 <pre class="r"><code># Hierachical cluster analysis: Euclidean distance matrix, furthest neighbor clustering
 field_Eucdis &lt;- dist(NHCA_data1[, 3:14], method = &quot;euclidean&quot;)
 HCA_field1 &lt;- hclust(field_Eucdis, method = &quot;complete&quot;)
@@ -559,7 +801,17 @@ dend_field4 &lt;- plot(HCA_field4)
 field_hgroups4 &lt;- cutree(HCA_field4, k = 7)
 rect.hclust(HCA_field4, k = 7, border = &quot;red&quot;)</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-7-4.png" width="672" /></p>
-<p>We have only touched on the basic approaches for HCA even among the options offered in the base stats package. In addition to the options available in the base package remember there is a wide range of other packages available that allow distances to be calculated using other metrics and clustering to be carried out with many different algorithms. Some of these packages are written with specific purposes in mind, others are more general. Rather than explore a subset of these options, in the limited time of the workshop we are going to stay with analyses that can be performed with the base package and move on to look at how we can combine ordination and cluster analyses to get good visualizations of clusters of objects.</p>
+<p>We have only touched on the basic approaches for HCA even among the
+options offered in the base stats package. In addition to the options
+available in the base package remember there is a wide range of other
+packages available that allow distances to be calculated using other
+metrics and clustering to be carried out with many different algorithms.
+Some of these packages are written with specific purposes in mind,
+others are more general. Rather than explore a subset of these options,
+in the limited time of the workshop we are going to stay with analyses
+that can be performed with the base package and move on to look at how
+we can combine ordination and cluster analyses to get good
+visualizations of clusters of objects.</p>
 </div>
 
 
@@ -576,13 +828,59 @@ Copyright 2018 Neil McRoberts
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
