@@ -448,28 +448,40 @@ trick with the ‘col’ option of the <code>plot()</code> command itself to
 color the points on the plot and also use it to allocate symbol types to
 the clusters. We leave you to explore those (and other)
 possibilities.</p>
-<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  xlab = &quot;first principal component&quot;, ylab = &quot;second principal component&quot;
-)
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  cex = 1.5, NHCA_fields2$cluster,
+<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1],
+                      survey_corpca1$score[, 2],
+                      xlab = &quot;first principal component&quot;,
+                      ylab = &quot;second principal component&quot;)
+text(
+  survey_corpca1$score[, 1],
+  survey_corpca1$score[, 2],
+  cex = 1.5,
+  NHCA_fields2$cluster,
   col = NHCA_fields2$cluster
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  xlab = &quot;first principal component&quot;, ylab = &quot;second principal component&quot;
-)
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 2],
-  cex = 1.5, NHCA_fields2$cluster,
+<pre class="r"><code>PCA_7clusplot &lt;- plot(survey_corpca1$score[, 1],
+                      survey_corpca1$score[, 2],
+                      xlab = &quot;first principal component&quot;,
+                      ylab = &quot;second principal component&quot;)
+text(
+  survey_corpca1$score[, 1],
+  survey_corpca1$score[, 2],
+  cex = 1.5,
+  NHCA_fields2$cluster,
   col = NHCA_fields2$cluster
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
-<pre class="r"><code>PCA_7clusplot2 &lt;- plot(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
-  xlab = &quot;first principal component&quot;, ylab = &quot;third principal component&quot;
-)
+<pre class="r"><code>PCA_7clusplot2 &lt;- plot(survey_corpca1$score[, 1],
+                       survey_corpca1$score[, 3],
+                       xlab = &quot;first principal component&quot;,
+                       ylab = &quot;third principal component&quot;)
 
-text(survey_corpca1$score[, 1], survey_corpca1$score[, 3],
-  cex = 1.5, NHCA_fields2$cluster,
+text(
+  survey_corpca1$score[, 1],
+  survey_corpca1$score[, 3],
+  cex = 1.5,
+  NHCA_fields2$cluster,
   col = NHCA_fields2$cluster
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
@@ -516,11 +528,15 @@ plot(HCA_field3)
 field_hgroups3 &lt;- cutree(HCA_field3, k = 7)
 rect.hclust(HCA_field3, k = 7, border = &quot;blue&quot;)</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>PCO_7clusplot &lt;- plot(PCO1_fields$points[, 1], PCO1_fields$points[, 2],
-  xlab = &quot;first principal coordinate&quot;, ylab = &quot;second principal cordinate&quot;
-)
-text(PCO1_fields$points[, 1], PCO1_fields$points[, 2],
-  cex = 1.5, field_hgroups3,
+<pre class="r"><code>PCO_7clusplot &lt;- plot(PCO1_fields$points[, 1],
+                      PCO1_fields$points[, 2],
+                      xlab = &quot;first principal coordinate&quot;,
+                      ylab = &quot;second principal cordinate&quot;)
+text(
+  PCO1_fields$points[, 1],
+  PCO1_fields$points[, 2],
+  cex = 1.5,
+  field_hgroups3,
   col = field_hgroups3
 )</code></pre>
 <p><img src="4-PCA_PCO_cluster_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>

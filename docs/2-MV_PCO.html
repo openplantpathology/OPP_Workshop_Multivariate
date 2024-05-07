@@ -539,21 +539,33 @@ fieldPCO_dim3 &lt;- vector(length = 54)
 fieldPCO_dim1 &lt;- field_pco$points[, 1]
 fieldPCO_dim2 &lt;- field_pco$points[, 2]
 fieldPCO_dim3 &lt;- field_pco$points[, 3]
-fieldpco_plot &lt;- plot(fieldPCO_dim1, fieldPCO_dim2,
-  asp = 1, cex = 1.5,
-  xlab = &quot;PCO dimension 1&quot;, ylab = &quot;PCO dimension 2&quot;
+fieldpco_plot &lt;- plot(
+  fieldPCO_dim1,
+  fieldPCO_dim2,
+  asp = 1,
+  cex = 1.5,
+  xlab = &quot;PCO dimension 1&quot;,
+  ylab = &quot;PCO dimension 2&quot;
 )
 text(fieldPCO_dim1, fieldPCO_dim2, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
-<pre class="r"><code>fieldpco_plot2 &lt;- plot(fieldPCO_dim1, fieldPCO_dim3,
-  asp = 1, cex = 1.5,
-  xlab = &quot;PCO dimension 1&quot;, ylab = &quot;PCO dimension 3&quot;
+<pre class="r"><code>fieldpco_plot2 &lt;- plot(
+  fieldPCO_dim1,
+  fieldPCO_dim3,
+  asp = 1,
+  cex = 1.5,
+  xlab = &quot;PCO dimension 1&quot;,
+  ylab = &quot;PCO dimension 3&quot;
 )
 text(fieldPCO_dim1, fieldPCO_dim3, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
-<pre class="r"><code>fieldpco_plot3 &lt;- plot(fieldPCO_dim2, fieldPCO_dim3,
-  asp = 1, cex = 1.5,
-  xlab = &quot;PCO dimension 2&quot;, ylab = &quot;PCO dimension 3&quot;
+<pre class="r"><code>fieldpco_plot3 &lt;- plot(
+  fieldPCO_dim2,
+  fieldPCO_dim3,
+  asp = 1,
+  cex = 1.5,
+  xlab = &quot;PCO dimension 2&quot;,
+  ylab = &quot;PCO dimension 3&quot;
 )
 text(fieldPCO_dim2, fieldPCO_dim3, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
@@ -575,9 +587,13 @@ against 2 there is a suggestion of separation among the fields from the
 different regions. If we swap the order of plotting the variables and
 reverse their signs, we can see that the projection looks something like
 the geographic map of the regions to which the fields belong.</p>
-<pre class="r"><code>fieldpco_plot &lt;- plot(-fieldPCO_dim2, -fieldPCO_dim1,
-  asp = 1, cex = 1.5,
-  xlab = &quot;PCO dimension 1&quot;, ylab = &quot;PCO dimension 2&quot;
+<pre class="r"><code>fieldpco_plot &lt;- plot(
+  -fieldPCO_dim2,
+  -fieldPCO_dim1,
+  asp = 1,
+  cex = 1.5,
+  xlab = &quot;PCO dimension 1&quot;,
+  ylab = &quot;PCO dimension 2&quot;
 )
 text(-fieldPCO_dim2, -fieldPCO_dim1, cex = 1.5, margin_data$region)</code></pre>
 <p><img src="2-MV_PCO_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>

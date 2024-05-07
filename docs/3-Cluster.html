@@ -521,25 +521,25 @@ head(NHCA_data1)</code></pre>
 <pre class="r"><code># Cluster the fields into 3 groups
 NHCA_fields1 &lt;- kmeans(NHCA_data1[, 3:14], 3)
 NHCA_fields1</code></pre>
-<pre><code>## K-means clustering with 3 clusters of sizes 11, 21, 9
+<pre><code>## K-means clustering with 3 clusters of sizes 5, 24, 12
 ## 
 ## Cluster means:
-##         ST_L       St_G       Sn_L        Sn_G       Pm_L       Pm_G       Fu_L
-## 1  1.2241451  1.0231808 -0.2457903 -0.07766454 -0.4836272 -0.4821244 -0.2571397
-## 2 -0.5138070 -0.1893597 -0.3134817 -0.30511069  0.2121172  0.3928780  0.2750472
-## 3 -0.2972944 -0.8087150  1.0318677  0.80684827  0.0961598 -0.3274523 -0.3274949
-##         Bo_L       SM_E         ES        SES         TA
-## 1  1.0214250  0.6904617  0.3447132 -0.5391760 -0.2658168
-## 2 -0.7461708 -0.6444095 -0.5282419 -0.1788765  0.2979625
-## 3  0.4926570  0.6597245  0.8112484  1.0763713 -0.3703586
+##         ST_L       St_G       Sn_L       Sn_G        Pm_L       Pm_G
+## 1 -0.7876661 -0.2774652 -0.3381438 -0.3051107  1.96887182  2.1627693
+## 2  0.2542274  0.3476692 -0.2518265 -0.2008645 -0.38578815 -0.2675168
+## 3 -0.1802606 -0.5797280  0.6445462  0.5288585 -0.04878696 -0.3661203
+##          Fu_L         Bo_L       SM_E         ES         SES         TA
+## 1  0.93010445 -0.977317986 -0.4898455 -0.4221388 -0.02316811 -0.2449084
+## 2  0.06671411 -0.009672585 -0.2700747 -0.4675439 -0.37749583  0.2362019
+## 3 -0.52097174  0.426560997  0.7442518  1.1109790  0.76464505 -0.3703586
 ## 
 ## Clustering vector:
-##  [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 2 3 2 1 3 3 2 3 1 1 3 3 1 1 1 1 1 3 2
-## [39] 1 1 1
+##  [1] 1 2 2 1 1 2 2 2 2 2 2 2 2 2 2 1 2 3 3 2 3 3 3 3 3 1 3 2 2 3 3 2 2 2 3 2 3 2
+## [39] 2 2 2
 ## 
 ## Within cluster sum of squares by cluster:
-## [1]  61.60036 157.82690 111.25969
-##  (between_SS / total_SS =  31.1 %)
+## [1]  28.53453 157.63472 160.98245
+##  (between_SS / total_SS =  27.7 %)
 ## 
 ## Available components:
 ## 
@@ -557,8 +557,11 @@ and between-cluster SS. Since the number of data objects is relatively
 small we can use a simple barplot to look at how the fields from each
 region have been allocated to the new clusters.</li>
 </ol>
-<pre class="r"><code>NHCA_3clus_plt &lt;- barplot(NHCA_fields1$cluster,
-  names.arg = PCA1_cordata$region, cex.names = 0.5, xlab = &quot;region&quot;,
+<pre class="r"><code>NHCA_3clus_plt &lt;- barplot(
+  NHCA_fields1$cluster,
+  names.arg = PCA1_cordata$region,
+  cex.names = 0.5,
+  xlab = &quot;region&quot;,
   ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
@@ -574,13 +577,21 @@ number.</p>
 <div id="number-of-clusters" class="section level2">
 <h2>Number of clusters</h2>
 <pre class="r"><code>wSS_fields1 &lt;- (nrow(NHCA_data1) - 1) * sum(apply(NHCA_data1[, 3:14], 2, var))
-for (i in 2:20) wSS_fields1[i] &lt;- sum(kmeans(NHCA_data1[, 3:14], centers = i)$withinss)
-clus_plot &lt;- barplot(wSS_fields1, xlab = &quot;number of clusters&quot;, ylab = &quot;within cluster S.S.&quot;, names.arg = seq(1, 20, 1))</code></pre>
+for (i in 2:20)
+  wSS_fields1[i] &lt;- sum(kmeans(NHCA_data1[, 3:14], centers = i)$withinss)
+clus_plot &lt;- barplot(
+  wSS_fields1,
+  xlab = &quot;number of clusters&quot;,
+  ylab = &quot;within cluster S.S.&quot;,
+  names.arg = seq(1, 20, 1)
+)</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>wSS_fields1_pct &lt;- (wSS_fields1 / wSS_fields1[1]) * 100
-clus_plot_pct &lt;- barplot(wSS_fields1_pct,
+clus_plot_pct &lt;- barplot(
+  wSS_fields1_pct,
   xlab = &quot;number of clusters&quot;,
-  ylab = &quot;within cluster %S.S.&quot;, names.arg = seq(1, 20, 1)
+  ylab = &quot;within cluster %S.S.&quot;,
+  names.arg = seq(1, 20, 1)
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <p>The <code>for()</code> loop cycles through the clustering procedure,
@@ -616,41 +627,44 @@ model with 7 clusters might be of interest.</p>
 <pre class="r"><code># Cluster the fields into 7 groups
 NHCA_fields2 &lt;- kmeans(NHCA_data1[, 3:14], 7)
 NHCA_fields2</code></pre>
-<pre><code>## K-means clustering with 7 clusters of sizes 3, 5, 2, 1, 3, 17, 10
+<pre><code>## K-means clustering with 7 clusters of sizes 3, 2, 10, 1, 17, 5, 3
 ## 
 ## Cluster means:
 ##         ST_L       St_G       Sn_L        Sn_G        Pm_L        Pm_G
-## 1 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.48212440
-## 2  0.1708408 -0.8087150 -0.3182244 -0.30511069  0.03818110 -0.20371453
-## 3 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.48212440
+## 1 -0.9175736 -0.1675514 -0.4510204 -0.30511069  2.82115871  2.81239232
+## 2 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.48212440
+## 3  1.2241451  1.2063704 -0.2186275 -0.05491992 -0.48362721 -0.48212440
 ## 4  0.6974930 -0.8087150 -0.5174184 -0.30511069 -0.48362721 -0.48212440
-## 5 -0.9175736 -0.1675514 -0.4510204 -0.30511069  2.82115871  2.81239232
-## 6 -0.5138070 -0.1567756 -0.2772139 -0.30511069 -0.20737575  0.01737565
-## 7  1.2241451  1.2063704 -0.2186275 -0.05491992 -0.48362721 -0.48212440
+## 5 -0.5138070 -0.1567756 -0.2772139 -0.30511069 -0.20737575  0.01737565
+## 6  0.1708408 -0.8087150 -0.3182244 -0.30511069  0.03818110 -0.20371453
+## 7 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.48212440
 ##          Fu_L       Bo_L       SM_E          ES        SES          TA
-## 1  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.37035862
-## 2 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.37035862
-## 3 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
+## 1  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
+## 2 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
+## 3 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
 ## 4  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
-## 5  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
-## 6  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
-## 7 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
+## 5  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
+## 6 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.37035862
+## 7  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.37035862
 ## 
 ## Clustering vector:
-##  [1] 6 6 6 5 5 6 6 6 6 6 6 6 6 6 6 5 6 3 2 6 3 6 2 2 1 6 2 7 7 1 1 7 7 7 7 7 2 4
-## [39] 7 7 7
+##  [1] 5 5 5 1 1 5 5 5 5 5 5 5 5 5 5 1 5 2 6 5 2 5 6 6 7 5 6 3 3 7 7 3 3 3 3 3 6 4
+## [39] 3 3 3
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 10.53387 36.40606 11.04295  0.00000 14.43222 61.40302 45.04325
+## [1] 14.43222 11.04295 45.04325  0.00000 61.40302 36.40606 10.53387
 ##  (between_SS / total_SS =  62.7 %)
 ## 
 ## Available components:
 ## 
 ## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
 ## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
-<pre class="r"><code>NHCA_7clus_plt &lt;- barplot(NHCA_fields2$cluster,
-  names.arg = PCA1_cordata$region, cex.names = 0.5,
-  xlab = &quot;region&quot;, ylab = &quot;cluster number&quot;
+<pre class="r"><code>NHCA_7clus_plt &lt;- barplot(
+  NHCA_fields2$cluster,
+  names.arg = PCA1_cordata$region,
+  cex.names = 0.5,
+  xlab = &quot;region&quot;,
+  ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Although the solution with 7 clusters has reduced the within-cluster
@@ -663,39 +677,42 @@ running the analysis.</p>
 <pre class="r"><code># Cluster the fields into 6 groups
 NHCA_fields3 &lt;- kmeans(NHCA_data1[, 3:14], 6)
 NHCA_fields3</code></pre>
-<pre><code>## K-means clustering with 6 clusters of sizes 2, 10, 3, 17, 8, 1
+<pre><code>## K-means clustering with 6 clusters of sizes 10, 3, 3, 2, 18, 5
 ## 
 ## Cluster means:
-##          ST_L       St_G       Sn_L        Sn_G         Pm_L        Pm_G
-## 1 -0.61913740 -0.8087150  3.4664601 -0.30511069  0.168633171 -0.48212440
-## 2  1.22414512  1.2063704 -0.2186275 -0.05491992 -0.483627208 -0.48212440
-## 3 -0.91757362 -0.1675514 -0.4510204 -0.30511069  2.821158715  2.81239232
-## 4 -0.51380697 -0.1567756 -0.2772139 -0.30511069 -0.207375753  0.01737565
-## 5 -0.02665374 -0.8087150  0.2295589  0.94584314  0.005568076 -0.30811823
-## 6  0.69749297 -0.8087150 -0.5174184 -0.30511069 -0.483627208 -0.48212440
-##          Fu_L       Bo_L       SM_E          ES        SES          TA
-## 1 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.37035862
-## 2 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.25536259
-## 3  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.16127493
-## 4  0.04921584 -0.6861846 -0.6330445 -0.50648331 -0.3205832  0.08009376
-## 5 -0.37586413  1.0214250  0.3216157  1.47252953  0.7340769 -0.37035862
-## 6  1.80075016 -1.3580309 -0.6927108 -0.51076278  0.8952439  5.37944306
+##         ST_L       St_G       Sn_L        Sn_G        Pm_L        Pm_G
+## 1  1.2241451  1.2063704 -0.2186275 -0.05491992 -0.48362721 -0.48212440
+## 2 -0.9175736 -0.1675514 -0.4510204 -0.30511069  2.82115871  2.81239232
+## 3 -0.3558113 -0.8087150  1.1425310  3.03076620 -0.04878696 -0.48212440
+## 4 -0.6191374 -0.8087150  3.4664601 -0.30511069  0.16863317 -0.48212440
+## 5 -0.4465125 -0.1929944 -0.2905586 -0.30511069 -0.22272306 -0.01037435
+## 6  0.1708408 -0.8087150 -0.3182244 -0.30511069  0.03818110 -0.20371453
+##          Fu_L       Bo_L       SM_E          ES        SES         TA
+## 1 -0.11467041  1.0214250  0.7273463  0.04071208 -0.5001675 -0.2553626
+## 2  1.04619054 -0.8821397 -0.6927108 -0.65736713  0.2660883 -0.1612749
+## 3  0.05945873  1.0214250 -0.3546019  0.98283793  0.4362660 -0.3703586
+## 4 -0.81118698 -1.3580309  1.8431054 -0.54713830  1.4427324 -0.3703586
+## 5  0.14652330 -0.7235094 -0.6363593 -0.50672106 -0.2530372  0.3745021
+## 6 -0.63705784  1.0214250  0.7273463  1.76634449  0.9127635 -0.3703586
 ## 
 ## Clustering vector:
-##  [1] 4 4 4 3 3 4 4 4 4 4 4 4 4 4 4 3 4 1 5 4 1 4 5 5 5 4 5 2 2 5 5 2 2 2 2 2 5 6
-## [39] 2 2 2
+##  [1] 5 5 5 2 2 5 5 5 5 5 5 5 5 5 5 2 5 4 6 5 4 5 6 6 3 5 6 1 1 3 3 1 1 1 1 1 6 5
+## [39] 1 1 1
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 11.04295 45.04325 14.43222 61.40302 77.16680  0.00000
-##  (between_SS / total_SS =  56.4 %)
+## [1] 45.04325 14.43222 10.53387 11.04295 94.79853 36.40606
+##  (between_SS / total_SS =  55.8 %)
 ## 
 ## Available components:
 ## 
 ## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
 ## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
-<pre class="r"><code>NHCA_6clus_plt &lt;- barplot(NHCA_fields3$cluster,
-  names.arg = PCA1_cordata$region, cex.names = 0.5,
-  xlab = &quot;region&quot;, ylab = &quot;cluster number&quot;
+<pre class="r"><code>NHCA_6clus_plt &lt;- barplot(
+  NHCA_fields3$cluster,
+  names.arg = PCA1_cordata$region,
+  cex.names = 0.5,
+  xlab = &quot;region&quot;,
+  ylab = &quot;cluster number&quot;
 )</code></pre>
 <p><img src="3-Cluster_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Sacrificing some of the within-cluster S.S. by moving from 7 to 6

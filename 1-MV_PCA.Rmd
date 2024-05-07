@@ -20,63 +20,134 @@ loadings_pca1
 The `summary()` shows how the variance in the original data is distributed among the new components, while the `loadings()` show how the original variables contribute to the new components.  One of the main ways to interpret the components is to plot the scores for the objects and then use any patterns that are apparent as a way to identify what information (in the informal sense) the new components contain.  The following block of code generates various graphs based on the scores for the objects.
 
 ```{r}
-pca1_plot2_1 <- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 2],
+pca1_plot2_1 <- plot(
+  survey_pca1$scores[, 1],
+  survey_pca1$scores[, 2],
   cex = 1.5,
   xlab = "first principal component 54% variance",
   ylab = "second principal component 32% variance"
 )
 
-pca1_plot3_2 <- plot(survey_pca1$scores[, 2], survey_pca1$scores[, 3],
+pca1_plot3_2 <- plot(
+  survey_pca1$scores[, 2],
+  survey_pca1$scores[, 3],
   cex = 1.5,
   xlab = "second principal component 32% variance",
   ylab = "third principal component 9% variance"
 )
 
-pca1_plot2_1 <- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 3],
+pca1_plot2_1 <- plot(
+  survey_pca1$scores[, 1],
+  survey_pca1$scores[, 3],
   cex = 1.5,
   xlab = "first principal component 54% variance",
   ylab = "third principal component 9% variance"
 )
 
-pca1_plot2_1N <- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 2],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_pca1$scores[1:17, 1],
+  survey_pca1$scores[1:17, 2],
+  cex = 1.5,
+  pch = 19,
   xlab = "first principal component 54% variance",
   ylab = "second principal component 32% variance",
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 2], cex = 1.5, pch = 15, col = "red")
-points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 2], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_pca1$scores[18:31, 1],
+  survey_pca1$scores[18:31, 2],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_pca1$scores[32:41, 1],
+  survey_pca1$scores[32:41, 2],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 
-pca1_plot2_1N <- plot(survey_pca1$scores[1:17, 2], survey_pca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_pca1$scores[1:17, 2],
+  survey_pca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = "second principal component 32% variance",
   ylab = "second principal component 9% variance",
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 2], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = "red")
-points(survey_pca1$scores[32:41, 2], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_pca1$scores[18:31, 2],
+  survey_pca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_pca1$scores[32:41, 2],
+  survey_pca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 
-pca1_plot2_1N <- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_pca1$scores[1:17, 1],
+  survey_pca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = "first principal component 54% variance",
   ylab = "third principal component 9% variance",
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = "red")
-points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_pca1$scores[18:31, 1],
+  survey_pca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_pca1$scores[32:41, 1],
+  survey_pca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 ```
 
-Since we can see from the loadings that the first 3 components a really only looking at differences based on the soil-borne diseases, and since the 4th component is >0 let's look at what we get by plotting 4 against 3.  Note that we reduce the scale of the  axes because these components have less variance so need a smaller absolute scale.
+Since we can see from the loadings that the first 3 components a really only looking at differences based on the soil -
+borne diseases, and since the 4th component is > 0 let's look at what we get by plotting 4 against 3.  Note that we reduce the scale of the  axes because these components have less variance so need a smaller absolute scale.
 
 ```{r}
-pca1_plot2_1N <- plot(survey_pca1$scores[1:17, 3], survey_pca1$scores[1:17, 4],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_pca1$scores[1:17, 3],
+  survey_pca1$scores[1:17, 4],
+  cex = 1.5,
+  pch = 19,
   xlab = "third principal component 9% variance",
   ylab = "fourth principal component 3% variance",
-  xlim = c(-5, 10), ylim = c(-5, 10)
+  xlim = c(-5, 10),
+  ylim = c(-5, 10)
 )
-points(survey_pca1$scores[18:31, 3], survey_pca1$scores[18:31, 4], cex = 1.5, pch = 15, col = "red")
-points(survey_pca1$scores[32:41, 3], survey_pca1$scores[32:41, 4], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_pca1$scores[18:31, 3],
+  survey_pca1$scores[18:31, 4],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_pca1$scores[32:41, 3],
+  survey_pca1$scores[32:41, 4],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 ```
 
 The plot shows that the fourth component is an east-west split (probably related to rainfall and cropping density in the rotation, the west being associated with wet weather diseases such as Septoria and ear blights and soil-borne diseases (eyespot and sharp eyespot being associated with the east where second wheat crops are not unusual and wheat is more frequent generally in the rotation.
@@ -95,49 +166,102 @@ summary_corpca1
 corpca1_scree <- plot(survey_corpca1)
 loadings_corpca1 <- survey_corpca1$loadings
 loadings_corpca1
-corpca1_plot2_1 <- plot(survey_corpca1$scores[, 1], survey_corpca1$scores[, 2],
+corpca1_plot2_1 <- plot(
+  survey_corpca1$scores[, 1],
+  survey_corpca1$scores[, 2],
   cex = 1.5,
   xlab = "first principal component 26% variance",
   ylab = "second principal component 17% variance"
 )
 
-corpca1_plot3_2 <- plot(survey_corpca1$scores[, 2], survey_corpca1$scores[, 3],
+corpca1_plot3_2 <- plot(
+  survey_corpca1$scores[, 2],
+  survey_corpca1$scores[, 3],
   cex = 1.5,
   xlab = "second principal component 17% variance",
   ylab = "third principal component 14% variance"
 )
 
 
-pca1_plot2_1N <- plot(survey_corpca1$scores[1:17, 1], survey_corpca1$scores[1:17, 2],
-  cex = 1.5, pch = 19,
+
+pca1_plot2_1N <- plot(
+  survey_corpca1$scores[1:17, 1],
+  survey_corpca1$scores[1:17, 2],
+  cex = 1.5,
+  pch = 19,
   xlab = "first principal component 26% variance",
   ylab = "second principal component 17% variance",
-  xlim = c(-4, 6), ylim = c(-3, 4)
+  xlim = c(-4, 6),
+  ylim = c(-3, 4)
 )
-points(survey_corpca1$scores[18:31, 1], survey_corpca1$scores[18:31, 2], cex = 1.5, pch = 15, col = "red")
-points(survey_corpca1$scores[32:41, 1], survey_corpca1$scores[32:41, 2], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_corpca1$scores[18:31, 1],
+  survey_corpca1$scores[18:31, 2],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_corpca1$scores[32:41, 1],
+  survey_corpca1$scores[32:41, 2],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 
-pca1_plot2_1N <- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_corpca1$scores[1:17, 2],
+  survey_corpca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = "second principal component 17% variance",
   ylab = "third principal component 14% variance",
-  xlim = c(-3, 4), ylim = c(-4, 4)
+  xlim = c(-3, 4),
+  ylim = c(-4, 4)
 )
-points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 3], cex = 1.5, pch = 15, col = "red")
-points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 3], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_corpca1$scores[18:31, 2],
+  survey_corpca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_corpca1$scores[32:41, 2],
+  survey_corpca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 ```
 
 By switching the components in the plot we can make the PCA output match the geographic orientation of the regions
 
 ```{r}
-pca1_plot2_1N <- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 1],
-  cex = 1.5, pch = 19,
+pca1_plot2_1N <- plot(
+  survey_corpca1$scores[1:17, 2],
+  survey_corpca1$scores[1:17, 1],
+  cex = 1.5,
+  pch = 19,
   xlab = "second principal component 17% variance",
   ylab = "first principal component 26% variance",
-  xlim = c(-3, 4), ylim = c(-4, 6)
+  xlim = c(-3, 4),
+  ylim = c(-4, 6)
 )
-points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 1], cex = 1.5, pch = 15, col = "red")
-points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 1], cex = 1.5, pch = 17, col = "blue")
+points(
+  survey_corpca1$scores[18:31, 2],
+  survey_corpca1$scores[18:31, 1],
+  cex = 1.5,
+  pch = 15,
+  col = "red"
+)
+points(
+  survey_corpca1$scores[32:41, 2],
+  survey_corpca1$scores[32:41, 1],
+  cex = 1.5,
+  pch = 17,
+  col = "blue"
+)
 ```
 
 ## Biplots
@@ -164,7 +288,12 @@ The data are in file Alternaria_nopen.csv
 
 ```{r}
 Alt_nopen_data <- read.csv("data/Alternaria_nopen.csv", head = FALSE)
-Altspp <- c("alternata", "brassicae", "brassicicola", "infectoria", "raphani", "solani")
+Altspp <- c("alternata",
+            "brassicae",
+            "brassicicola",
+            "infectoria",
+            "raphani",
+            "solani")
 host <- c("Bnapus", "Papaver", "Lycopersicon", "Triticum")
 rownames(Alt_nopen_data) <- Altspp
 colnames(Alt_nopen_data) <- host

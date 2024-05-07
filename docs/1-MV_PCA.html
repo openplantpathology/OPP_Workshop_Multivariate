@@ -480,64 +480,135 @@ to plot the scores for the objects and then use any patterns that are
 apparent as a way to identify what information (in the informal sense)
 the new components contain. The following block of code generates
 various graphs based on the scores for the objects.</p>
-<pre class="r"><code>pca1_plot2_1 &lt;- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 2],
+<pre class="r"><code>pca1_plot2_1 &lt;- plot(
+  survey_pca1$scores[, 1],
+  survey_pca1$scores[, 2],
   cex = 1.5,
   xlab = &quot;first principal component 54% variance&quot;,
   ylab = &quot;second principal component 32% variance&quot;
 )</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r"><code>pca1_plot3_2 &lt;- plot(survey_pca1$scores[, 2], survey_pca1$scores[, 3],
+<pre class="r"><code>pca1_plot3_2 &lt;- plot(
+  survey_pca1$scores[, 2],
+  survey_pca1$scores[, 3],
   cex = 1.5,
   xlab = &quot;second principal component 32% variance&quot;,
   ylab = &quot;third principal component 9% variance&quot;
 )</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1 &lt;- plot(survey_pca1$scores[, 1], survey_pca1$scores[, 3],
+<pre class="r"><code>pca1_plot2_1 &lt;- plot(
+  survey_pca1$scores[, 1],
+  survey_pca1$scores[, 3],
   cex = 1.5,
   xlab = &quot;first principal component 54% variance&quot;,
   ylab = &quot;third principal component 9% variance&quot;
 )</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 2],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_pca1$scores[1:17, 1],
+  survey_pca1$scores[1:17, 2],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;first principal component 54% variance&quot;,
   ylab = &quot;second principal component 32% variance&quot;,
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 2], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 2], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_pca1$scores[18:31, 1],
+  survey_pca1$scores[18:31, 2],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_pca1$scores[32:41, 1],
+  survey_pca1$scores[32:41, 2],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 2], survey_pca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_pca1$scores[1:17, 2],
+  survey_pca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;second principal component 32% variance&quot;,
   ylab = &quot;second principal component 9% variance&quot;,
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 2], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_pca1$scores[32:41, 2], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_pca1$scores[18:31, 2],
+  survey_pca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_pca1$scores[32:41, 2],
+  survey_pca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-5.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 1], survey_pca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_pca1$scores[1:17, 1],
+  survey_pca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;first principal component 54% variance&quot;,
   ylab = &quot;third principal component 9% variance&quot;,
-  xlim = c(-25, 10), ylim = c(-15, 15)
+  xlim = c(-25, 10),
+  ylim = c(-15, 15)
 )
-points(survey_pca1$scores[18:31, 1], survey_pca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_pca1$scores[32:41, 1], survey_pca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_pca1$scores[18:31, 1],
+  survey_pca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_pca1$scores[32:41, 1],
+  survey_pca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-2-6.png" width="672" /></p>
 <p>Since we can see from the loadings that the first 3 components a
-really only looking at differences based on the soil-borne diseases, and
-since the 4th component is &gt;0 let’s look at what we get by plotting 4
-against 3. Note that we reduce the scale of the axes because these
-components have less variance so need a smaller absolute scale.</p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_pca1$scores[1:17, 3], survey_pca1$scores[1:17, 4],
-  cex = 1.5, pch = 19,
+really only looking at differences based on the soil - borne diseases,
+and since the 4th component is &gt; 0 let’s look at what we get by
+plotting 4 against 3. Note that we reduce the scale of the axes because
+these components have less variance so need a smaller absolute
+scale.</p>
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_pca1$scores[1:17, 3],
+  survey_pca1$scores[1:17, 4],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;third principal component 9% variance&quot;,
   ylab = &quot;fourth principal component 3% variance&quot;,
-  xlim = c(-5, 10), ylim = c(-5, 10)
+  xlim = c(-5, 10),
+  ylim = c(-5, 10)
 )
-points(survey_pca1$scores[18:31, 3], survey_pca1$scores[18:31, 4], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_pca1$scores[32:41, 3], survey_pca1$scores[32:41, 4], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_pca1$scores[18:31, 3],
+  survey_pca1$scores[18:31, 4],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_pca1$scores[32:41, 3],
+  survey_pca1$scores[32:41, 4],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>The plot shows that the fourth component is an east-west split
 (probably related to rainfall and cropping density in the rotation, the
@@ -626,46 +697,98 @@ loadings_corpca1</code></pre>
 ## SS loadings      1.000   1.000   1.000
 ## Proportion Var   0.083   0.083   0.083
 ## Cumulative Var   0.833   0.917   1.000</code></pre>
-<pre class="r"><code>corpca1_plot2_1 &lt;- plot(survey_corpca1$scores[, 1], survey_corpca1$scores[, 2],
+<pre class="r"><code>corpca1_plot2_1 &lt;- plot(
+  survey_corpca1$scores[, 1],
+  survey_corpca1$scores[, 2],
   cex = 1.5,
   xlab = &quot;first principal component 26% variance&quot;,
   ylab = &quot;second principal component 17% variance&quot;
 )</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<pre class="r"><code>corpca1_plot3_2 &lt;- plot(survey_corpca1$scores[, 2], survey_corpca1$scores[, 3],
+<pre class="r"><code>corpca1_plot3_2 &lt;- plot(
+  survey_corpca1$scores[, 2],
+  survey_corpca1$scores[, 3],
   cex = 1.5,
   xlab = &quot;second principal component 17% variance&quot;,
   ylab = &quot;third principal component 14% variance&quot;
 )</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 1], survey_corpca1$scores[1:17, 2],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_corpca1$scores[1:17, 1],
+  survey_corpca1$scores[1:17, 2],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;first principal component 26% variance&quot;,
   ylab = &quot;second principal component 17% variance&quot;,
-  xlim = c(-4, 6), ylim = c(-3, 4)
+  xlim = c(-4, 6),
+  ylim = c(-3, 4)
 )
-points(survey_corpca1$scores[18:31, 1], survey_corpca1$scores[18:31, 2], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_corpca1$scores[32:41, 1], survey_corpca1$scores[32:41, 2], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_corpca1$scores[18:31, 1],
+  survey_corpca1$scores[18:31, 2],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_corpca1$scores[32:41, 1],
+  survey_corpca1$scores[32:41, 2],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 3],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_corpca1$scores[1:17, 2],
+  survey_corpca1$scores[1:17, 3],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;second principal component 17% variance&quot;,
   ylab = &quot;third principal component 14% variance&quot;,
-  xlim = c(-3, 4), ylim = c(-4, 4)
+  xlim = c(-3, 4),
+  ylim = c(-4, 4)
 )
-points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 3], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 3], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_corpca1$scores[18:31, 2],
+  survey_corpca1$scores[18:31, 3],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_corpca1$scores[32:41, 2],
+  survey_corpca1$scores[32:41, 3],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
 <p>By switching the components in the plot we can make the PCA output
 match the geographic orientation of the regions</p>
-<pre class="r"><code>pca1_plot2_1N &lt;- plot(survey_corpca1$scores[1:17, 2], survey_corpca1$scores[1:17, 1],
-  cex = 1.5, pch = 19,
+<pre class="r"><code>pca1_plot2_1N &lt;- plot(
+  survey_corpca1$scores[1:17, 2],
+  survey_corpca1$scores[1:17, 1],
+  cex = 1.5,
+  pch = 19,
   xlab = &quot;second principal component 17% variance&quot;,
   ylab = &quot;first principal component 26% variance&quot;,
-  xlim = c(-3, 4), ylim = c(-4, 6)
+  xlim = c(-3, 4),
+  ylim = c(-4, 6)
 )
-points(survey_corpca1$scores[18:31, 2], survey_corpca1$scores[18:31, 1], cex = 1.5, pch = 15, col = &quot;red&quot;)
-points(survey_corpca1$scores[32:41, 2], survey_corpca1$scores[32:41, 1], cex = 1.5, pch = 17, col = &quot;blue&quot;)</code></pre>
+points(
+  survey_corpca1$scores[18:31, 2],
+  survey_corpca1$scores[18:31, 1],
+  cex = 1.5,
+  pch = 15,
+  col = &quot;red&quot;
+)
+points(
+  survey_corpca1$scores[32:41, 2],
+  survey_corpca1$scores[32:41, 1],
+  cex = 1.5,
+  pch = 17,
+  col = &quot;blue&quot;
+)</code></pre>
 <p><img src="1-MV_PCA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="biplots" class="section level2">
@@ -715,7 +838,12 @@ Alternaria anamorphs which did NOT attempt penetration on different
 plant species.</p>
 <p>The data are in file Alternaria_nopen.csv</p>
 <pre class="r"><code>Alt_nopen_data &lt;- read.csv(&quot;data/Alternaria_nopen.csv&quot;, head = FALSE)
-Altspp &lt;- c(&quot;alternata&quot;, &quot;brassicae&quot;, &quot;brassicicola&quot;, &quot;infectoria&quot;, &quot;raphani&quot;, &quot;solani&quot;)
+Altspp &lt;- c(&quot;alternata&quot;,
+            &quot;brassicae&quot;,
+            &quot;brassicicola&quot;,
+            &quot;infectoria&quot;,
+            &quot;raphani&quot;,
+            &quot;solani&quot;)
 host &lt;- c(&quot;Bnapus&quot;, &quot;Papaver&quot;, &quot;Lycopersicon&quot;, &quot;Triticum&quot;)
 rownames(Alt_nopen_data) &lt;- Altspp
 colnames(Alt_nopen_data) &lt;- host

@@ -458,7 +458,7 @@ hypothesis is that there is no difference among regions on the intensity
 of wheat diseases, or equivalently that disease intensities do not
 differ among regions more than would be expected by chance alone.</p>
 <p>Since we have stated our hypothesis in advance we can do the analyses
-in any order we want so We will run the LDA first. You will need the
+in any order we want so We will run the LDA first.You will need the
 disease data set. If you still have the data set that was used for the
 PCA on the correlation matrix you can use it to make a data frame to
 hold the data variables. If you don’t have the PCA data set still
@@ -554,17 +554,26 @@ been achieved.</p>
 of a LDA. Unfortunately MASS does not include a biplot procedure for
 LDA, but the following function written by a contributor to
 Stackoverflow produces reasonable results.</p>
-<pre class="r"><code>lda.arrows &lt;- function(x, myscale = 1, tex = 0.75, choices = c(1, 2), ...) {
+<pre class="r"><code>lda.arrows &lt;- function(x,
+                       myscale = 1,
+                       tex = 0.75,
+                       choices = c(1, 2),
+                       ...) {
   ## adds `biplot` arrows to an lda using the discriminant function values
   heads &lt;- coef(x)
   arrows(
-    x0 = 0, y0 = 0,
+    x0 = 0,
+    y0 = 0,
     x1 = myscale * heads[, choices[1]],
-    y1 = myscale * heads[, choices[2]], ...
+    y1 = myscale * heads[, choices[2]],
+    ...
   )
-  text(myscale * heads[, choices],
+  text(
+    myscale * heads[, choices],
     labels = row.names(heads),
-    cex = tex, pos = 1, offset = 0.5
+    cex = tex,
+    pos = 1,
+    offset = 0.5
   )
 }</code></pre>
 <p>Once the function has been loaded you can use it just like any other
@@ -592,16 +601,16 @@ disease variables. To fit the MANOVA model we have to supply a list of
 variables using a <code>cbind()</code> statement and then identify the
 treatment (or grouping) factor. R uses the tilde (~) to indicate a
 statistical model. It makes the model more compact to write if we use
-the <code>data= option</code> to identify a data frame the contains the
-variables. By default the manova() procedure doesn’t print anything.
-Since we have already examined the way that the variables and grouping
-are connected in the LDA, all we really need are the overall tests of
-significance. There are several such tests for MANOVA which differ in
-their tendency to type 1 and type 2 errors. Wilks test tends to be
-conservative while the Hotelling-Lawley test tends to be lax. It’s a
-good idea to look at all of the options and come to a consensus. In this
-case, there’s no conflict. All of the tests point to a clear case for
-rejecting the null hypothesis of no difference among the different
+the <code>data = option</code> to identify a data frame the contains the
+variables. By default the <code>manova()</code> procedure doesn’t print
+anything. Since we have already examined the way that the variables and
+grouping are connected in the LDA, all we really need are the overall
+tests of significance. There are several such tests for MANOVA which
+differ in their tendency to type 1 and type 2 errors. Wilks test tends
+to be conservative while the Hotelling-Lawley test tends to be lax. It’s
+a good idea to look at all of the options and come to a consensus. In
+this case, there’s no conflict. All of the tests point to a clear case
+for rejecting the null hypothesis of no difference among the different
 regions.</p>
 <pre class="r"><code>lda_expl &lt;- data.frame(lda_expl)
 region_MAN &lt;- manova(
